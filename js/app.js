@@ -672,9 +672,7 @@ function area() {
     '<nav class="personal-book-stack" aria-label="Op\u00e7\u00f5es da \u00e1rea pessoal">' +
     options.map(([href, title], index) => '<a class="stack-book stack-book-' + index + '" href="#' + href +
       '"><span>' + title + '</span><i aria-hidden="true"></i></a>').join('') +
-    '</nav>' + (legacyState?.books?.length ?
-      '<div class="legacy-actions"><button type="button" class="button secondary" data-action="import-local">Importar livros deste navegador</button>' +
-      '<button type="button" class="text-button" data-action="backup-local">Descarregar cópia dos dados antigos</button></div>' : '') +
+    '</nav>' +
     '<button type="button" class="text-button stack-logout" data-action="logout">Terminar sess\u00e3o</button></section>';
 }
 
