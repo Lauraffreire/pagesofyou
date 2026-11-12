@@ -685,7 +685,7 @@ function myBooks() {
     '<h1 class="screen-brand">Pages of You</h1><div class="personal-books">' + (books.length ? books.map(
         book => '<article class="simple-book">' + (book.coverDesign ? '<div class="custom-book-thumbnail">' +
           designMarkup(book.coverDesign) + '</div>' : '<div class="custom-book-thumbnail">' + designMarkup(defaultBookCover(book)) + '</div>'
-          ) + '<div class="book-list-actions"><a class="button" href="#livro/' + e(book.id) + '">Ver livro</a><button type="button" class="text-button danger" data-action="delete-book" data-id="' + e(book.id) + '">Eliminar livro</button></div></article>').join('') :
+          ) + '<div class="book-list-actions"><span class="badge">' + (book.visibility === 'private' ? 'Privado — apenas a minha conta' : 'Público — biblioteca e instalação') + '</span><a class="button" href="#livro/' + e(book.id) + '">Ver livro</a><button type="button" class="text-button danger" data-action="delete-book" data-id="' + e(book.id) + '">Eliminar livro</button></div></article>').join('') :
       '<p>Ainda não tem livros.</p>') + '</div></div>';
   const drafts = (state.bookDrafts || []).filter(item => item.ownerId === user.id);
   main.querySelector('.page').insertAdjacentHTML('beforeend',
@@ -1200,6 +1200,11 @@ function preview() {
 function publishDraft() {
   if (!draft) return;
   const isBook = draft.kind === 'book';
+  const completionMessage = isBook
+    ? (draft.id ? 'Alterações guardadas com sucesso.' : 'Livro publicado com sucesso.') +
+      (draft.values.visibility === 'private' ? ' O livro é privado e está acessível apenas na sua conta.' :
+        ' O livro é público e está disponível na biblioteca e na instalação.')
+    : 'Pedido enviado com sucesso. Aguarda revisão do responsável.';
   confirmDialog(isBook ? (draft.id ? 'Tem a certeza que deseja guardar as alterações?' :
       'Tem a certeza que deseja publicar o livro?') : 'Tem a certeza que deseja enviar o pedido?',
     isBook ? (draft.values.visibility === 'public' ?
@@ -1241,8 +1246,7 @@ function publishDraft() {
       editorCache = null;
       successResult = null;
       navigate(isBook ? '#livro/' + id : '#area', true);
-      announce(isBook ? 'Livro guardado com sucesso.' :
-        'Pedido enviado com sucesso. Aguarda revisão do responsável.');
+      announce(completionMessage);
     }, isBook ? (draft.id ? 'Sim, guardar' : 'Sim, publicar') : 'Sim, enviar',
     'Não, voltar à pré-visualização');
 }
@@ -1361,7 +1365,7 @@ function render(focus = true) {
     const result = successResult;
     successResult = null;
     openModal('<span class="success-mark" aria-hidden="true">✓</span><h2 id="modal-title">' +
-      (result.isBook ? 'Livro guardado com sucesso!' : 'Pedido enviado com sucesso!') +
+      (result.isBook ? (result.isEdit ? 'Alterações guardadas com sucesso!' : 'Livro publicado com sucesso!') : 'Pedido enviado com sucesso!') +
       '</h2><p>' + (result.isBook ? 'A nova versão já está guardada online.' :
         'A memória aguarda a revisão do responsável. Pode acompanhar o estado na área pessoal.') +
       '</p><div class="panel-actions"><button class="button" data-action="close-modal">' +
