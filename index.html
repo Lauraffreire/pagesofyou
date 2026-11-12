@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Continua a experiência da instalação Pages of You: cria um livro sobre alguém da tua vida e reúne memórias em conjunto.">
+    <title>Pages of You — Histórias que ficam</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="identidade.css">
+    <script src="js/dados.js" defer></script>
+    <script src="supabase/vendor/supabase-2.49.8.js" defer></script>
+    <script src="supabase/config.js" defer></script>
+    <script src="supabase/client.js" defer></script>
+    <script src="js/designer.js" defer></script>
+    <script src="js/app.js" defer></script>
+  </head>
+  <body class="creation-site">
+    <a class="skip" href="#conteudo">Saltar para o conteúdo</a>
+    <header class="header">
+      <a class="personal" href="#area" aria-label="Área pessoal">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <circle cx="12" cy="7" r="4" fill="currentColor"/>
+          <path d="M4 21v-3a8 8 0 0 1 16 0v3" fill="currentColor"/>
+        </svg>
+      </a>
+    </header>
+    <main id="conteudo" tabindex="-1">
+    </main>
+    <aside id="cloud-notice" class="cloud-notice" role="status" hidden>
+      <span id="cloud-message"></span>
+      <button type="button" class="text-button" data-action="retry-cloud">Voltar a tentar</button>
+    </aside>
+    <dialog id="modal" aria-labelledby="modal-title">
+      <div id="modal-content">
+      </div>
+    </dialog>
+    <div id="status" role="status" aria-live="polite"></div>
+  </body>
+</html>

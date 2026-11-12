@@ -1,0 +1,1122 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* Padrões de lombada partilhados pela pré-visualização e pela instalação. */
+:is(.spine, .spine-preview).spine-pattern-none {
+  background-image: none;
+}
+
+:is(.spine, .spine-preview).spine-pattern-lines {
+  background-image: repeating-linear-gradient(0deg, transparent 0 23px, var(--spine-pattern-color, #ffffff) 23px 24px);
+}
+
+:is(.spine, .spine-preview).spine-pattern-grid {
+  background-image: linear-gradient(var(--spine-pattern-color, #ffffff) 1px, transparent 1px), linear-gradient(90deg, var(--spine-pattern-color, #ffffff) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+:is(.spine, .spine-preview).spine-pattern-dots {
+  background-image: radial-gradient(circle, var(--spine-pattern-color, #ffffff) 1px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+:is(.spine, .spine-preview).spine-pattern-stripes {
+  background-image: repeating-linear-gradient(135deg, transparent 0 12px, var(--spine-pattern-color, #ffffff) 12px 16px, transparent 16px 24px);
+}
+
+/* 01. Identidade comum ao site e à instalação. */
+:root {
+  --paper: #f7eed5;
+  --ink: #173b2d;
+  --muted: #53634c;
+  --line: #c5b88f;
+  --green: #173b2d;
+  --lime: #e8e5bc;
+  --red: #dc7247;
+  --pink: #efd4b3;
+  --olive: #8c914f;
+  --blue: #70988a;
+  --yellow: #e7ad51;
+  --wood: #e7ad51;
+  --sans: 'Manrope', 'Trebuchet MS', Arial, sans-serif;
+  --serif: var(--sans);
+  --display-font: var(--sans);
+  font-family: var(--sans);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: var(--sans);
+}
+
+:focus-visible {
+  outline: 3px solid #b65336;
+  outline-offset: 5px;
+}
+
+/* 02. Títulos e navegação da aplicação de criação. */
+.creation-site h1:not(.quiet-title),
+.creation-site h2,
+.creation-site h3,
+.creation-site .screen-brand,
+.creation-site .auth-card h1,
+.creation-site .page .auth-card h1 {
+  font-family: var(--sans);
+  font-weight: 700;
+  letter-spacing: -.035em;
+}
+
+.creation-site .header {
+  color: var(--ink);
+}
+
+.creation-site .personal,
+.creation-site:has(.quiet-library) .personal {
+  background: var(--paper);
+  border: 1px solid var(--green);
+  color: var(--green);
+  border-radius: 12px;
+}
+
+.creation-site .button {
+  background: var(--green);
+  color: #fff;
+  border: 1px solid var(--green);
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.creation-site .button:hover {
+  background: #183b31;
+}
+
+.creation-site .button.secondary {
+  background: #fff;
+  color: var(--green);
+  border-color: var(--line);
+}
+
+.creation-site .button.secondary:hover {
+  background: var(--lime);
+}
+
+/* 03. Estante: cores planas e linhas estruturais. */
+.creation-site .quiet-library {
+  --wall-0: #748f9e;
+  --wall-1: #b65336;
+  --wall-2: #e3c65c;
+  --wall-3: #7a8254;
+  --wall-4: #d7b8b6;
+  --wall-5: #244f43;
+  --wall-6: #a5b8ae;
+  --shelf-wood: #244f43;
+  background: var(--paper);
+}
+
+.creation-site .quiet-shelf {
+  border-inline-width: 2px;
+  border-bottom-width: 5px;
+  box-shadow: none;
+}
+
+.creation-site .quiet-shelf:first-child {
+  border-top-width: 2px;
+}
+
+.creation-site .quiet-book-group + .quiet-book-group,
+.creation-site .quiet-center > .quiet-side:last-child {
+  border-left-width: 2px;
+}
+
+.creation-site .quiet-book-group + .quiet-book-group::before,
+.creation-site .quiet-center > .quiet-side:last-child::before {
+  left: -2px;
+  width: 2px;
+}
+
+.creation-site .quiet-title {
+  flex: 0 0 auto;
+  font: 800 clamp(36px, 5.7vw, 88px)/1.08 var(--sans);
+  letter-spacing: -.065em;
+  color: var(--ink);
+}
+
+.creation-site .quiet-title a {
+  padding: 14px clamp(12px, 1.5vw, 22px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.creation-site .quiet-center > .quiet-side:last-child {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.creation-site .quiet-title em {
+  color: var(--red);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.creation-site .quiet-title span:last-child {
+  color: var(--ink);
+}
+
+.creation-site .quiet-library .wall-book {
+  border-radius: 5px 5px 0 0;
+  box-shadow: inset 2px 0 #ffffff30;
+}
+
+.creation-site .shelf-area,
+.creation-site .personal-shelf-menu,
+.creation-site .shelf-zoom-exit,
+.creation-site .shelf-zoom-logout {
+  background: var(--paper);
+}
+
+/* 04. Caixas de texto, formulários e painéis. */
+.creation-site .field input,
+.creation-site .field textarea,
+.creation-site .field select,
+.creation-site .editor-properties .field input,
+.creation-site .editor-properties .field textarea,
+.creation-site #design-inspector input:not([type=checkbox]),
+.creation-site #design-inspector select,
+.creation-site #design-inspector textarea {
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid #a8b8ac;
+  border-radius: 9px;
+  box-shadow: none;
+}
+
+.creation-site .field input:focus,
+.creation-site .field textarea:focus,
+.creation-site .field select:focus {
+  border-color: var(--green);
+}
+
+.creation-site .field label,
+.creation-site .field > span {
+  font-weight: 600;
+}
+
+.creation-site input::placeholder,
+.creation-site textarea::placeholder {
+  color: #69766e;
+  opacity: 1;
+}
+
+.creation-site .auth-card,
+.creation-site .page .auth-card,
+.creation-site .proposal-card,
+.creation-site dialog,
+.creation-site .editor-properties {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 12px 36px #203c3508;
+}
+
+.creation-site .search {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+/* 05. Instalação: identidade, leitura e alvos dos gestos. */
+.installation-site header {
+  border-bottom: 1px solid var(--line);
+}
+
+.installation-site .brand {
+  font: 800 clamp(25px, 2.6vw, 36px)/1.1 var(--sans);
+  letter-spacing: -.055em;
+}
+
+.installation-site .brand span {
+  font: 600 10px/1.5 var(--sans);
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+
+.installation-site .intro {
+  margin: 26px auto 38px;
+  max-width: 920px;
+  width: 100%;
+  padding: 24px clamp(16px, 3vw, 40px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.installation-site .eyebrow {
+  color: var(--green);
+  font-weight: 700;
+  letter-spacing: .13em;
+}
+
+.installation-site h1 {
+  font: 800 clamp(32px, 4.1vw, 64px)/1.08 var(--sans);
+  letter-spacing: -.055em;
+  margin: 18px 0;
+}
+
+.installation-site .intro p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.installation-site #shelf {
+  border-bottom: 7px solid var(--green);
+  box-shadow: none;
+  padding-bottom: 0;
+}
+
+.installation-site .spine {
+  border-radius: 7px 7px 0 0;
+  box-shadow: inset 3px 0 #ffffff30;
+}
+
+.installation-site .spine span {
+  font: 700 clamp(19px, 2.2vw, 30px)/1.2 var(--sans);
+  letter-spacing: -.025em;
+}
+
+.installation-site .spine::after {
+  content: '';
+  width: 18px;
+  height: 5px;
+  margin: auto;
+  border-radius: 3px;
+  background: currentColor;
+}
+
+.installation-site button {
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.installation-site #book-name {
+  font: 700 26px/1.2 var(--sans);
+  letter-spacing: -.035em;
+}
+
+.installation-site #book-code {
+  background: var(--lime);
+  border-radius: 8px;
+}
+
+.installation-site footer {
+  border-color: var(--line);
+}
+
+.installation-site .footer-note {
+  font: 500 13px/1.5 var(--sans);
+  color: var(--muted);
+}
+
+.installation-site dialog {
+  background: var(--paper);
+  border-color: var(--line);
+  border-radius: 16px;
+}
+
+/* 06. Adaptação a ecrãs pequenos. */
+/* Área pessoal: livros horizontais empilhados, sem aproximação da estante. */
+.creation-site:has(.stack-area) {
+  background: #173b2d;
+}
+
+.creation-site:has(.stack-area) > .header {
+  display: none;
+}
+
+.creation-site .stack-area {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 4vh, 42px);
+  padding: 76px 32px 28px;
+  color: #f7eed5;
+  background: #173b2d;
+}
+
+.creation-site .stack-area .back-link {
+  background: #f7eed5;
+  border-color: #f7eed5;
+  color: #173b2d;
+}
+
+.stack-heading {
+  text-align: center;
+}
+
+.stack-heading p {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.creation-site .stack-heading h1 {
+  margin: 0 0 8px;
+  font-size: clamp(24px, 3vw, 38px);
+  color: inherit;
+}
+
+.stack-heading > span {
+  font-size: 14px;
+  color: #d8dec8;
+}
+
+.personal-book-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: min(620px, 100%);
+  padding: 0 14px 10px;
+  border-bottom: 3px solid #0f2c21;
+}
+
+.stack-book {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(70px, 12vh, 104px);
+  padding: 18px 24px;
+  border: 6px solid #e6a94f;
+  border-left-width: 13px;
+  border-radius: 14px 4px 4px 14px;
+  background: #f7eed5;
+  color: #173b2d;
+  transform: rotate(-1deg);
+  transition: translate .18s ease;
+}
+
+.stack-book span {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(18px, 3.3vw, 36px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: .025em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.stack-book i {
+  position: absolute;
+  inset: 7px 10px;
+  border-block: 1px solid #ffffffa6;
+  pointer-events: none;
+}
+
+.stack-book-1 {
+  background: #dc7247;
+  border-color: #dc7247;
+  border-radius: 3px 14px 14px 3px;
+  transform: rotate(.6deg);
+  margin-left: 14px;
+  margin-right: -10px;
+}
+
+.stack-book-2 {
+  background: #e7ad51;
+  border-color: #e7ad51;
+  transform: rotate(-.6deg);
+  margin-left: -12px;
+  margin-right: 12px;
+}
+
+.stack-book-2 i {
+  border: 1px solid #fff6dc;
+}
+
+.stack-book-3 {
+  border-color: #dc7247;
+  border-radius: 4px 14px 14px 4px;
+  transform: rotate(-1deg);
+}
+
+.stack-book:hover {
+  translate: 8px 0;
+}
+
+.stack-book:focus-visible {
+  outline: 3px solid #fff6dc;
+  outline-offset: 4px;
+}
+
+.stack-logout {
+  color: #f7eed5;
+  font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-book {
+    transition: none;
+  }
+}
+
+.creation-site:has(.quiet-library) {
+  background: #d9cfbb;
+}
+
+.creation-site main:has(> .quiet-library) {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: #d9cfbb;
+}
+
+.creation-site .quiet-library {
+  width: 100%;
+  max-width: none;
+  height: 100svh;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  background: #d9cfbb;
+}
+
+.creation-site .quiet-title a {
+  background: #e8dfce;
+  border-color: #b8b39d;
+}
+
+.creation-site:has(.quiet-library) .personal {
+  background: #e8dfce !important;
+}
+
+#status:empty {
+  display: none;
+}
+
+.creation-site .personal,
+.creation-site:has(.quiet-library) .personal {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.creation-site .personal svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+}
+
+/* Setas de navegação com o mesmo desenho e centro visual. */
+.creation-site .back-link,
+.creation-site .shelf-zoom-exit,
+.installation-site #return-shelf,
+.creation-site .editor-book-navigation button,
+.installation-site #previous,
+.installation-site #next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.creation-site .back-link::before,
+.creation-site .shelf-zoom-exit::before,
+.installation-site #return-shelf::before,
+.creation-site .editor-book-navigation button::before,
+.installation-site #previous::before,
+.installation-site #next::before {
+  content: '';
+  display: block;
+  position: static;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  margin: 0;
+  background: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 12H5m6-6-6 6 6 6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.creation-site .book-navigation-forward button::before,
+.installation-site #next::before {
+  transform: rotate(180deg);
+}
+
+.creation-site .editor-book-navigation {
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .creation-site .quiet-title {
+    font-size: clamp(25px, 7vw, 42px);
+  }
+
+  .creation-site .quiet-title a {
+    padding: 18px 10px;
+    border-radius: 10px;
+  }
+
+  .creation-site .quiet-center {
+    gap: 10px;
+  }
+
+  .installation-site .intro {
+    margin: 20px auto 28px;
+    padding: 20px 16px;
+  }
+}
+
+/* 07. Identidade editorial: creme, verde floresta e lombadas em tons quentes. */
+.creation-site .header {
+  max-width: none;
+  background: var(--green);
+  color: var(--paper);
+  border-bottom: 3px solid var(--yellow);
+}
+
+.creation-site .header .personal {
+  background: var(--paper);
+  color: var(--green);
+  border-color: var(--yellow);
+}
+
+.creation-site .button {
+  color: var(--paper);
+  border: 2px solid var(--green);
+  border-radius: 8px 3px 3px 8px;
+  box-shadow: 3px 3px 0 var(--yellow);
+}
+
+.creation-site .button.secondary {
+  background: var(--paper);
+  color: var(--green);
+  border: 2px solid var(--red);
+  box-shadow: none;
+}
+
+.creation-site .button.secondary:hover {
+  background: #f0d7a7;
+}
+
+.creation-site .page > h1,
+.creation-site .screen-brand,
+.creation-site .auth-card h1,
+.creation-site .page .auth-card h1 {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -.035em;
+}
+
+.creation-site .auth-card,
+.creation-site .page .auth-card,
+.creation-site .proposal-card,
+.creation-site .simple-book,
+.creation-site dialog {
+  background: var(--paper);
+  border: 2px solid var(--yellow);
+  border-radius: 14px 5px 5px 14px;
+  box-shadow: 5px 5px 0 #173b2d12;
+}
+
+.creation-site .field input,
+.creation-site .field textarea,
+.creation-site .field select,
+.creation-site #design-inspector input:not([type=checkbox]),
+.creation-site #design-inspector textarea,
+.creation-site #design-inspector select {
+  background: #fff9e9;
+  border-color: #a69d72;
+  border-radius: 6px;
+}
+
+.creation-site .badge {
+  background: #ead196;
+  color: var(--green);
+}
+
+.creation-site .editor-sidebar,
+.creation-site .editor-properties,
+.creation-site .editor-tools {
+  background: #efe2bf;
+  border-color: #c5b88f;
+}
+
+.creation-site .editor-properties {
+  border-radius: 12px;
+}
+
+.creation-site .design-sections button,
+.creation-site .editor-tool-group > summary {
+  color: var(--green);
+  font-weight: 800;
+}
+
+.creation-site .design-sections button[aria-pressed=true],
+.creation-site [data-editor-page][aria-pressed=true] {
+  background: var(--yellow);
+  color: var(--green);
+  border-color: var(--green);
+}
+
+/* A estante ocupa o ecrã inteiro com a mesma paleta do menu pessoal. */
+.creation-site:has(.quiet-library),
+.creation-site main:has(> .quiet-library),
+.creation-site .quiet-library {
+  background: var(--green);
+}
+
+.creation-site .quiet-library {
+  --wall-0: #e7ad51;
+  --wall-1: #dc7247;
+  --wall-2: #f7eed5;
+  --wall-3: #8c914f;
+  --wall-4: #efd4b3;
+  --wall-5: #70988a;
+  --wall-6: #bf7b42;
+  --shelf-wood: #e7ad51;
+}
+
+.creation-site .quiet-title a {
+  background: var(--paper);
+  border: 5px solid var(--yellow);
+  border-left-width: 10px;
+  border-radius: 14px 4px 4px 14px;
+  box-shadow: 4px 4px 0 #0f2c21;
+}
+
+.creation-site:has(.quiet-library) .personal {
+  background: var(--paper) !important;
+  border: 2px solid var(--yellow);
+}
+
+.creation-site .search,
+.creation-site .book-stage,
+.creation-site .filters button[aria-pressed=true] {
+  background: #efe2bf;
+  color: var(--green);
+  border-color: var(--line);
+}
+
+/* A instalação acompanha a identidade sem alterar as composições publicadas. */
+.installation-site {
+  background: var(--green);
+  color: var(--paper);
+}
+
+.installation-site header,
+.installation-site footer {
+  border-color: #e7ad5166;
+}
+
+.installation-site .brand span,
+.installation-site .footer-note {
+  color: #e0d9bd;
+}
+
+.installation-site .intro {
+  background: var(--paper);
+  color: var(--green);
+  border: 5px solid var(--yellow);
+  border-radius: 16px 4px 4px 16px;
+}
+
+.installation-site #shelf {
+  border-bottom-color: var(--yellow);
+}
+
+.installation-site .reader-top,
+.installation-site .pagination {
+  background: var(--paper);
+  color: var(--green);
+  padding: 10px 16px;
+  border-radius: 10px;
+}
+
+.installation-site .spine.selected,
+.installation-site .spine:hover {
+  outline-color: var(--paper);
+}
+
+.installation-site #book-name {
+  color: var(--paper);
+}
+
+@media (max-width: 600px) {
+  .creation-site .quiet-title a {
+    border-width: 3px;
+    border-left-width: 6px;
+  }
+}
+
+/* Capa fechada vista de cima, com uma dobra discreta junto à lombada. */
+.creation-site .page .auth-card.book-start {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  padding: 42px 36px 46px 52px;
+  border: 1px solid #c4af79;
+  border-radius: 3px 7px 7px 3px;
+  background: #f7eed5;
+  box-shadow: inset 5px 0 7px -5px #173b2d60, 5px 7px 15px #173b2d26;
+}
+
+/* Cada secção acompanha a cor da respetiva lombada no menu pessoal. */
+.creation-site main[data-section="create"],
+.creation-site main[data-section="contribute"] {
+  --section-color: #f7eed5;
+  --section-edge: #e7ad51;
+}
+
+.creation-site main[data-section="contribute"] {
+  --section-edge: #dc7247;
+}
+
+.creation-site main[data-section="my-books"] {
+  --section-color: #dc7247;
+  --section-edge: #bf5731;
+}
+
+.creation-site main[data-section="received"] {
+  --section-color: #e7ad51;
+  --section-edge: #c88c31;
+}
+
+.creation-site main[data-section="my-books"],
+.creation-site main[data-section="received"] {
+  background: var(--section-color);
+  min-height: 100svh;
+}
+
+.creation-site main[data-section] .simple-book,
+.creation-site main[data-section] .proposal-card,
+.creation-site main[data-section] .auth-card {
+  background: var(--section-color, var(--paper));
+  border-color: var(--section-edge, var(--yellow));
+  color: var(--green);
+}
+
+.creation-site main[data-section="create"] .book-start,
+.creation-site main[data-section="contribute"] .auth-card {
+  border-color: var(--section-edge);
+}
+
+.creation-site main[data-section="my-books"] .badge,
+.creation-site main[data-section="received"] .badge {
+  background: #f7eed5;
+  color: #173b2d;
+}
+
+.creation-site main[data-section="my-books"] .muted,
+.creation-site main[data-section="received"] .muted {
+  color: #253e2d;
+}
+
+.creation-site .book-start::before {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #c4af7966;
+  box-shadow: 2px 0 3px #ffffff80;
+  pointer-events: none;
+}
+
+.creation-site .book-start::after {
+  content: none;
+}
+
+.creation-site .book-start > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .creation-site .page .auth-card.book-start {
+    padding: 30px 22px 34px 36px;
+  }
+}
+
+/* A instalação ocupa um único ecrã, com a assinatura do site. */
+html:has(body.installation-site) {
+  height: 100%;
+  overflow: hidden;
+}
+
+body.installation-site {
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.installation-site header {
+  flex: 0 0 auto;
+  justify-content: center;
+  padding: clamp(12px, 3vh, 28px) 20px;
+}
+
+.installation-site h1.installation-title {
+  margin: 0;
+  padding: 8px 18px 12px;
+  background: var(--paper);
+  color: var(--green);
+  border-right: 5px solid var(--yellow);
+  font: 800 clamp(32px, min(7vw, 11vh), 100px)/1.08 var(--sans);
+  letter-spacing: -.065em;
+  white-space: nowrap;
+}
+
+.installation-site .installation-title em {
+  color: var(--red);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.installation-site #installation {
+  flex: 1 1 0;
+  min-height: 0;
+  padding: 16px 5vw 20px;
+}
+
+.installation-site #shelf {
+  flex: 1 1 0;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  padding-top: 24px;
+}
+
+.installation-site #shelf .spine {
+  flex: 1 0 clamp(80px, 10vw, 160px);
+  min-width: 80px;
+}
+
+.installation-site #shelf::-webkit-scrollbar {
+  display: none;
+}
+
+.installation-site footer {
+  flex: 0 0 auto;
+  min-height: 0;
+  padding: 12px 4vw;
+}
+
+@media (max-height: 500px), (max-width: 600px) {
+  .installation-site .footer-note {
+    display: none;
+  }
+
+  .installation-site footer {
+    padding: 8px 4vw;
+    font-size: 10px;
+  }
+}
+
+/* Leitura: código discreto no canto e livro ajustado ao espaço disponível. */
+.installation-site.reading header {
+  padding-block: 12px;
+}
+
+.installation-site.reading .installation-title {
+  font-size: clamp(28px, min(5vw, 8vh), 64px);
+}
+
+.installation-site #reader {
+  inset: 0 5vw 12px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  justify-items: center;
+  align-items: center;
+  align-content: stretch;
+  gap: 12px;
+  min-height: 0;
+}
+
+.installation-site #reader .reader-top {
+  position: fixed;
+  top: max(20px, env(safe-area-inset-top));
+  right: max(20px, env(safe-area-inset-right));
+  z-index: 10;
+  display: block;
+  width: auto;
+  max-width: none;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+}
+
+.installation-site #book-code {
+  display: block;
+  padding: 7px 10px;
+  font-size: 10px;
+  background: var(--paper);
+  color: var(--green);
+  border-radius: 6px;
+}
+
+.installation-site #reader #book-name {
+  margin: 0;
+  font-size: clamp(18px, 3vh, 26px);
+}
+
+.installation-site #reader #spread {
+  height: 100%;
+  width: auto;
+  aspect-ratio: 10 / 7;
+  max-width: 100%;
+  min-height: 0;
+}
+
+.installation-site #reader .pagination {
+  margin: 0;
+  padding: 6px 14px;
+}
+
+@media (max-width: 600px) {
+  .installation-site.reading header {
+    padding-top: 72px;
+  }
+}
+
+/* Todas as setas de voltar partilham posição, tamanho e aparência. */
+.creation-site main .back-link,
+.creation-site main .shelf-zoom-exit,
+.creation-site .auth-page:has(.form-library-background) > .back-link,
+.installation-site #return-shelf {
+  position: fixed;
+  inset: max(20px, env(safe-area-inset-top)) auto auto max(20px, env(safe-area-inset-left));
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #c9bfad;
+  border-radius: 50%;
+  background: #f7eed5;
+  color: #173b2d;
+  font-size: 0;
+  line-height: 1;
+}
+
+/* Estantes decorativas atrás dos formulários de acesso e de criação. */
+.creation-site main:has(.form-library-background) {
+  isolation: isolate;
+}
+
+.creation-site .form-library-background {
+  --wall-0: #e7ad51;
+  --wall-1: #dc7247;
+  --wall-2: #f7eed5;
+  --wall-3: #8c914f;
+  --wall-4: #efd4b3;
+  --wall-5: #70988a;
+  --wall-6: #bf7b42;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: grid;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  padding: 28px 0 0;
+  overflow: hidden;
+  background: #173b2d;
+  pointer-events: none;
+}
+
+.creation-site .form-library-shelf {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 9px;
+  min-height: 0;
+  padding: 16px 24px 0;
+  border-bottom: 12px solid #e7ad51;
+  box-shadow: 0 8px 14px #071c1670;
+}
+
+.creation-site .form-library-shelf .wall-book {
+  flex-shrink: 0;
+  min-width: 28px;
+}
+
+/* Capa amarela no formulario Criar livro. */
+.creation-site .page .auth-card.book-start {
+  background: #e7ad51;
+  border-color: #c88c31;
+}
+
+/* Os formulários de acesso usam a mesma capa amarela vista de cima. */
+.creation-site .page.auth-page .auth-card:not(.book-start) {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  padding: 42px 36px 46px 52px;
+  border: 1px solid #c88c31;
+  border-radius: 3px 7px 7px 3px;
+  background: #e7ad51;
+  color: #173b2d;
+  box-shadow: inset 5px 0 7px -5px #173b2d60, 5px 7px 15px #173b2d26;
+}
+
+.creation-site .page.auth-page .auth-card:not(.book-start)::before {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #a7763266;
+  box-shadow: 2px 0 3px #ffffff80;
+  pointer-events: none;
+}
+
+.creation-site .page.auth-page .auth-card .field input {
+  background: #fff9e9;
+}
+
+.creation-site .page.auth-page .auth-card .muted {
+  color: #34482e;
+}
+
+@media (max-width: 600px) {
+  .creation-site .page.auth-page .auth-card:not(.book-start) {
+    padding: 30px 22px 34px 36px;
+  }
+}
