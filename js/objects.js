@@ -63,5 +63,30 @@ window.PoyObjects = (() => {
     const uri=encodeURIComponent(svg(item)).replace(/'/g,'%27');
     return `background:transparent url('data:image/svg+xml,${uri}') center/${preset.type==='clip'?'contain':'100% 100%'} no-repeat!important;box-shadow:none!important;border:0!important;clip-path:none!important;border-radius:0!important;opacity:1!important;${preset.type==='postit'?'padding:1.2em .7em .7em!important;color:#3f3c33!important;':''}`;
   }
-  return {presets:presets.filter(preset=>preset.id!=='clip-binder'),shapes,findShape,find,svg,style};
+  const spineFormats = [['plain','Lisa'],['classic','Moldura dupla'],['label','Etiqueta'],['bands','Faixas decoradas'],['stars','Estrelas'],['oval','Oval'],['split','Oval dividido']];
+  const spineFormat = value => spineFormats.some(([id])=>id===value)?value:'plain';
+  function spineArt(value, color='#ffffff') {
+    const format=spineFormat(value), ink=/^#[a-f0-9]{6}$/i.test(color)?color:'#ffffff';
+    const line=(path,width=1.5)=>`<path d="${path}" fill="none" stroke="${ink}" stroke-width="${width}"/>`;
+    let art='';
+    if(format==='classic') art=line('M12 9H88V291H12ZM17 14H83V286H17ZM23 35H77M23 39H77M23 261H77M23 265H77');
+    if(format==='label') art=line('M17 20H83V280H17Z')+`<path d="M26 43H74V49H26Z" fill="${ink}"/>`;
+    if(format==='bands') {
+      art=line('M12 9H88V291H12ZM17 14H83V286H17ZM12 61H88M12 66H88M12 234H88M12 239H88');
+      for(let x=18;x<78;x+=10) art+=line(`M${x} 17L${Math.min(83,x+25)} 55M${x} 245L${Math.min(83,x+25)} 282`,.8);
+    }
+    if(format==='stars') {
+      art=line('M20 19H80M20 24H80M20 276H80M20 281H80');
+      art+=`<ellipse cx="50" cy="43" rx="13" ry="7" fill="${ink}"/>`;
+      for(const y of [105,165,225]) art+=line(`M50 ${y-13}V${y+13}M37 ${y}H63M41 ${y-9}L59 ${y+9}M41 ${y+9}L59 ${y-9}`,1.8);
+    }
+    if(format==='oval'||format==='split') {
+      art=`<ellipse cx="50" cy="145" rx="28" ry="119" fill="none" stroke="${ink}" stroke-width="1.5"/>`;
+      art+=format==='split'?`<path d="M50 26Q74 145 50 264Z" fill="${ink}"/>`:`<path d="M30 279H70V286H30Z" fill="${ink}"/>`;
+    }
+    if(!art) return '';
+    const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 300" preserveAspectRatio="none">${art}</svg>`;
+    return "background-image:url('data:image/svg+xml,"+encodeURIComponent(svg).replace(/'/g,'%27')+"');";
+  }
+  return {presets:presets.filter(preset=>preset.id!=='clip-binder'),shapes,findShape,find,svg,style,spineFormats,spineFormat,spineArt};
 })();

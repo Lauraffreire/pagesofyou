@@ -1340,3 +1340,11 @@ body.creation-site,
   .creation-site main .page.auth-page:has(.form-library-background) .auth-card { padding: 30px 22px 34px 36px; }
   .creation-site .auth-page > .form-library-background { filter: blur(4px) brightness(.76) saturate(.8); }
 }
+
+:is(.spine, .spine-preview) { position: relative; isolation: isolate; }
+.spine-art { position: absolute; inset: 0; background-position: center; background-size: 100% 100%; background-repeat: no-repeat; pointer-events: none; z-index: -1; }
+.spine-format-options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
+.spine-format-options button { padding: 8px 4px; border: 1px solid #a9b8a0; background: #f6f7ef; color: #173b2d; border-radius: 5px; }
+.spine-format-options button[aria-pressed=true] { outline: 2px solid #41715b; outline-offset: 1px; }
+.spine-format-sample { display: block; width: 30px; height: 85px; margin: 0 auto 6px; background-color: #70988a; background-size: 100% 100%; border-radius: 3px; }
+.spine-format-options small { font-size: 10px; }

@@ -16,6 +16,7 @@ let started = false;
 let recoveryMode = false;
 let authSubscription = null;
 let authOperation = false;
+let draftSaving = false;
 let filter = 'Todos';
 let query = '';
 let page = 0;
@@ -31,9 +32,9 @@ const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, c => ({
 } [c]));
 const e = escapeHTML;
 
-function save() {
+async function save() {
   try {
-    if (user) localStorage.setItem('poy-online-drafts-v1:' + user.id, JSON.stringify(state.bookDrafts || []));
+    if (user) await PoyDraftStore.write(user.id, state.bookDrafts || []);
     return true;
   } catch {
     announce('Não foi possível guardar. O armazenamento do navegador pode estar cheio ou desativado.');
@@ -228,11 +229,12 @@ const statusText = status => ({
 })[status] || 'Pendente de revisão';
 const uid = () => crypto.randomUUID();
 
-function localTransaction(change) {
+async function localTransaction(change) {
+  const generation = sessionGeneration;
   const before = structuredClone(state);
   change();
-  if (save()) return true;
-  state = before;
+  if (await save()) return true;
+  if (generation === sessionGeneration) state = before;
   return false;
 }
 
@@ -241,9 +243,9 @@ function cloudNotice(message = '') {
   document.querySelector('#cloud-notice').hidden = !message;
 }
 
-function loadLocalDrafts() {
+async function loadLocalDrafts() {
   try {
-    const drafts = JSON.parse(localStorage.getItem('poy-online-drafts-v1:' + user?.id) || '[]');
+    const drafts = user ? await PoyDraftStore.read(user.id) : [];
     state.bookDrafts = Array.isArray(drafts) ? drafts.filter(item => item.ownerId === user?.id) : [];
   } catch { state.bookDrafts = []; }
 }
@@ -289,7 +291,7 @@ async function transaction(change) {
     committed = true;
     if (generation !== sessionGeneration) return false;
     state = after;
-    if (!save()) cloudNotice('O livro foi guardado online, mas não foi possível atualizar os rascunhos locais.');
+    if (!await save()) cloudNotice('O livro foi guardado online, mas não foi possível atualizar os rascunhos locais.');
     try { await refreshCloud(); }
     catch (error) {
       cloudReady = false;
@@ -311,11 +313,11 @@ function back(href = '#area', text = 'Voltar à área pessoal') {
   return '<a class="back-link" href="' + e(href) + '">← ' + e(text) + '</a>';
 }
 
-function navigate(hash, allow = false) {
-  if (cloudBusy) return;
+async function navigate(hash, allow = false) {
+  if (cloudBusy || draftSaving) return;
   if (dirty && !allow) {
     if (editorCache?.key.startsWith('book/')) {
-      if (!saveBookDraft()) return;
+      if (!await saveBookDraft()) return;
       modalCancel = null;
       if (modal.open) modal.close();
       dirty = false;
@@ -371,7 +373,7 @@ async function session(account) {
   }
   user = nextUser;
   cloudReady = false;
-  loadLocalDrafts();
+  await loadLocalDrafts();
   try { await refreshCloud(); }
   catch (error) { cloudNotice(PoyCloud.message(error)); }
 }
@@ -524,7 +526,7 @@ async function bootstrapCloud() {
           if (event === 'PASSWORD_RECOVERY') navigate('#recuperar', true);
           if (event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') return;
           if ((nextSession?.user?.id || null) !== (user?.id || null)) {
-            if (dirty && editorCache?.key.startsWith('book/')) saveBookDraft();
+            if (dirty && editorCache?.key.startsWith('book/')) await saveBookDraft();
             await session(nextSession?.user || null);
             render(false);
           }
@@ -729,8 +731,13 @@ function deleteSavedBook(id, isDraft) {
     }, 'Eliminar', 'Cancelar');
 }
 
-function saveBookDraft() {
-  if (!user || !editorCache?.key.startsWith('book/')) return false;
+async function saveBookDraft() {
+  if (draftSaving || !user || !editorCache?.key.startsWith('book/')) return false;
+  draftSaving = true;
+  const generation = sessionGeneration;
+  const wasInert = main.inert;
+  main.inert = true;
+  try {
   const form = document.querySelector('#book-form');
   if (form) editorCache.values = Object.fromEntries(new FormData(form));
   const id = editorCache.savedDraftId || uid();
@@ -738,9 +745,10 @@ function saveBookDraft() {
     ...editorCache,
     savedDraftId: id
   });
+  delete cache.designHistories;
   const bookId = cache.key.split('/')[1];
   if (bookId !== 'new' && !owns(bookById(bookId))) return false;
-  if (!localTransaction(() => {
+  if (!await localTransaction(() => {
       state.bookDrafts ||= [];
       const item = {
         id,
@@ -753,12 +761,17 @@ function saveBookDraft() {
       if (index < 0) state.bookDrafts.push(item);
       else state.bookDrafts[index] = item;
     })) return false;
+  if (generation !== sessionGeneration) return false;
   editorCache.savedDraftId = id;
   dirty = false;
   const status = document.querySelector('#draft-state');
   if (status) status.textContent = 'Rascunho guardado';
   announce('Rascunho guardado neste navegador. Pode continuar em Meus livros.');
   return true;
+  } finally {
+    draftSaving = false;
+    main.inert = wasInert;
+  }
 }
 
 function resumeBookDraft(id) {
@@ -1402,7 +1415,7 @@ document.addEventListener('click', async event => {
   if (action === 'retry-cloud') await retryCloud();
   if (action === 'import-local') importLocalBooks();
   if (action === 'backup-local') downloadLegacyBackup();
-  if (action === 'save-book-draft') saveBookDraft();
+  if (action === 'save-book-draft') await saveBookDraft();
   if (action === 'delete-book' || action === 'delete-book-draft') deleteSavedBook(id, action === 'delete-book-draft');
   if (action === 'clear-search') {
     query = '';
@@ -1420,7 +1433,7 @@ document.addEventListener('click', async event => {
     'Os livros publicados continuam guardados na sua conta.', async () => {
       authOperation = true;
       try {
-        if (dirty && editorCache?.key.startsWith('book/') && !saveBookDraft()) return;
+        if (dirty && editorCache?.key.startsWith('book/') && !await saveBookDraft()) return;
         PoyCloud.check(await PoyCloud.connection().auth.signOut({ scope: 'local' }));
         await session(null);
         navigate('#inicio', true);

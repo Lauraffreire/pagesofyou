@@ -43,29 +43,34 @@ function editBookSpine() {
     color: '#ffffff',
     fontSize: 28,
     direction: 'down',
+    format: 'plain',
     pattern: 'none',
     patternColor: '#ffffff'
   };
   const value = { ...defaults, ...editorCache.spine };
   openModal('<h2 id="modal-title">Editar lombada</h2><form id="spine-form">' +
     '<div class="spine-editor"><div class="spine-settings">' +
-    '<label class="field">Texto da lombada<input name="title" maxlength="100" required value="' + e(value.title) + '"></label>' +
+    '<label class="field">Texto da lombada (opcional)<input name="title" maxlength="100" value="' + e(value.title) + '"></label>' +
     '<label class="field">Cor da lombada<input name="background" type="color" value="' + designColor(value.background) + '"></label>' +
     '<label class="field">Cor das letras<input name="color" type="color" value="' + designColor(value.color) + '"></label>' +
+    '<label class="field">Formato da lombada<select name="format">' + PoyObjects.spineFormats.map(([id,label]) => '<option value="' + id + '">' + label + '</option>').join('') + '</select></label>' +
+    '<div class="spine-format-options" role="group" aria-label="Formatos de lombada">' + PoyObjects.spineFormats.map(([id,label]) => '<button type="button" data-spine-format="' + id + '" aria-label="' + label + '"><i class="spine-format-sample" style="' + PoyObjects.spineArt(id,'#f7eed5') + '"></i><small>' + label + '</small></button>').join('') + '</div>' +
     '<label class="field">Padrão da lombada<select name="pattern">' + pagePatterns.map(([key, label]) =>
       '<option value="' + key + '">' + label + '</option>').join('') + '</select></label>' +
     '<label class="field">Cor do padrão<input name="patternColor" type="color" value="' + designColor(value.patternColor) + '"></label>' +
     '<label class="field">Tamanho das letras<input name="fontSize" type="number" min="14" max="48" value="' + designNumber(value.fontSize, 14, 48) + '"></label>' +
     '<label class="field">Sentido do texto<select name="direction"><option value="down">De cima para baixo</option>' +
     '<option value="up">De baixo para cima</option></select></label></div>' +
-    '<div class="spine-preview" aria-label="Pré-visualização da lombada"><span></span></div></div>' +
+    '<div class="spine-preview" aria-label="Pré-visualização da lombada"><i class="spine-art" aria-hidden="true"></i><span></span></div></div>' +
     '<div class="spine-actions"><button class="button" type="submit">Guardar lombada</button>' +
     '<button class="button secondary" type="button" id="cancel-spine">Cancelar</button></div></form>');
   const form = document.querySelector('#spine-form');
   form.elements.direction.value = value.direction === 'up' ? 'up' : 'down';
+  form.elements.format.value = PoyObjects.spineFormat(value.format);
   form.elements.pattern.value = pagePattern(value.pattern);
   const read = () => ({
     title: form.elements.title.value.trim(),
+    format: PoyObjects.spineFormat(form.elements.format.value),
     background: designColor(form.elements.background.value),
     color: designColor(form.elements.color.value),
     pattern: pagePattern(form.elements.pattern.value),
@@ -78,6 +83,11 @@ function editBookSpine() {
     const node = form.querySelector('.spine-preview');
     node.className = 'spine-preview spine-pattern-' + spine.pattern;
     node.style.backgroundColor = spine.background;
+    node.querySelector('.spine-art').style.cssText = PoyObjects.spineArt(spine.format, spine.patternColor);
+    form.querySelectorAll('[data-spine-format]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.spineFormat === spine.format));
+      button.querySelector('i').style.cssText = PoyObjects.spineArt(button.dataset.spineFormat, spine.patternColor) + 'background-color:' + spine.background;
+    });
     node.style.setProperty('--spine-pattern-color', spine.patternColor);
     node.style.color = spine.color;
     node.querySelector('span').textContent = spine.title;
@@ -85,9 +95,13 @@ function editBookSpine() {
     node.querySelector('span').style.transform = spine.direction === 'up' ? 'rotate(180deg)' : '';
   };
   form.oninput = preview;
+  form.querySelectorAll('[data-spine-format]').forEach(button => button.onclick = () => {
+    form.elements.format.value = button.dataset.spineFormat;
+    preview();
+  });
   form.onsubmit = event => {
     event.preventDefault();
-    if (!form.reportValidity() || !read().title) return;
+    if (!form.reportValidity()) return;
     editorCache.spine = read();
     designChanged();
     closeModal();
