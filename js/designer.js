@@ -276,9 +276,7 @@ function renderDesigner() {
   const cover = editorCache.designMode === 'cover';
   document.querySelector('.design-background label').textContent = cover ? 'Cor da capa' :
     'Cor da p\u00e1gina';
-  target.innerHTML = (editorCache.key.startsWith('book/') ? '<h2 class="design-part-title">' + (cover ?
-      'Capa do livro' : 'P\u00e1ginas do livro') + '</h2>' : '') + designMarkup(activeDesign(), true) +
-    '<p class="design-hint">Selecione um objeto e arraste para mover. Use as pegas para ajustar o tamanho. Shift + clique ou arraste uma caixa para selecionar v\u00e1rios. Delete elimina. Duplo clique no texto para escrever.</p>';
+  target.innerHTML = designMarkup(activeDesign(), true);
   const sheet = document.querySelector('#design-sheet');
   sheet.querySelectorAll('[data-design-id]').forEach(node => {
     const item = activeDesign().elements.find(element => element.id === node.dataset.designId);
@@ -1442,5 +1440,6 @@ renderDesigner = function() {
     node.dataset.memoryDisabled = String(node.disabled);
     node.disabled = true;
   });
-  document.querySelector('#live-preview .design-hint').textContent = 'Memória aceite — apenas leitura.';
+  const hint = document.querySelector('#live-preview .design-hint');
+  if (hint) hint.textContent = 'Memória aceite — apenas leitura.';
 };

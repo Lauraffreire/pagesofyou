@@ -943,14 +943,12 @@ function editor(kind, id) {
     if (cached) consent.checked = Boolean(cached.consent);
   }
   const details = document.querySelector('.form-layout aside');
-  const title = kind === 'book' ? (id ? 'Editar livro' : 'Criar livro') : 'Adicionar memória';
   const shell = document.createElement('div');
   shell.className = 'editor-page';
   shell.innerHTML = '<aside class="editor-sidebar">' + back(kind === 'book' ? '#area' : '#livro/' + e(id),
       kind === 'book' ? 'Voltar à área pessoal' : 'Voltar ao livro') +
     '</aside>' +
-    '<section class="editor-canvas"><div class="editor-canvas-head"><span class="eyebrow">' + title +
-    '</span><span id="draft-state" class="badge">Em edição</span></div>' +
+    '<section class="editor-canvas"><div class="editor-canvas-head"><span id="draft-state" class="badge">Em edição</span></div>' +
     '<div id="live-preview"></div><div id="editor-extra"></div></section><aside class="editor-properties"><h2>' +
     (kind === 'book' ? 'Personalizar livro' : 'A sua memória') +
     '</h2><div id="editor-fields"></div></aside>';
