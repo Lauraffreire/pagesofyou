@@ -1325,7 +1325,7 @@ function render(focus = true) {
     sobre: about
   };
   (needsLogin ? auth : views[view] || missing)();
-  if (main.querySelector('#auth-form, #book-start-form')) {
+  if (main.querySelector('.auth-page .auth-card')) {
     const backdrop = document.createElement('div');
     backdrop.className = 'form-library-background';
     backdrop.setAttribute('aria-hidden', 'true');

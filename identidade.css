@@ -1288,3 +1288,55 @@ body.creation-site,
 .creation-site .visual-editor #live-preview > .design-hint {
   color: var(--paper);
 }
+
+/* Formulários sobre a estante completa, desfocada ao fundo. */
+.creation-site main > .page.auth-page:has(.form-library-background) {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: none;
+  min-height: 100svh;
+  background: transparent;
+  padding: 76px 24px 40px;
+}
+.creation-site .auth-page > .form-library-background {
+  inset: -12px;
+  padding-top: 24px;
+  filter: blur(5px) brightness(.76) saturate(.8);
+  transform: scale(1.025);
+}
+.creation-site main .page.auth-page:has(.form-library-background) .auth-card,
+.creation-site main .page.auth-page:has(.form-library-background) .auth-card.book-start {
+  position: relative;
+  isolation: isolate;
+  background: #e3e9dc;
+  color: var(--ink);
+  width: min(490px, 100%);
+  max-width: 490px;
+  margin: 24px auto;
+  padding: 42px 36px 46px 52px;
+  border: 1px solid #a9b8a0;
+  border-radius: 3px 8px 8px 3px;
+  box-shadow: inset 6px 0 9px -7px #173b2d99, 0 18px 60px #061c1666, 5px 5px 0 #c9d2c2;
+}
+.creation-site main .page.auth-page:has(.form-library-background) .auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 17px; width: 1px;
+  background: #a9b8a0;
+  box-shadow: 2px 0 3px #ffffff80;
+  pointer-events: none;
+}
+.creation-site main .page.auth-page:has(.form-library-background) .auth-card :is(input, textarea, select) {
+  background: #f6f7ef;
+  border-color: #a9b8a0;
+  color: var(--ink);
+}
+.creation-site main .page.auth-page:has(.form-library-background) .auth-card .button {
+  box-shadow: 3px 3px 0 #a9b8a0;
+}
+@media (max-width: 600px) {
+  .creation-site main > .page.auth-page:has(.form-library-background) { padding: 76px 20px 32px; }
+  .creation-site main .page.auth-page:has(.form-library-background) .auth-card { padding: 30px 22px 34px 36px; }
+  .creation-site .auth-page > .form-library-background { filter: blur(4px) brightness(.76) saturate(.8); }
+}
