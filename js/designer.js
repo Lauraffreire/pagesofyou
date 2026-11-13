@@ -280,7 +280,7 @@ function renderDesigner() {
   sheet.querySelectorAll('[data-design-id]').forEach(node => {
     const item = activeDesign().elements.find(element => element.id === node.dataset.designId);
     if (!['text', 'postit'].includes(item?.type)) return;
-    node.contentEditable = 'false';
+    node.contentEditable = item.templateLine ? 'plaintext-only' : 'false';
     node.ondblclick = event => {
       event.stopPropagation();
       node.contentEditable = 'plaintext-only';
@@ -289,7 +289,8 @@ function renderDesigner() {
     node.setAttribute('role', 'textbox');
     node.setAttribute('aria-multiline', 'true');
     node.setAttribute('aria-label', item.type === 'postit' ? 'Texto do post-it' : 'Texto da página');
-    node.title = 'Arraste para mover. Use as pegas para ajustar o tamanho. Duplo clique para escrever.';
+    node.title = item.templateLine ? 'Clique para escrever. Alt + arrastar para mover.' :
+      'Arraste para mover. Use as pegas para ajustar o tamanho. Duplo clique para escrever.';
     node.onbeforeinput = () => designSnapshot();
     node.oninput = () => {
       item.text = node.innerText;
@@ -301,7 +302,7 @@ function renderDesigner() {
       renderDesignLayers();
     };
     node.onblur = () => {
-      node.contentEditable = 'false';
+      node.contentEditable = item.templateLine ? 'plaintext-only' : 'false';
       if (designSelection === item.id) renderDesignInspector();
     };
   });
