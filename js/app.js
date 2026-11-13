@@ -252,11 +252,17 @@ function hasActiveEditor() {
   return dirty || (['editar', 'criar', 'previsualizar', 'contribuir', 'rascunho'].includes(route().view) && Boolean(editorCache || draft));
 }
 
+// Os formulários iniciais ainda não têm editorCache nem dirty.
+// Mantém o próprio DOM para preservar texto, seleção e ficheiros.
+function hasActiveForm() {
+  return hasActiveEditor() || Boolean(main.querySelector('form'));
+}
+
 async function refreshCloud(background = false) {
   const generation = sessionGeneration;
   const collection = await PoyCloud.collection(Boolean(user));
   if (generation !== sessionGeneration) return false;
-  if (background && (hasActiveEditor() || modal.open || cloudBusy)) return false;
+  if (background && (hasActiveForm() || modal.open || cloudBusy)) return false;
   Object.assign(state, collection);
   cloudReady = true;
   cloudNotice();
@@ -540,8 +546,8 @@ async function bootstrapCloud() {
 
 async function retryCloud() {
   if (cloudBusy || cloudLoading) return;
-  if (hasActiveEditor()) {
-    cloudNotice('O conteúdo em edição foi mantido. Guarde um rascunho e volte à área pessoal para atualizar a coleção antes de reabrir o editor.');
+  if (hasActiveForm()) {
+    cloudNotice('O formulário foi mantido. Termine o preenchimento ou volte à biblioteca para atualizar a coleção.');
     return;
   }
   if (!authSubscription) return bootstrapCloud();
@@ -549,19 +555,20 @@ async function retryCloud() {
   try {
     await refreshCloud();
     // Uma atualização nunca substitui o conteúdo do editor ou da pré-visualização.
-    if (!hasActiveEditor() && !modal.open) render(false);
+    if (!hasActiveForm() && !modal.open) render(false);
     announce('Coleção atualizada.');
   } catch (error) { cloudNotice(PoyCloud.message(error)); }
   finally { cloudLoading = false; }
 }
 
 setInterval(async () => {
-  if (!started || cloudBusy || cloudLoading || hasActiveEditor() || modal.open || document.hidden) return;
+  if (!started || cloudBusy || cloudLoading || hasActiveForm() || modal.open || document.hidden) return;
   cloudLoading = true;
   const previous = JSON.stringify([state.books, state.pending, state.history]);
   try {
     const refreshed = await refreshCloud(true);
-    if (refreshed && previous !== JSON.stringify([state.books, state.pending, state.history])) render(false);
+    if (refreshed && !hasActiveForm() && !modal.open &&
+      previous !== JSON.stringify([state.books, state.pending, state.history])) render(false);
   } catch (error) {
     cloudReady = false;
     cloudNotice('Não foi possível atualizar a coleção. ' + PoyCloud.message(error));
