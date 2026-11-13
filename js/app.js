@@ -253,16 +253,16 @@ function hasActiveEditor() {
 }
 
 // Os formulários iniciais ainda não têm editorCache nem dirty.
-// Mantém o próprio DOM para preservar texto, seleção e ficheiros.
-function hasActiveForm() {
-  return hasActiveEditor() || Boolean(main.querySelector('form'));
+// Mantém o DOM dos formulários e do leitor para preservar texto e a página aberta.
+function hasActiveView() {
+  return hasActiveEditor() || route().view === 'livro' || Boolean(main.querySelector('form'));
 }
 
 async function refreshCloud(background = false) {
   const generation = sessionGeneration;
   const collection = await PoyCloud.collection(Boolean(user));
   if (generation !== sessionGeneration) return false;
-  if (background && (hasActiveForm() || modal.open || cloudBusy)) return false;
+  if (background && (hasActiveView() || modal.open || cloudBusy)) return false;
   Object.assign(state, collection);
   cloudReady = true;
   cloudNotice();
@@ -546,8 +546,8 @@ async function bootstrapCloud() {
 
 async function retryCloud() {
   if (cloudBusy || cloudLoading) return;
-  if (hasActiveForm()) {
-    cloudNotice('O formulário foi mantido. Termine o preenchimento ou volte à biblioteca para atualizar a coleção.');
+  if (hasActiveView()) {
+    cloudNotice('O conteúdo aberto foi mantido. Volte à biblioteca para atualizar a coleção.');
     return;
   }
   if (!authSubscription) return bootstrapCloud();
@@ -555,19 +555,19 @@ async function retryCloud() {
   try {
     await refreshCloud();
     // Uma atualização nunca substitui o conteúdo do editor ou da pré-visualização.
-    if (!hasActiveForm() && !modal.open) render(false);
+    if (!hasActiveView() && !modal.open) render(false);
     announce('Coleção atualizada.');
   } catch (error) { cloudNotice(PoyCloud.message(error)); }
   finally { cloudLoading = false; }
 }
 
 setInterval(async () => {
-  if (!started || cloudBusy || cloudLoading || hasActiveForm() || modal.open || document.hidden) return;
+  if (!started || cloudBusy || cloudLoading || hasActiveView() || modal.open || document.hidden) return;
   cloudLoading = true;
   const previous = JSON.stringify([state.books, state.pending, state.history]);
   try {
     const refreshed = await refreshCloud(true);
-    if (refreshed && !hasActiveForm() && !modal.open &&
+    if (refreshed && !hasActiveView() && !modal.open &&
       previous !== JSON.stringify([state.books, state.pending, state.history])) render(false);
   } catch (error) {
     cloudReady = false;
