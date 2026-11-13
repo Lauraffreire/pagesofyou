@@ -528,6 +528,7 @@ select {
 .creation-site .shelf-zoom-exit,
 .installation-site #return-shelf,
 .creation-site .editor-book-navigation button,
+.creation-site .reader-arrow,
 .installation-site #previous,
 .installation-site #next {
   display: flex;
@@ -552,6 +553,7 @@ select {
 .creation-site .shelf-zoom-exit::before,
 .installation-site #return-shelf::before,
 .creation-site .editor-book-navigation button::before,
+.creation-site .reader-arrow::before,
 .installation-site #previous::before,
 .installation-site #next::before {
   content: '';
@@ -566,6 +568,7 @@ select {
 }
 
 .creation-site .book-navigation-forward button::before,
+.creation-site #flip-next::before,
 .installation-site #next::before {
   transform: rotate(180deg);
 }
@@ -1348,3 +1351,7 @@ body.creation-site,
 .spine-format-options button[aria-pressed=true] { outline: 2px solid #41715b; outline-offset: 1px; }
 .spine-format-sample { display: block; width: 30px; height: 85px; margin: 0 auto 6px; background-color: #70988a; background-size: 100% 100%; border-radius: 3px; }
 .spine-format-options small { font-size: 10px; }
+
+.creation-site .reader-arrow { box-shadow: none; }
+.creation-site .reader-arrow:not(:disabled):hover { background: #e3e9dc; border-color: #41715b; }
+.creation-site .reader-arrow:disabled { opacity: .35; cursor: default; }

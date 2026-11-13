@@ -1357,7 +1357,7 @@ function renderBookPreview(book, isDraft = true) {
     coverDesign: book.coverDesign || defaultBookCover(book)
   };
   main.innerHTML =
-    '<div class="page reader-page"><button class="back-link" data-action="return-editor">← Voltar à edição</button><h1>O teu livro</h1><p class="design-hint">Arrasta para a esquerda para abrir e folhear. Arrasta para a direita para voltar.</p><div id="flipbook" tabindex="0" role="region" aria-label="Pré-visualização do livro"></div><div class="page-controls"><button class="button secondary" id="flip-prev">← Anterior</button><span id="flip-status" aria-live="polite"></span><button class="button secondary" id="flip-next">Abrir livro →</button></div><div class="review-actions"><button class="button secondary" data-action="return-editor">Voltar à edição</button><button class="button" data-action="publish">' +
+    '<div class="page reader-page"><button class="back-link" data-action="return-editor">← Voltar à edição</button><h1>O teu livro</h1><div id="flipbook" tabindex="0" role="region" aria-label="Pré-visualização do livro"></div><nav class="page-controls" aria-label="Folhear livro"><button type="button" class="reader-arrow" id="flip-prev" aria-label="Páginas anteriores"></button><button type="button" class="reader-arrow" id="flip-next" aria-label="Abrir livro"></button></nav><div class="review-actions"><button class="button secondary" data-action="return-editor">Voltar à edição</button><button class="button" data-action="publish">' +
     (draft?.id ? 'Guardar alterações' : 'Publicar livro') + '</button></div></div>';
   if (isDraft) main.querySelector('.review-actions').insertAdjacentHTML('afterbegin',
     '<button type="button" class="button secondary" data-action="save-book-draft">Guardar rascunho</button>'
@@ -1384,11 +1384,9 @@ function renderBookPreview(book, isDraft = true) {
         '<section class="atelier-page">' + (pages[i] ? designMarkup(pages[i]) :
           '<div class="atelier-empty">Fim</div>') + '<small>' + (pages[i] ? i + 1 : '') +
         '</small></section>').join('') + '</div>';
-    document.querySelector('#flip-status').textContent = position < 0 ? 'Capa' : ('Páginas ' + (position +
-      1) + (pages[position + 1] ? '–' + (position + 2) : '') + ' de ' + pages.length);
     document.querySelector('#flip-prev').disabled = position < 0;
     document.querySelector('#flip-next').disabled = position >= 0 && position + 2 >= pages.length;
-    document.querySelector('#flip-next').textContent = position < 0 ? 'Abrir livro →' : 'Seguinte →';
+    document.querySelector('#flip-next').setAttribute('aria-label', position < 0 ? 'Abrir livro' : 'Páginas seguintes');
   };
   const turn = direction => {
     const next = position < 0 ? (direction > 0 ? 0 : -1) : position + direction * 2;
