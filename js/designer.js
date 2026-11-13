@@ -21,7 +21,7 @@ function designMarkup(design, editable = false) {
       const selected = editable && item.id === designSelection;
       return '<div class="design-element ' + (selected ? 'selected' : '') + '" ' + (editable ?
           'tabindex="0" role="button" aria-label="' + e(['text', 'photo', 'audio'].includes(item.type) ?
-            item.text : item.type === 'ellipse' ? 'Elipse' : 'Retângulo') + '" data-design-id="' + e(item
+            item.text : PoyObjects.findShape(item.shape)?.label || (item.type === 'ellipse' ? 'Elipse' : 'Retângulo')) + '" data-design-id="' + e(item
             .id) + '"' : '') + ' style="left:' + item.x / 6 + '%;top:' + item.y / 8.4 + '%;width:' + item
         .width / 6 + '%;height:' + item.height / 8.4 + '%;transform:rotate(' + item.rotation +
         'deg);background:' + (item.type === 'text' ? 'transparent' : designColor(item.color)) + ';color:' +
@@ -194,7 +194,8 @@ function setupDesigner(book) {
   shell.classList.add('visual-editor');
   const sidebar = shell.querySelector('.editor-sidebar');
   sidebar.insertAdjacentHTML('beforeend',
-    '<div class="design-tools"><h2>Adicionar</h2><button type="button" data-design-add="text">T Texto</button><button type="button" data-design-add="rectangle">□ Retângulo</button><button type="button" data-design-add="ellipse">○ Elipse</button><h2>Histórico</h2><button type="button" id="design-undo">Desfazer</button><button type="button" id="design-redo">Refazer</button><h2>Camadas</h2><div id="design-layers"></div></div>'
+    '<div class="design-tools"><h2>Adicionar</h2><button type="button" data-design-add="text">T Texto</button><button type="button" data-design-add="rectangle">□ Retângulo</button><button type="button" data-design-add="ellipse">○ Elipse</button>' +
+    PoyObjects.shapes.map(shape => '<button type="button" data-design-add="rectangle" data-shape="' + shape.id + '"><span class="shape-menu-preview" aria-hidden="true">' + PoyObjects.svg({shape:shape.id,color:'#697658'}) + '</span>' + e(shape.label) + '</button>').join('') + '<h2>Histórico</h2><button type="button" id="design-undo">Desfazer</button><button type="button" id="design-redo">Refazer</button><h2>Camadas</h2><div id="design-layers"></div></div>'
     );
   if (isBook) {
     sidebar.insertAdjacentHTML('afterbegin',
@@ -224,6 +225,7 @@ function setupDesigner(book) {
     const item = {
       id: uid(),
       type,
+      shape: button.dataset.shape || '',
       x: 80,
       y: 100,
       width: type === 'text' ? 300 : 180,
@@ -234,7 +236,8 @@ function setupDesigner(book) {
       font: 'sans',
       align: 'left',
       bold: false,
-      text: 'Escreva aqui'
+      text: '',
+      placeholder: 'Escreva aqui'
     };
     activeDesign().elements.push(item);
     designSelection = item.id;
@@ -280,6 +283,13 @@ function renderDesigner() {
   sheet.querySelectorAll('[data-design-id]').forEach(node => {
     const item = activeDesign().elements.find(element => element.id === node.dataset.designId);
     if (!['text', 'postit'].includes(item?.type)) return;
+    const prompts = ['Escreva aqui', 'Escreve aqui…', 'Escreva aqui…', 'Uma pequena memória…', 'Une petite pensée…'];
+    if (prompts.includes(item.text)) {
+      item.placeholder = item.text;
+      item.text = '';
+      node.textContent = '';
+    }
+    node.setAttribute('data-placeholder', item.placeholder || (item.type === 'postit' ? 'Escreve aqui…' : 'Escreva aqui'));
     node.contentEditable = item.templateLine ? 'plaintext-only' : 'false';
     node.ondblclick = event => {
       event.stopPropagation();
@@ -391,8 +401,8 @@ function renderDesignLayers() {
   const target = document.querySelector('#design-layers');
   target.innerHTML = activeDesign().elements.slice().reverse().map(item =>
     '<button type="button" data-layer="' + e(item.id) + '" aria-pressed="' + selectedDesignObjects().some(selected => selected.id === item.id) +
-    '">' + e(['text', 'photo', 'audio'].includes(item.type) ? item.text.slice(0, 22) : item.type ===
-      'ellipse' ? 'Elipse' : 'Retângulo') + '</button>').join('') || '<p>Sem elementos</p>';
+    '">' + e(['text', 'photo', 'audio'].includes(item.type) ? item.text.slice(0, 22) : PoyObjects.findShape(item.shape)?.label || (item.type ===
+      'ellipse' ? 'Elipse' : 'Retângulo')) + '</button>').join('') || '<p>Sem elementos</p>';
   target.querySelectorAll('[data-layer]').forEach(button => button.onclick = event => {
     const ids = new Set(selectedDesignObjects().map(item => item.id));
     if (event.shiftKey) {
@@ -412,7 +422,7 @@ function renderDesignInspector() {
     return;
   }
   if (!item) {
-    target.innerHTML = '<p class="design-hint">Adicione ou selecione um elemento.</p>';
+    target.innerHTML = '';
     return;
   }
   const numeric = (key, label, max) => '<label>' + label + '<input data-property="' + key +
@@ -616,7 +626,8 @@ function updateDesignObjectNode(item) {
     .find(el => el.dataset.designId === item.id);
   if (!node) return;
   Object.assign(node.style, { left: item.x / 6 + '%', top: item.y / 8.4 + '%',
-    width: item.width / 6 + '%', height: item.height / 8.4 + '%' });
+    width: item.width / 6 + '%', height: item.height / 8.4 + '%',
+    transform: 'rotate(' + (item.rotation || 0) + 'deg)' });
   if (['text', 'postit'].includes(item.type)) node.style.fontSize = item.fontSize / 6 + 'cqw';
 }
 
@@ -666,6 +677,17 @@ function beginDesignMarquee(event, sheet) {
   sheet.onlostpointercapture = () => finish(false);
 }
 
+function rotatedObjectGeometry(origin, center, degrees) {
+  const angle = degrees * Math.PI / 180;
+  const dx = origin.x + origin.width / 2 - center.x;
+  const dy = origin.y + origin.height / 2 - center.y;
+  return {
+    x: center.x + dx * Math.cos(angle) - dy * Math.sin(angle) - origin.width / 2,
+    y: center.y + dx * Math.sin(angle) + dy * Math.cos(angle) - origin.height / 2,
+    rotation: (((origin.rotation || 0) + degrees + 180) % 360 + 360) % 360 - 180
+  };
+}
+
 function positionPhotoHandles(item) {
   const frame = document.querySelector('#photo-handles, #object-handles');
   if (!frame) return;
@@ -702,8 +724,65 @@ function renderPhotoHandles() {
     '" aria-label="' + (handle.length === 2 ? 'Redimensionar: canto ' : item.type === 'photo' ? 'Recortar: lado ' : 'Redimensionar: lado ') + label +
     '" title="' + (handle.length === 2 || item.type !== 'photo' ? 'Arraste para redimensionar' : 'Arraste para recortar') +
     '. Use as setas para ajustar."></button>').join('') + '<output aria-label="Dimensões"></output>';
+  frame.insertAdjacentHTML('beforeend', '<button type="button" class="rotation-handle" aria-label="Rodar objeto" title="Arraste para rodar. Shift: intervalos de 15 graus. Setas: ajustar rotação."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10a7 7 0 1 0 0 5M19 4v6h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>');
   sheet.append(frame);
   positionPhotoHandles(item);
+  const rotationHandle = frame.querySelector('.rotation-handle');
+  const rotateMembers = (origins, center, delta, frameAngle) => {
+    members.forEach((member, index) => {
+      Object.assign(member, rotatedObjectGeometry(origins[index], center, delta));
+      updateDesignObjectNode(member);
+    });
+    if (grouped) item.rotation = frameAngle + delta;
+    positionPhotoHandles(item);
+  };
+  rotationHandle.onpointerdown = event => {
+    event.stopPropagation();
+    if (event.button !== 0) return;
+    event.preventDefault();
+    rotationHandle.focus({ preventScroll: true });
+    const origins = members.map(member => ({ ...member }));
+    const center = { x: item.x + item.width / 2, y: item.y + item.height / 2 };
+    const frameAngle = item.rotation || 0;
+    const bounds = sheet.getBoundingClientRect();
+    const pointerAngle = ev => Math.atan2((ev.clientY - bounds.top) * 840 / bounds.height - center.y,
+      (ev.clientX - bounds.left) * 600 / bounds.width - center.x) * 180 / Math.PI;
+    let lastAngle = pointerAngle(event), delta = 0, changed = false;
+    const previousRedo = designRedo;
+    rotationHandle.setPointerCapture(event.pointerId);
+    rotationHandle.onpointermove = move => {
+      const angle = pointerAngle(move);
+      delta += ((angle - lastAngle + 540) % 360) - 180;
+      lastAngle = angle;
+      if (!changed && Math.abs(delta) < .5) return;
+      if (!changed) { designSnapshot(); changed = true; }
+      rotateMembers(origins, center, move.shiftKey ? Math.round(delta / 15) * 15 : delta, frameAngle);
+    };
+    const finish = cancelled => {
+      rotationHandle.onpointermove = rotationHandle.onpointerup = rotationHandle.onpointercancel = rotationHandle.onlostpointercapture = null;
+      if (!changed) return;
+      if (cancelled) {
+        members.forEach((member, index) => { Object.assign(member, origins[index]); updateDesignObjectNode(member); });
+        if (grouped) item.rotation = frameAngle;
+        designUndo.pop(); designRedo = previousRedo;
+      } else designChanged();
+      renderDesigner();
+    };
+    rotationHandle.onpointerup = () => finish(false);
+    rotationHandle.onpointercancel = () => finish(true);
+    rotationHandle.onlostpointercapture = () => finish(false);
+  };
+  rotationHandle.onkeydown = event => {
+    event.stopPropagation();
+    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+    event.preventDefault();
+    const delta = (['ArrowLeft', 'ArrowDown'].includes(event.key) ? -1 : 1) * (event.shiftKey ? 15 : 1);
+    designSnapshot();
+    rotateMembers(members.map(member => ({ ...member })),
+      { x: item.x + item.width / 2, y: item.y + item.height / 2 }, delta, item.rotation || 0);
+    designChanged();
+  };
+
   const apply = geometry => {
     Object.assign(item, geometry);
     if (grouped) {
@@ -713,7 +792,8 @@ function renderPhotoHandles() {
       return;
     }
     Object.assign(node.style, { left: item.x / 6 + '%', top: item.y / 8.4 + '%',
-      width: item.width / 6 + '%', height: item.height / 8.4 + '%' });
+      width: item.width / 6 + '%', height: item.height / 8.4 + '%',
+    transform: 'rotate(' + (item.rotation || 0) + 'deg)' });
     if (item.type === 'text' || item.type === 'postit') node.style.fontSize = item.fontSize / 6 + 'cqw';
     if (image) {
       image.style.objectPosition = (item.cropX ?? 50) + '% ' + (item.cropY ?? 50) + '%';
@@ -812,9 +892,13 @@ designMarkup = function(design, editable = false) {
         elements: [item]
       }, editable);
       node = node.slice(node.indexOf('>') + 1, node.lastIndexOf('</div>'));
+      if (window.PoyObjects?.find(item.objectStyle) || window.PoyObjects?.findShape(item.shape)) {
+        node = node.replace('style="', 'style="' + PoyObjects.style(item));
+        if (item.type === 'postit') node = node.replace('></div>', '>' + e(item.text || '') + '</div>');
+        return node;
+      }
       if (item.type === 'postit') node = node.replace('design-element ',
-        'design-element scrapbook-postit ').replace('></div>', '>' + e(item.text ||
-        'Une petite pensée…') + '</div>');
+        'design-element scrapbook-postit ').replace('></div>', '>' + e(item.text || '') + '</div>');
       if (item.type === 'sticker' || item.type === 'clip') node = node.replace('></div>',
         '><span class="scrapbook-symbol">' + e(item.type === 'clip' ? '📎' : item.text || '🌸') +
         '</span></div>');
@@ -905,15 +989,11 @@ setupDesigner = function(book) {
     '<h2>Selecionar e desenhar</h2><div class="atelier-modes"><button type="button" id="atelier-select">↖ Selecionar / mover</button><button type="button" id="atelier-draw">✎ Desenhar</button></div><label>Pincel<select id="atelier-brush"><option value="pen">Caneta</option><option value="pencil">Lápis</option><option value="marker">Marcador translúcido</option><option value="brush">Pincel</option></select></label><label>Cor<input type="color" id="atelier-ink" value="' +
     atelierInk +
     '"></label><label>Espessura<input type="range" id="atelier-size" min="1" max="40" value="' +
-    atelierSize + '"></label><h2>Decorar</h2>' + '<div class="atelier-objects">' + [
-      ['postit', 'Post-it'],
-      ['sticker', 'Sticker'],
-      ['tape', 'Fita'],
-      ['clip', 'Clip']
-    ].map(([type, label]) => '<button type="button" data-decoration="' + type +
-      '" aria-label="Adicionar ' + label + '" title="Adicionar ' + label +
-      '"><span class="object-preview object-preview-' + type + '" aria-hidden="true">' + (type ===
-        'sticker' ? '&#127800;' : type === 'clip' ? '&#128206;' : '') + '</span></button>').join('') +
+    atelierSize + '"></label><h2>Papéis, fitas e clipes</h2>' + '<div class="atelier-objects">' +
+    PoyObjects.presets.map(preset => '<button type="button" data-decoration="' + preset.id +
+      '" aria-label="Adicionar ' + preset.label + '" title="Adicionar ' + preset.label +
+      '"><span class="collage-preview" aria-hidden="true">' + PoyObjects.svg({objectStyle:preset.id,color:preset.color}) +
+      '</span><small>' + preset.label + '</small></button>').join('') +
     '</div><h2>Padrões</h2><div class="atelier-patterns" role="group" aria-label="Padrão da página">' +
     pagePatterns.map(([key, label]) => '<button type="button" data-page-pattern="' + key +
       '" aria-pressed="false" title="' + label + '"><span class="pattern-preview page-pattern-' + key +
@@ -937,19 +1017,14 @@ setupDesigner = function(book) {
   document.querySelector('#atelier-size').oninput = ev => atelierSize = Number(ev.target.value);
   tools.querySelectorAll('[data-decoration]').forEach(button => button.onclick = () => {
     designSnapshot();
-    const type = button.dataset.decoration;
+    const preset = PoyObjects.find(button.dataset.decoration);
+    if (!preset) return;
     const item = {
-      id: uid(),
-      type,
-      x: 100,
-      y: 120,
-      width: type === 'clip' ? 65 : 180,
-      height: type === 'tape' ? 45 : type === 'clip' ? 110 : 180,
-      rotation: type === 'tape' ? -8 : 0,
-      color: type === 'postit' ? '#f4df88' : type === 'tape' ? '#d3b4bb' : '#ffffff',
-      fontSize: 26,
-      font: 'serif',
-      text: type === 'sticker' ? '🌸' : type === 'postit' ? 'Uma pequena memória…' : ''
+      id: uid(), type: preset.type, objectStyle: preset.id,
+      x: 100, y: 120, width: preset.width, height: preset.height,
+      rotation: preset.type === 'tape' ? -6 : 0,
+      color: preset.color, fontSize: 22, font: 'serif',
+      text: '', placeholder: preset.type === 'postit' ? 'Escreve aqui…' : ''
     };
     activeDesign().elements.push(item);
     designSelection = item.id;
