@@ -1,22 +1,4 @@
 /* Entrada, biblioteca, leitura, área pessoal e propostas. */
-function personalShelfBooks(interactive = false) {
-  const options = [
-    ['criar', 'Criar um livro', '#d798aa', 4, 88, -3],
-    ['meus-livros', 'Meus livros', '#8eafb6', 0, 96, 0],
-    ['recebidas', 'Ver mem\u00f3rias', '#7b813e', 5, 83, 4],
-    ['codigo', 'Adicionar contribui\u00e7\u00f5es', '#e9c64b', 2, 91, -2]
-  ];
-  return '<div class="personal-shelf-stage">' + options.map(([href, title, color, pattern, height, angle],
-    i) => {
-      const tag = interactive ? 'a' : 'span';
-      return '<' + tag + ' class="wall-book wall-pattern-' + pattern + ' proportional-book' + (interactive ?
-          ' shelf-menu-book dashboard-card' : '') + '" style="--volume-color:' + color + ';--book-height:' +
-        height + '%;--volume-angle:' + angle + 'deg;--book-left:' + (8 + i * 22) + '%" ' + (interactive ?
-          'href="#' + href + '"' : 'aria-hidden="true"') + '>' + (interactive ? '<span>' + title +
-          '</span>' : '') + '<i aria-hidden="true"></i><b aria-hidden="true"></b></' + tag + '>';
-    }).join('') + '</div>';
-}
-
 function home() {
   if (main.querySelector('.quiet-library')) {
     return;
@@ -26,26 +8,27 @@ function home() {
     length: count
   }, (_, i) => {
     const n = i + offset;
-    return '<span class="wall-book wall-pattern-' + (n % 8) + '" style="--volume-color:var(--wall-' + (n %
+    const pattern = n % 5 < 2 ? '' : ' wall-pattern-' + (n % 8);
+    return '<span class="wall-book' + pattern + '" style="--volume-color:var(--wall-' + (n %
         7) + ');--volume-height:' + (72 + (n * 13) % 27) + '%;--volume-width:' + (24 + (n * 17) % 30) +
       ';--volume-angle:' + (n % 5 === 0 ? -9 : n % 4 === 0 ? 7 : n % 7 === 0 ? -4 : 0) +
       'deg"><i></i><b></b></span>';
   }).join('');
   main.innerHTML =
     '<div class="quiet-library"><div class="quiet-shelf quiet-outer" aria-hidden="true"><div class="quiet-book-group">' +
-    books(0, 10) + '</div><div class="quiet-book-group">' + books(7, 7) +
+    books(0, 18) + '</div><div class="quiet-book-group">' + books(18, 12) +
     '</div></div><section class="quiet-shelf quiet-center" aria-labelledby="landing-title"><div class="quiet-side" aria-hidden="true">' +
-    books(4, 2) +
+    books(4, 0) +
     '</div><h1 id="landing-title" class="quiet-title"><a href="#area" aria-label="Pages of You: entrar na \u00e1rea pessoal"><span>Pages</span> <em>of</em> <span>You.</span></a></h1><div class="quiet-side" aria-hidden="true">' +
-    books(9, 8) +
+    books(30, 18) +
     '</div></section><div class="quiet-shelf quiet-outer" aria-hidden="true"><div class="quiet-book-group">' +
-    books(11, 7) + '</div><div class="quiet-book-group">' + books(18, 7) + '</div></div></div>';
+    books(48, 15) + '</div><div class="quiet-book-group">' + books(63, 15) + '</div></div></div>';
   const shelf = main.querySelector('.quiet-outer');
   shelf.removeAttribute('aria-hidden');
   shelf.firstElementChild.setAttribute('aria-hidden', 'true');
   const personalShelf = shelf.lastElementChild;
   personalShelf.classList.add('personal-shelf');
-  personalShelf.innerHTML = personalShelfBooks(true);
+  personalShelf.innerHTML = books(18, 11);
   personalShelf.querySelectorAll('.wall-book').forEach(book => {
     book.tabIndex = -1;
     book.setAttribute('aria-hidden', 'true');

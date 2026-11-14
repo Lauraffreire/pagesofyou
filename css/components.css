@@ -54,8 +54,8 @@
 
 @media (max-width: 600px) {
   .draft-book-card {
-    flex-wrap: wrap;
-  }
+  flex-wrap: wrap;
+}
 }
 
 .design-marquee {
@@ -132,14 +132,46 @@
   transform: translate(-50%, -50%);
 }
 
-:is(#photo-handles, #object-handles) .handle-nw { left: 0; top: 0; cursor: nwse-resize; }
-:is(#photo-handles, #object-handles) .handle-n { left: 50%; top: 0; cursor: ns-resize; }
-:is(#photo-handles, #object-handles) .handle-ne { left: 100%; top: 0; cursor: nesw-resize; }
-:is(#photo-handles, #object-handles) .handle-e { left: 100%; top: 50%; cursor: ew-resize; }
-:is(#photo-handles, #object-handles) .handle-se { left: 100%; top: 100%; cursor: nwse-resize; }
-:is(#photo-handles, #object-handles) .handle-s { left: 50%; top: 100%; cursor: ns-resize; }
-:is(#photo-handles, #object-handles) .handle-sw { left: 0; top: 100%; cursor: nesw-resize; }
-:is(#photo-handles, #object-handles) .handle-w { left: 0; top: 50%; cursor: ew-resize; }
+:is(#photo-handles, #object-handles) .handle-nw {
+  left: 0;
+  top: 0;
+  cursor: nwse-resize;
+}
+:is(#photo-handles, #object-handles) .handle-n {
+  left: 50%;
+  top: 0;
+  cursor: ns-resize;
+}
+:is(#photo-handles, #object-handles) .handle-ne {
+  left: 100%;
+  top: 0;
+  cursor: nesw-resize;
+}
+:is(#photo-handles, #object-handles) .handle-e {
+  left: 100%;
+  top: 50%;
+  cursor: ew-resize;
+}
+:is(#photo-handles, #object-handles) .handle-se {
+  left: 100%;
+  top: 100%;
+  cursor: nwse-resize;
+}
+:is(#photo-handles, #object-handles) .handle-s {
+  left: 50%;
+  top: 100%;
+  cursor: ns-resize;
+}
+:is(#photo-handles, #object-handles) .handle-sw {
+  left: 0;
+  top: 100%;
+  cursor: nesw-resize;
+}
+:is(#photo-handles, #object-handles) .handle-w {
+  left: 0;
+  top: 50%;
+  cursor: ew-resize;
+}
 
 :is(#photo-handles, #object-handles) output {
   position: absolute;

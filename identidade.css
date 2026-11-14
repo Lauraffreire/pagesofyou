@@ -1,5 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
+/* O compartimento do título fica livre; os restantes ficam cheios de livros. */
+.creation-site .quiet-center > .quiet-side:first-child {
+  display: none;
+}
+
+.creation-site .quiet-center .quiet-title {
+  flex: 0 1 39%;
+  min-width: 0;
+  align-self: center;
+  text-align: center;
+  font-size: clamp(26px, 5vw, 88px);
+}
+
+.creation-site .quiet-center .quiet-title a {
+  justify-content: center;
+}
+
+.creation-site .quiet-library .quiet-book-group,
+.creation-site .quiet-library .quiet-side:last-child {
+  justify-content: space-between;
+  gap: 2px;
+}
+
+.creation-site .quiet-library .quiet-book-group.personal-shelf {
+  padding-top: 10px;
+  padding-right: 70px;
+}
+
+.creation-site .quiet-library .quiet-book-group > .wall-book,
+.creation-site .quiet-library .quiet-side > .wall-book {
+  display: block;
+  flex: var(--volume-width) 1 0;
+  min-width: 0;
+  max-width: none;
+}
+
+@media (max-width: 600px) {
+  .creation-site .quiet-center .quiet-title {
+  flex-basis: 56%;
+  font-size: clamp(22px, 6vw, 36px);
+}
+}
+
 /* Padrões de lombada partilhados pela pré-visualização e pela instalação. */
 :is(.spine, .spine-preview).spine-pattern-none {
   background-image: none;
@@ -24,24 +67,6 @@
 }
 
 /* 01. Identidade comum ao site e à instalação. */
-:root {
-  --paper: #f7eed5;
-  --ink: #173b2d;
-  --muted: #53634c;
-  --line: #c5b88f;
-  --green: #173b2d;
-  --lime: #e8e5bc;
-  --red: #dc7247;
-  --pink: #efd4b3;
-  --olive: #8c914f;
-  --blue: #70988a;
-  --yellow: #e7ad51;
-  --wood: #e7ad51;
-  --sans: 'Manrope', 'Trebuchet MS', Arial, sans-serif;
-  --serif: var(--sans);
-  --display-font: var(--sans);
-  font-family: var(--sans);
-}
 
 body {
   background: var(--paper);
@@ -74,10 +99,6 @@ select {
   letter-spacing: -.035em;
 }
 
-.creation-site .header {
-  color: var(--ink);
-}
-
 .creation-site .personal,
 .creation-site:has(.quiet-library) .personal {
   background: var(--paper);
@@ -88,11 +109,7 @@ select {
 
 .creation-site .button {
   background: var(--green);
-  color: #fff;
-  border: 1px solid var(--green);
-  border-radius: 10px;
   font-weight: 700;
-  box-shadow: none;
 }
 
 .creation-site .button:hover {
@@ -100,27 +117,10 @@ select {
 }
 
 .creation-site .button.secondary {
-  background: #fff;
-  color: var(--green);
   border-color: var(--line);
 }
 
-.creation-site .button.secondary:hover {
-  background: var(--lime);
-}
-
 /* 03. Estante: cores planas e linhas estruturais. */
-.creation-site .quiet-library {
-  --wall-0: #748f9e;
-  --wall-1: #b65336;
-  --wall-2: #e3c65c;
-  --wall-3: #7a8254;
-  --wall-4: #d7b8b6;
-  --wall-5: #244f43;
-  --wall-6: #a5b8ae;
-  --shelf-wood: #244f43;
-  background: var(--paper);
-}
 
 .creation-site .quiet-shelf {
   border-inline-width: 2px;
@@ -152,9 +152,6 @@ select {
 
 .creation-site .quiet-title a {
   padding: 14px clamp(12px, 1.5vw, 22px);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: #fff;
 }
 
 .creation-site .quiet-center > .quiet-side:last-child {
@@ -255,9 +252,6 @@ select {
   max-width: 920px;
   width: 100%;
   padding: 24px clamp(16px, 3vw, 40px);
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 18px;
 }
 
 .installation-site .eyebrow {
@@ -311,11 +305,6 @@ select {
 .installation-site #book-name {
   font: 700 26px/1.2 var(--sans);
   letter-spacing: -.035em;
-}
-
-.installation-site #book-code {
-  background: var(--lime);
-  border-radius: 8px;
 }
 
 .installation-site footer {
@@ -469,8 +458,8 @@ select {
 
 @media (prefers-reduced-motion: reduce) {
   .stack-book {
-    transition: none;
-  }
+  transition: none;
+}
 }
 
 .creation-site:has(.quiet-library) {
@@ -496,12 +485,7 @@ select {
 }
 
 .creation-site .quiet-title a {
-  background: #e8dfce;
   border-color: #b8b39d;
-}
-
-.creation-site:has(.quiet-library) .personal {
-  background: #e8dfce !important;
 }
 
 #status:empty {
@@ -579,22 +563,22 @@ select {
 
 @media (max-width: 600px) {
   .creation-site .quiet-title {
-    font-size: clamp(25px, 7vw, 42px);
-  }
+  font-size: clamp(25px, 7vw, 42px);
+}
 
   .creation-site .quiet-title a {
-    padding: 18px 10px;
-    border-radius: 10px;
-  }
+  padding: 18px 10px;
+  border-radius: 10px;
+}
 
   .creation-site .quiet-center {
-    gap: 10px;
-  }
+  gap: 10px;
+}
 
   .installation-site .intro {
-    margin: 20px auto 28px;
-    padding: 20px 16px;
-  }
+  margin: 20px auto 28px;
+  padding: 20px 16px;
+}
 }
 
 /* 07. Identidade editorial: creme, verde floresta e lombadas em tons quentes. */
@@ -774,9 +758,9 @@ select {
 
 @media (max-width: 600px) {
   .creation-site .quiet-title a {
-    border-width: 3px;
-    border-left-width: 6px;
-  }
+  border-width: 3px;
+  border-left-width: 6px;
+}
 }
 
 /* Capa fechada vista de cima, com uma dobra discreta junto à lombada. */
@@ -787,7 +771,6 @@ select {
   padding: 42px 36px 46px 52px;
   border: 1px solid #c4af79;
   border-radius: 3px 7px 7px 3px;
-  background: #f7eed5;
   box-shadow: inset 5px 0 7px -5px #173b2d60, 5px 7px 15px #173b2d26;
 }
 
@@ -865,8 +848,8 @@ select {
 
 @media (max-width: 600px) {
   .creation-site .page .auth-card.book-start {
-    padding: 30px 22px 34px 36px;
-  }
+  padding: 30px 22px 34px 36px;
+}
 }
 
 /* A instalação ocupa um único ecrã, com a assinatura do site. */
@@ -939,13 +922,13 @@ body.installation-site {
 
 @media (max-height: 500px), (max-width: 600px) {
   .installation-site .footer-note {
-    display: none;
-  }
+  display: none;
+}
 
   .installation-site footer {
-    padding: 8px 4vw;
-    font-size: 10px;
-  }
+  padding: 8px 4vw;
+  font-size: 10px;
+}
 }
 
 /* Leitura: código discreto no canto e livro ajustado ao espaço disponível. */
@@ -1010,8 +993,8 @@ body.installation-site {
 
 @media (max-width: 600px) {
   .installation-site.reading header {
-    padding-top: 72px;
-  }
+  padding-top: 72px;
+}
 }
 
 /* Todas as setas de voltar partilham posição, tamanho e aparência. */
@@ -1120,8 +1103,8 @@ body.installation-site {
 
 @media (max-width: 600px) {
   .creation-site .page.auth-page .auth-card:not(.book-start) {
-    padding: 30px 22px 34px 36px;
-  }
+  padding: 30px 22px 34px 36px;
+}
 }
 
 /* Editor: verde floresta, sálvia e papel claro. */
@@ -1325,7 +1308,10 @@ body.creation-site,
 .creation-site main .page.auth-page:has(.form-library-background) .auth-card::before {
   content: '';
   position: absolute;
-  top: 0; bottom: 0; left: 17px; width: 1px;
+  top: 0;
+  bottom: 0;
+  left: 17px;
+  width: 1px;
   background: #a9b8a0;
   box-shadow: 2px 0 3px #ffffff80;
   pointer-events: none;
@@ -1339,19 +1325,68 @@ body.creation-site,
   box-shadow: 3px 3px 0 #a9b8a0;
 }
 @media (max-width: 600px) {
-  .creation-site main > .page.auth-page:has(.form-library-background) { padding: 76px 20px 32px; }
-  .creation-site main .page.auth-page:has(.form-library-background) .auth-card { padding: 30px 22px 34px 36px; }
-  .creation-site .auth-page > .form-library-background { filter: blur(4px) brightness(.76) saturate(.8); }
+  .creation-site main > .page.auth-page:has(.form-library-background) {
+  padding: 76px 20px 32px;
+}
+  .creation-site main .page.auth-page:has(.form-library-background) .auth-card {
+  padding: 30px 22px 34px 36px;
+}
+  .creation-site .auth-page > .form-library-background {
+  filter: blur(4px) brightness(.76) saturate(.8);
+}
 }
 
-:is(.spine, .spine-preview) { position: relative; isolation: isolate; }
-.spine-art { position: absolute; inset: 0; background-position: center; background-size: 100% 100%; background-repeat: no-repeat; pointer-events: none; z-index: -1; }
-.spine-format-options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
-.spine-format-options button { padding: 8px 4px; border: 1px solid #a9b8a0; background: #f6f7ef; color: #173b2d; border-radius: 5px; }
-.spine-format-options button[aria-pressed=true] { outline: 2px solid #41715b; outline-offset: 1px; }
-.spine-format-sample { display: block; width: 30px; height: 85px; margin: 0 auto 6px; background-color: #70988a; background-size: 100% 100%; border-radius: 3px; }
-.spine-format-options small { font-size: 10px; }
+:is(.spine, .spine-preview) {
+  position: relative;
+  isolation: isolate;
+}
+.spine-art {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: -1;
+}
+.spine-format-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.spine-format-options button {
+  padding: 8px 4px;
+  border: 1px solid #a9b8a0;
+  background: #f6f7ef;
+  color: #173b2d;
+  border-radius: 5px;
+}
+.spine-format-options button[aria-pressed=true] {
+  outline: 2px solid #41715b;
+  outline-offset: 1px;
+}
+.spine-format-sample {
+  display: block;
+  width: 30px;
+  height: 85px;
+  margin: 0 auto 6px;
+  background-color: #70988a;
+  background-size: 100% 100%;
+  border-radius: 3px;
+}
+.spine-format-options small {
+  font-size: 10px;
+}
 
-.creation-site .reader-arrow { box-shadow: none; }
-.creation-site .reader-arrow:not(:disabled):hover { background: #e3e9dc; border-color: #41715b; }
-.creation-site .reader-arrow:disabled { opacity: .35; cursor: default; }
+.creation-site .reader-arrow {
+  box-shadow: none;
+}
+.creation-site .reader-arrow:not(:disabled):hover {
+  background: #e3e9dc;
+  border-color: #41715b;
+}
+.creation-site .reader-arrow:disabled {
+  opacity: .35;
+  cursor: default;
+}

@@ -1,11 +1,6 @@
 /* Atelier de memórias : mesa, lombada e duas páginas. */
 .visual-editor .editor-canvas {
   background: #eeeae2;
-  min-height: 100vh
-}
-
-.visual-editor .editor-sidebar {
-  background: #faf8f3
 }
 
 .atelier-pagination {
@@ -14,8 +9,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin: 12px 0 22px;
-  font-size: 12px
+  font-size: 12px;
 }
 
 .atelier-pagination button,
@@ -26,21 +20,21 @@
   border-radius: 5px;
   min-height: 34px;
   padding: 6px 9px;
-  color: #343e32
+  color: #343e32;
 }
 
 .atelier-pagination label {
   display: flex;
   align-items: center;
-  gap: 5px
+  gap: 5px;
 }
 
 .atelier-pagination input {
-  width: 64px
+  width: 64px;
 }
 
 .atelier-pagination button:disabled {
-  opacity: .4
+  opacity: .4;
 }
 
 .atelier-spread {
@@ -50,50 +44,50 @@
   max-width: 1200px;
   margin: 20px auto;
   gap: 0;
-  filter: drop-shadow(0 12px 15px #352b2220)
+  filter: drop-shadow(0 12px 15px #352b2220);
 }
 
 .atelier-page {
   position: relative;
   min-width: 0;
-  text-align: center
+  text-align: center;
 }
 
 .atelier-page .design-sheet {
   box-shadow: none;
   max-width: none;
-  margin: 0
+  margin: 0;
 }
 
 .atelier-page:first-child .design-sheet {
   border-radius: 4px 0 0 4px;
   --page-shading: linear-gradient(90deg, transparent 90%, #40382714);
   background-image: var(--page-shading), var(--page-pattern, none);
-  background-size: auto, var(--pattern-size, auto)
+  background-size: auto, var(--pattern-size, auto);
 }
 
 .atelier-page:nth-child(2) .design-sheet {
   border-radius: 0 4px 4px 0;
   --page-shading: linear-gradient(90deg, #4038271c, transparent 10%);
   background-image: var(--page-shading), var(--page-pattern, none);
-  background-size: auto, var(--pattern-size, auto)
+  background-size: auto, var(--pattern-size, auto);
 }
 
 .atelier-page.active .design-sheet {
   outline: 2px solid #78856a;
   outline-offset: 3px;
-  z-index: 1
+  z-index: 1;
 }
 
 .atelier-page small {
   display: block;
   margin: 12px 2px;
   color: #62685b;
-  font-size: 11px
+  font-size: 11px;
 }
 
 .atelier-page:not(.active) .design-sheet {
-  cursor: pointer
+  cursor: pointer;
 }
 
 .atelier-empty {
@@ -102,38 +96,38 @@
   display: grid;
   place-items: center;
   color: #797a70;
-  font: italic 18px Georgia, serif
+  font: italic 18px Georgia, serif;
 }
 
 .design-tools label {
   display: block;
   font-size: 12px;
-  margin: 10px 0
+  margin: 10px 0;
 }
 
 .design-tools select,
 .design-tools input[type=range] {
   width: 100%;
-  margin-top: 5px
+  margin-top: 5px;
 }
 
 .design-tools select {
   padding: 8px 3px;
   border: 1px solid #ccc;
   background: white;
-  border-radius: 4px
+  border-radius: 4px;
 }
 
 .design-tools input[type=color] {
   display: block;
   width: 100%;
   height: 30px;
-  margin-top: 5px
+  margin-top: 5px;
 }
 
 .design-tools button[aria-pressed=true] {
   background: #e4eadf;
-  border-color: #78856a
+  border-color: #78856a;
 }
 
 .scrapbook-postit {
@@ -141,12 +135,12 @@
   box-shadow: 3px 5px 7px #0002;
   background-image: linear-gradient(#00000009 16%, transparent 16%);
   font-size: 3.5cqw !important;
-  color: #4e4634 !important
+  color: #4e4634 !important;
 }
 
 .scrapbook-tape {
   opacity: .65;
-  clip-path: polygon(3% 0, 98% 3%, 96% 30%, 100% 50%, 96% 74%, 98% 100%, 0 96%, 3% 75%, 0 50%)
+  clip-path: polygon(3% 0, 98% 3%, 96% 30%, 100% 50%, 96% 74%, 98% 100%, 0 96%, 3% 75%, 0 50%);
 }
 
 .scrapbook-symbol {
@@ -155,18 +149,18 @@
   width: 100%;
   height: 100%;
   font-size: 20cqw;
-  line-height: 1
+  line-height: 1;
 }
 
 .design-element:has(.scrapbook-symbol) {
   background: transparent !important;
-  overflow: visible
+  overflow: visible;
 }
 
 #design-sheet.drawing,
 #design-sheet.drawing * {
   cursor: crosshair;
-  touch-action: none
+  touch-action: none;
 }
 
 .drawing-overlay {
@@ -175,7 +169,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 999
+  z-index: 999;
 }
 
 .flipbook {
@@ -186,15 +180,15 @@
   cursor: grab;
   user-select: none;
   transition: transform .18s ease;
-  perspective: 1400px
+  perspective: 1400px;
 }
 
 .flipbook:active {
-  cursor: grabbing
+  cursor: grabbing;
 }
 
 .flipbook.closed {
-  max-width: 420px
+  max-width: 420px;
 }
 
 .flip-cover {
@@ -203,7 +197,7 @@
   transform: perspective(1600px) rotateY(-9deg);
   border-left: 10px solid #0002;
   border-radius: 3px 8px 8px 3px;
-  overflow: hidden
+  overflow: hidden;
 }
 
 .flip-cover-title {
@@ -211,11 +205,11 @@
   inset: 20% 12%;
   text-align: center;
   font: clamp(25px, 5vw, 50px)/1.2 Georgia, serif;
-  pointer-events: none
+  pointer-events: none;
 }
 
 .flipbook.open .atelier-spread {
-  animation: book-reveal .35s ease
+  animation: book-reveal .35s ease;
 }
 
 @keyframes book-reveal {
@@ -234,85 +228,85 @@
 
   .flipbook,
   .flipbook.open .atelier-spread {
-    animation: none;
-    transition: none
-  }
+  animation: none;
+  transition: none;
+}
 }
 
 @media(max-width:1050px) {
   .visual-editor {
-    grid-template-columns: 155px minmax(0, 1fr)
-  }
+  grid-template-columns: 155px minmax(0, 1fr);
+}
 
   .visual-editor .editor-properties {
-    grid-column: 2;
-    position: static;
-    max-height: none
-  }
+  grid-column: 2;
+  position: static;
+  max-height: none;
+}
 
   .visual-editor .editor-sidebar {
-    grid-row: 1/3
-  }
+  grid-row: 1/3;
+}
 
   .visual-editor .editor-canvas {
-    min-height: 0;
-    padding: 25px 18px
-  }
+  min-height: 0;
+  padding: 25px 18px;
+}
 }
 
 @media(max-width:560px) {
   .visual-editor {
-    display: flex;
-    flex-direction: column
-  }
+  display: flex;
+  flex-direction: column;
+}
 
   .visual-editor .editor-sidebar {
-    padding: 15px;
-    width: 100%;
-    box-sizing: border-box
-  }
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
 
   .design-tools {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 4px 10px
-  }
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 10px;
+}
 
   .design-tools h2,
   .design-tools #design-layers {
-    grid-column: 1/-1
-  }
+  grid-column: 1/-1;
+}
 
   .design-tools h2 {
-    margin: 12px 0 3px
-  }
+  margin: 12px 0 3px;
+}
 
   .design-tools button {
-    margin: 2px 0
-  }
+  margin: 2px 0;
+}
 
   .visual-editor .editor-canvas {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 20px 12px
-  }
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 12px;
+}
 
   .visual-editor .editor-properties {
-    width: 100%;
-    box-sizing: border-box
-  }
+  width: 100%;
+  box-sizing: border-box;
+}
 
   .atelier-page small {
-    font-size: 9px
-  }
+  font-size: 9px;
+}
 
   .flipbook {
-    margin: 25px auto
-  }
+  margin: 25px auto;
+}
 
   .atelier-pagination {
-    gap: 5px
-  }
+  gap: 5px;
+}
 }
 
 /* A biblioteca ilustrada da entrada. */
@@ -327,12 +321,12 @@
   max-width: 1120px;
   margin: auto;
   padding: 28px 52px 22px;
-  color: #2f3e32
+  color: #2f3e32;
 }
 
 .volume-style-0 {
   border-top: 7px double #f9f3dd;
-  border-bottom: 7px double #f9f3dd
+  border-bottom: 7px double #f9f3dd;
 }
 
 .volume-style-1::after,
@@ -342,70 +336,70 @@
   inset: 7px;
   border: 1px solid currentColor;
   opacity: .65;
-  pointer-events: none
+  pointer-events: none;
 }
 
 .volume-style-2 {
   color: #35422e;
-  background-image: repeating-linear-gradient(90deg, transparent 0 5px, #fff1 5px 6px)
+  background-image: repeating-linear-gradient(90deg, transparent 0 5px, #fff1 5px 6px);
 }
 
 .volume-style-3 {
   border-top: 10px solid #e8c880;
-  border-bottom: 10px solid #e8c880
+  border-bottom: 10px solid #e8c880;
 }
 
 .volume-style-4 {
-  color: #3b453d
+  color: #3b453d;
 }
 
 .volume-style-5 {
   border-top: 5px double #ede4bb;
-  border-bottom: 5px double #ede4bb
+  border-bottom: 5px double #ede4bb;
 }
 
 .book-create {
   transform: rotate(-2deg);
-  --book-color: #e6bc4c
+  --book-color: #e6bc4c;
 }
 
 .book-contribute {
   transform: rotate(.7deg);
-  --book-color: #dfa1b0
+  --book-color: #dfa1b0;
 }
 
 .book-library {
   transform: rotate(1.8deg);
-  --book-color: #a4b0cb
+  --book-color: #a4b0cb;
 }
 
 .book-personal {
   transform: rotate(-1deg);
   --book-color: #77814c;
-  --book-ink: #fffae9
+  --book-ink: #fffae9;
 }
 
 @media(min-width:1400px) {
   .bookshelf-home {
-    padding-top: 35px
-  }
+  padding-top: 35px;
+}
 }
 
 @media(max-width:1000px) {
   .bookshelf-home {
-    padding: 25px 30px
-  }
+  padding: 25px 30px;
+}
 }
 
 @media(max-width:680px) {
   .bookshelf-home {
-    padding: 23px 18px
-  }
+  padding: 23px 18px;
+}
 }
 
 @media(max-width:370px) {
 
   .bookshelf-home {
-    padding-inline: 12px
-  }
+  padding-inline: 12px;
+}
 }

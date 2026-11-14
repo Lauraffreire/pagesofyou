@@ -1,74 +1,41 @@
 /* Ferramentas de composição do livro. */
 .memory-composition {
   margin: 30px auto;
-  max-width: 600px
+  max-width: 600px;
 }
 
 .memory-credit {
   font-size: 12px;
   color: #777;
   text-align: right;
-  margin: 14px 0
+  margin: 14px 0;
 }
 
 .visual-editor {
   grid-template-columns: 190px minmax(300px, 1fr) 290px;
-  background: #f2f2f2
-}
-
-.visual-editor .editor-sidebar {
-  padding: 75px 16px 25px;
-  background: #fff;
-  border-right: 1px solid #ddd
 }
 
 .visual-editor .editor-canvas {
-  align-self: start;
-  padding: 35px;
   min-width: 0;
-  background: #f2f2f2
 }
 
 .visual-editor .editor-properties {
-  background: white;
-  border-left: 1px solid #ddd;
   border-radius: 0;
   margin: 0;
-  padding: 25px 20px;
-  max-height: 100vh;
   overflow: auto;
-  position: sticky;
-  top: 0
+  top: 0;
 }
 
 .design-tools h2 {
-  font-size: 13px;
-  margin: 25px 0 10px;
-  font-weight: 600
+  font-weight: 600;
 }
 
 .design-tools button,
 .design-operations button {
   display: block;
   text-align: left;
-  border: 1px solid #ddd;
-  background: #fff;
-  border-radius: 5px;
-  padding: 9px 12px;
-  margin: 6px 0;
   width: 100%;
   font-size: 13px;
-  min-height: 36px
-}
-
-.design-tools button:hover,
-.design-operations button:hover {
-  background: #eee
-}
-
-.design-tools button[aria-pressed=true] {
-  border-color: #555;
-  background: #eee
 }
 
 .design-sheet {
@@ -79,9 +46,8 @@
   margin: 0 auto;
   overflow: hidden;
   container-type: inline-size;
-  box-shadow: 0 2px 12px #0002;
   text-align: left;
-  isolation: isolate
+  isolation: isolate;
 }
 
 .design-element {
@@ -90,25 +56,23 @@
   overflow-wrap: anywhere;
   line-height: 1.2;
   overflow: hidden;
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 #design-sheet .design-element {
   cursor: move;
   touch-action: none;
-  user-select: none
+  user-select: none;
 }
 
 #design-sheet .design-element.selected {
   outline: 2px solid #597bd1;
-  outline-offset: -2px
+  outline-offset: -2px;
 }
 
 .design-hint {
-  font-size: 12px;
-  color: #777;
   text-align: center;
-  margin: 16px 0
+  margin: 16px 0;
 }
 
 .design-background {
@@ -118,23 +82,19 @@
   border-bottom: 1px solid #ddd;
   padding-bottom: 15px;
   margin-bottom: 15px;
-  font-size: 13px
+  font-size: 13px;
 }
 
 #design-inspector {
   border-bottom: 1px solid #ddd;
   padding-bottom: 20px;
-  margin-bottom: 20px
-}
-
-#design-inspector h3 {
-  font-size: 14px
+  margin-bottom: 20px;
 }
 
 #design-inspector label {
   display: block;
   font-size: 12px;
-  margin: 10px 0
+  margin: 10px 0;
 }
 
 #design-inspector input:not([type=checkbox]),
@@ -142,32 +102,24 @@
 #design-inspector textarea {
   display: block;
   width: 100%;
-  padding: 6px;
   border: 1px solid #bbb;
-  background: white;
-  border-radius: 4px
+  border-radius: 4px;
 }
 
 #design-inspector textarea {
   min-height: 85px;
-  resize: vertical
+  resize: vertical;
 }
 
 .design-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 10px
+  gap: 0 10px;
 }
 
 .design-operations {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5px
-}
-
-.design-operations button {
-  font-size: 11px;
-  margin: 0
 }
 
 .design-sheet input[type=color],
@@ -175,73 +127,54 @@
   width: 45px;
   height: 32px;
   padding: 2px;
-  border: 1px solid #aaa
+  border: 1px solid #aaa;
 }
 
 .reader-page>.design-sheet {
-  margin: 30px auto
+  margin: 30px auto;
 }
 
 @media(max-width:950px) {
   .visual-editor {
-    grid-template-columns: 145px minmax(250px, 1fr) 240px
-  }
+  grid-template-columns: 145px minmax(250px, 1fr) 240px;
+}
 
   .visual-editor .editor-canvas {
-    padding: 25px 15px
-  }
+  padding: 25px 15px;
+}
 }
 
 @media(max-width:760px) {
   .visual-editor {
-    grid-template-columns: 110px minmax(0, 1fr)
-  }
+  grid-template-columns: 110px minmax(0, 1fr);
+}
 
   .visual-editor .editor-sidebar {
-    grid-row: 1/3;
-    padding: 65px 10px 20px
-  }
+  grid-row: 1/3;
+}
 
   .visual-editor .editor-properties {
-    grid-column: 2;
-    grid-row: 2;
-    position: static;
-    max-height: none;
-    border: 0;
-    margin: 0
-  }
-
-  .visual-editor .editor-canvas {
-    padding: 30px 15px
-  }
+  grid-column: 2;
+  grid-row: 2;
+  position: static;
+  max-height: none;
+  border: 0;
+  margin: 0;
+}
 
   .design-tools button {
-    font-size: 12px;
-    padding: 8px
-  }
+  font-size: 12px;
+  padding: 8px;
+}
 
   .design-sheet {
-    min-width: 0
-  }
+  min-width: 0;
+}
 }
 
-/* Direcao visual: cartazes editoriais e livros de formas simples. */
-:root {
-  --paper: #f7f5ef;
-  --ink: #30241f;
-  --muted: #766d65;
-  --line: #dcd6cb;
-  --green: #195771;
-  --red: #f04c32;
-  --pink: #efa7cf;
-  --olive: #a6a144;
-  --blue: #7a83e9;
-  --yellow: #f1bb42;
-}
+/* Apresentação dos livros e componentes do editor. */
 
 body {
-  background: var(--paper);
-  color: var(--ink);
   font: 14px/1.55 Arial, sans-serif;
 }
 
@@ -250,11 +183,6 @@ input,
 textarea,
 select {
   color: inherit;
-}
-
-:focus-visible {
-  outline: 3px solid #195771;
-  outline-offset: 4px;
 }
 
 .header {
@@ -311,7 +239,6 @@ select {
 .page h1.screen-brand {
   top: 37px;
   font: 400 27px/1.2 Georgia, serif;
-  letter-spacing: -.055em;
 }
 
 .button,
@@ -484,11 +411,6 @@ select {
   padding-left: 12px;
 }
 
-.personal-books {
-  margin-top: 35px;
-  gap: 26px;
-}
-
 .simple-book {
   min-height: 280px;
   border: 1px solid var(--line);
@@ -587,9 +509,7 @@ select {
 }
 
 .visual-editor .editor-sidebar {
-  background: var(--paper);
   border-right: 1px solid var(--line);
-  padding: 85px 18px 25px;
 }
 
 .visual-editor .editor-sidebar .back-link {
@@ -598,13 +518,11 @@ select {
 }
 
 .visual-editor .editor-canvas {
-  background: #eeeae1;
   padding: 40px clamp(18px, 3.5vw, 60px);
 }
 
 .visual-editor .editor-properties {
   background: #fcfaf5;
-  padding: 28px 22px;
   border-left: 1px solid var(--line);
   scrollbar-width: thin;
 }
@@ -648,11 +566,6 @@ select {
 
 .design-tools button[data-design-add=ellipse] {
   border-left: 4px solid var(--olive);
-}
-
-.design-tools button[aria-pressed=true] {
-  background: #f3e0eb;
-  border-color: #c88da9;
 }
 
 #design-layers p {
@@ -762,144 +675,144 @@ dialog .panel-actions {
 
 @media (max-width: 1050px) {
   .visual-editor {
-    grid-template-columns: 155px minmax(0, 1fr) 260px;
-  }
+  grid-template-columns: 155px minmax(0, 1fr) 260px;
+}
 
   .visual-editor .editor-canvas {
-    padding: 35px 20px;
-  }
+  padding: 35px 20px;
+}
 }
 
 @media (max-width: 760px) {
   .header {
-    top: 22px;
-    right: 20px;
-  }
+  top: 22px;
+  right: 20px;
+}
 
   .page {
-    padding: 105px 24px 35px;
-  }
+  padding: 105px 24px 35px;
+}
 
   .back-link {
-    top: 22px;
-    left: 20px;
-  }
+  top: 22px;
+  left: 20px;
+}
 
   .screen-brand,
   .page h1.screen-brand {
-    top: 31px;
-    font-size: 24px;
-  }
+  top: 31px;
+  font-size: 24px;
+}
 
   .area-actions {
-    margin-top: 30px;
-    gap: 14px;
-  }
+  margin-top: 30px;
+  gap: 14px;
+}
 
   .area-actions .button {
-    padding: 23px 18px;
-    min-height: 145px;
-    font-size: 26px;
-  }
+  padding: 23px 18px;
+  min-height: 145px;
+  font-size: 26px;
+}
 
   .area-actions .button:after {
-    top: 14px;
-    right: 16px;
-  }
+  top: 14px;
+  right: 16px;
+}
 
   .visual-editor {
-    grid-template-columns: 120px minmax(0, 1fr);
-  }
+  grid-template-columns: 120px minmax(0, 1fr);
+}
 
   .visual-editor .editor-sidebar {
-    grid-row: 1/3;
-    padding: 75px 10px 20px;
-  }
+  grid-row: 1/3;
+  padding: 75px 10px 20px;
+}
 
   .visual-editor .editor-canvas {
-    padding: 25px 18px;
-  }
+  padding: 25px 18px;
+}
 
   .visual-editor .editor-properties {
-    grid-column: 2;
-    grid-row: 2;
-    position: static;
-    max-height: none;
-    border-left: 1px solid var(--line);
-    padding: 25px 20px;
-  }
+  grid-column: 2;
+  grid-row: 2;
+  position: static;
+  max-height: none;
+  border-left: 1px solid var(--line);
+  padding: 25px 20px;
+}
 
   .design-tools button {
-    padding: 9px 8px;
-    font-size: 12px;
-  }
+  padding: 9px 8px;
+  font-size: 12px;
+}
 
   .personal-books {
-    grid-template-columns: 1fr;
-    margin-top: 25px;
-  }
+  grid-template-columns: 1fr;
+  margin-top: 25px;
+}
 
   .proposal-card {
-    align-items: flex-start;
-  }
+  align-items: flex-start;
+}
 }
 
 @media (max-width: 440px) {
 
   .area-actions {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 10px;
-  }
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
 
   .area-actions .button {
-    min-height: 100px;
-  }
+  min-height: 100px;
+}
 
   .auth-card {
-    padding: 30px 24px;
-  }
+  padding: 30px 24px;
+}
 
   .simple-book {
-    padding: 20px;
-    min-height: 245px;
-  }
+  padding: 20px;
+  min-height: 245px;
+}
 
   .book-thumbnail {
-    width: 115px;
-    min-height: 175px;
-    font-size: 23px;
-  }
+  width: 115px;
+  min-height: 175px;
+  font-size: 23px;
+}
 
   .visual-editor {
-    grid-template-columns: 100px minmax(0, 1fr);
-  }
+  grid-template-columns: 100px minmax(0, 1fr);
+}
 
   .visual-editor .editor-canvas {
-    padding: 25px 12px;
-  }
+  padding: 25px 12px;
+}
 
   .visual-editor .editor-properties {
-    padding: 24px 14px;
-  }
+  padding: 24px 14px;
+}
 
   .design-operations {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: 1fr;
+}
 
   dialog {
-    padding: 35px 22px;
-  }
+  padding: 35px 22px;
+}
 
   dialog h2 {
-    font-size: 26px;
-  }
+  font-size: 26px;
+}
 }
 
 @media (prefers-reduced-motion: reduce) {
   * {
-    transition: none !important;
-  }
+  transition: none !important;
+}
 }
 
 .design-sections {
@@ -948,13 +861,13 @@ dialog .panel-actions {
 
 @media(max-width:440px) {
   .custom-book-thumbnail {
-    width: 115px;
-  }
+  width: 115px;
+}
 
   .design-sections button {
-    padding: 10px 6px;
-    font-size: 12px;
-  }
+  padding: 10px 6px;
+  font-size: 12px;
+}
 }
 
 .edit-book-information {
@@ -1007,12 +920,7 @@ dialog .panel-actions {
   height: 80%;
 }
 
-/* Tipografia inspirada na referencia: titulos espacados e lombadas manuscritas. */
-:root {
-  --display-font: 'Century Gothic', 'Avenir Next', 'Trebuchet MS', Arial, sans-serif;
-  --handwritten-font: 'Segoe Print', 'Bradley Hand', 'Segoe Script', cursive;
-}
-
+/* Títulos e identificação dos livros. */
 
 .screen-brand,
 .page h1.screen-brand {
@@ -1021,7 +929,6 @@ dialog .panel-actions {
   text-transform: uppercase;
   letter-spacing: .13em;
 }
-
 
 .area-actions .button,
 .auth-card h1,
@@ -1041,7 +948,7 @@ dialog h2 {
 
   .screen-brand,
   .page h1.screen-brand {
-    font-size: 20px;
-    letter-spacing: .1em;
-  }
+  font-size: 20px;
+  letter-spacing: .1em;
+}
 }

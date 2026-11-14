@@ -45,7 +45,7 @@ a aplicação depois de todos os ficheiros terem sido executados.
 `css/estilos.css` importa as folhas pela ordem da cascata existente:
 
 - `components.css`: miniaturas, lombadas e pegas.
-- `base.css`: base, acessibilidade e componentes iniciais.
+- `base.css`: definição única das cores e fontes, base e acessibilidade.
 - `layout.css`: estruturas das páginas, formulários e editor.
 - `editor.css`: composição, tipografia e apresentação dos livros.
 - `atelier.css`: ferramentas do atelier e elementos da estante.
@@ -56,6 +56,13 @@ a aplicação depois de todos os ficheiros terem sido executados.
 comum ao projeto, incluindo regras destinadas à instalação. Não se deve copiar
 esta versão organizada do site por cima do diretório da instalação.
 As folhas incluem adaptações responsivas junto dos respetivos componentes.
+
+A fonte principal é **Manrope**, importada uma única vez em `identidade.css`.
+A família e a paleta são definidas apenas no bloco `:root` de `css/base.css`.
+`--serif` e `--display-font` são aliases de `--sans`, mantidos para os componentes
+existentes. Para alterar a fonte da interface, editar apenas `--sans`.
+As fontes explícitas dos ornamentos das lombadas e as escolhidas no editor
+dos livros são independentes da tipografia da interface.
 
 ## Dados e permissões
 
