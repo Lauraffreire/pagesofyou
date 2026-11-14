@@ -1,0 +1,984 @@
+/* Fira Sans na interface; o titulo principal conserva Georgia. */
+:root {
+  --sans: 'Fira Sans', Arial, sans-serif;
+  --display-font: 'Fira Sans', Arial, sans-serif
+}
+
+body {
+  font-family: var(--sans)
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: var(--sans)
+}
+
+h1:not(.quiet-title),
+h2,
+h3,
+h4,
+h5,
+h6,
+.page h1.screen-brand,
+.shelf-area h1.screen-brand,
+.design-part-title,
+.book-thumbnail,
+.reading h2,
+.reading .dedication h2,
+.editor-properties h2,
+.auth-card h1,
+.page .auth-card h1,
+dialog h2,
+.proposal-card h2,
+.shelf-menu-book>span,
+.atelier-empty,
+.flip-cover-title {
+  font-family: var(--sans)
+}
+
+.quiet-title {
+  font-family: Georgia, 'Times New Roman', serif
+}
+
+/* Escala adaptada a altura da janela, mantendo os controlos visiveis. */
+.page:not(.shelf-area) {
+  padding-top: 76px;
+  padding-bottom: 28px
+}
+
+.page h1 {
+  font-size: clamp(25px, 3.2vw, 38px)
+}
+
+.reader-page {
+  --reading-height: max(180px, calc(100svh - 340px))
+}
+
+.reader-page>.design-sheet,
+.reader-page .memory-composition,
+.reader-page .book-cover-preview,
+.reader-page .book-pages-preview {
+  width: min(100%, 420px, calc(var(--reading-height)*.714286));
+  margin: 16px auto
+}
+
+.reader-page .book-cover-preview .design-sheet,
+.reader-page .book-pages-preview .design-sheet {
+  width: 100%
+}
+
+.reader-page .flipbook.closed {
+  max-width: min(340px, calc(var(--reading-height)*.714286));
+  margin: 16px auto 22px
+}
+
+.reader-page .flipbook.open {
+  max-width: min(900px, calc(var(--reading-height)*1.428572));
+  margin: 16px auto
+}
+
+.reader-page .atelier-spread {
+  margin: 0 auto 10px
+}
+
+.reader-page .design-hint {
+  margin: 8px 0;
+  font-size: 12px
+}
+
+.reader-page>h1 {
+  margin: 12px 0
+}
+
+.reader-page .review-actions,
+.reader-page .page-controls {
+  margin: 12px 0;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center
+}
+
+.reader-page .reading {
+  min-height: 0;
+  margin: 20px auto;
+  max-width: 900px
+}
+
+.reader-page .reading>section {
+  padding: clamp(16px, 3vw, 35px)
+}
+
+.page .auth-card {
+  padding: 26px 30px;
+  margin: 8px 0 18px
+}
+
+.page .auth-card h1 {
+  font-size: 27px;
+  margin-bottom: 18px
+}
+
+.page .auth-card .field {
+  margin: 13px 0
+}
+
+.page .auth-card .button {
+  margin-top: 16px
+}
+
+.personal-books {
+  margin-top: 20px;
+  gap: 20px
+}
+
+.visual-editor .editor-canvas {
+  padding: 22px;
+  min-height: 0
+}
+
+.visual-editor #live-preview>.design-sheet {
+  width: min(100%, calc((100svh - 185px)*.714286), 460px)
+}
+
+.visual-editor #live-preview>.atelier-spread {
+  max-width: min(100%, calc((100svh - 230px)*1.428572), 1050px);
+  margin: 12px auto
+}
+
+.visual-editor .design-part-title {
+  font-size: 21px;
+  margin-bottom: 12px
+}
+
+.atelier-pagination {
+  margin: 8px 0 14px
+}
+
+@media(max-width:600px) {
+  .page:not(.shelf-area) {
+    padding: 72px 20px 24px
+  }
+
+  .reader-page {
+    --reading-height: max(160px, calc(100svh - 340px))
+  }
+
+  .reader-page .review-actions .button,
+  .reader-page .page-controls .button {
+    font-size: 13px;
+    padding: 10px 14px
+  }
+
+  .page .auth-card {
+    padding: 24px 20px
+  }
+
+  .visual-editor .editor-canvas {
+    padding: 18px 12px
+  }
+
+  .visual-editor #live-preview>.atelier-spread {
+    max-width: 100%
+  }
+
+  .page .screen-brand {
+    font-size: 20px
+  }
+}
+
+@media(max-height:650px) and (min-width:601px) {
+  .page:not(.shelf-area) {
+    padding-top: 60px
+  }
+
+  .reader-page {
+    --reading-height: max(150px, calc(100svh - 320px))
+  }
+
+  .reader-page .design-hint {
+    margin: 5px 0
+  }
+
+  .reader-page .review-actions,
+  .reader-page .page-controls {
+    margin: 8px 0
+  }
+
+  .page .auth-card {
+    padding: 20px 26px
+  }
+
+  .page .auth-card h1 {
+    font-size: 24px
+  }
+
+  .page .auth-card .field {
+    margin: 9px 0
+  }
+}
+
+/* Editor em tres zonas: paginas e camadas, livro, criacao. */
+.visual-editor {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr) 310px;
+  height: 100svh;
+  min-height: 0;
+  overflow: hidden;
+  align-items: stretch
+}
+
+.visual-editor .editor-sidebar {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  padding: 78px 15px 22px;
+  overflow-y: auto;
+  min-height: 0;
+  background: #faf8f3
+}
+
+.visual-editor .editor-canvas {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  min-height: 0;
+  padding: 22px;
+  overflow: auto
+}
+
+.visual-editor .editor-properties {
+  grid-column: 3;
+  grid-row: 1;
+  position: static;
+  max-height: none;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 22px 18px
+}
+
+.visual-editor .editor-canvas-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  justify-content: space-between;
+  margin-bottom: 18px
+}
+
+.visual-editor .editor-canvas-head .button {
+  font-size: 12px;
+  padding: 9px 12px
+}
+
+.visual-editor .editor-properties>h2 {
+  font-size: 23px;
+  margin-bottom: 15px
+}
+
+.visual-editor .edit-book-information {
+  margin: 0 0 16px;
+  width: 100%;
+  padding: 9px;
+  font-size: 13px
+}
+
+.editor-page-navigation,
+.editor-layer-navigation {
+  border-top: 1px solid #ded9ce;
+  margin-top: 20px;
+  padding-top: 16px
+}
+
+.editor-sidebar .editor-page-navigation h2,
+.editor-sidebar .editor-layer-navigation h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  margin: 0 0 12px;
+  color: #737064
+}
+
+#atelier-page-list {
+  display: grid;
+  gap: 5px
+}
+
+#atelier-page-list button,
+#design-layers button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 4px;
+  font-size: 13px;
+  overflow-wrap: anywhere
+}
+
+#atelier-page-list button[aria-pressed=true],
+#design-layers button[aria-pressed=true] {
+  background: #e6ebdf;
+  border-color: #a2ad92
+}
+
+#atelier-page-list button:hover,
+#design-layers button:hover {
+  background: #eeeae1
+}
+
+#atelier-page-tools .atelier-pagination {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-top: 14px;
+  font-size: 11px
+}
+
+#atelier-page-tools .atelier-pagination label {
+  flex-wrap: wrap;
+  font-size: 11px
+}
+
+#atelier-page-tools .atelier-pagination input {
+  width: 55px;
+  min-width: 0
+}
+
+#atelier-page-tools .atelier-pagination button {
+  font-size: 11px;
+  padding: 6px 4px
+}
+
+#atelier-page-tools .atelier-pagination label:has(#atelier-page) {
+  grid-column: 1/-1;
+  grid-row: 1
+}
+
+#atelier-page-tools #atelier-delete {
+  grid-column: 1/-1
+}
+
+.editor-properties .design-tools {
+  display: block
+}
+
+.editor-tool-group {
+  border-top: 1px solid #ded9ce;
+  padding: 13px 0
+}
+
+.editor-tool-group summary {
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 10px
+}
+
+.editor-tool-group:not([open]) summary {
+  margin-bottom: 0
+}
+
+.editor-tool-group[open] {
+  display: block
+}
+
+.editor-tool-group>button {
+  display: inline-block;
+  width: calc(50% - 5px);
+  margin: 4px 4px 4px 0;
+  padding: 8px;
+  font-size: 12px;
+  vertical-align: top
+}
+
+.editor-tool-group label {
+  font-size: 12px
+}
+
+.editor-tool-group .atelier-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px
+}
+
+.editor-tool-group .atelier-modes button {
+  padding: 8px;
+  font-size: 11px
+}
+
+.editor-properties .design-background {
+  padding-top: 14px
+}
+
+.visual-editor #live-preview>.atelier-spread {
+  max-width: min(100%, calc((100svh - 190px)*1.428572))
+}
+
+@media(max-width:1050px) and (min-width:761px) {
+  .visual-editor {
+    grid-template-columns: 175px minmax(0, 1fr) 275px
+  }
+
+  .visual-editor .editor-canvas {
+    padding: 18px 12px
+  }
+
+  .visual-editor .editor-properties {
+    padding: 20px 14px
+  }
+}
+
+@media(max-width:760px) {
+  .visual-editor {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100svh;
+    overflow: visible
+  }
+
+  .visual-editor .editor-sidebar {
+    order: 0;
+    overflow: visible;
+    padding: 65px 18px 18px
+  }
+
+  .visual-editor .editor-canvas {
+    order: 1;
+    width: 100%;
+    overflow: visible;
+    padding: 18px
+  }
+
+  .visual-editor .editor-properties {
+    order: 2;
+    width: 100%;
+    overflow: visible;
+    padding: 22px 18px
+  }
+
+  .editor-page-navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px
+  }
+
+  .editor-page-navigation h2 {
+    grid-column: 1/-1
+  }
+
+  .editor-layer-navigation {
+    max-height: 180px;
+    overflow: auto
+  }
+
+  .visual-editor #live-preview>.atelier-spread {
+    max-width: 100%
+  }
+}
+
+/* Navegacao de paginas e historico compactos. */
+.editor-pages-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  margin-bottom: 10px
+}
+
+.editor-pages-heading button {
+  background: transparent;
+  border: 0;
+  padding: 5px;
+  border-radius: 4px;
+  min-height: 30px;
+  color: #54584a
+}
+
+#atelier-pages-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left
+}
+
+#atelier-page-tools {
+  display: flex;
+  align-items: center;
+  gap: 3px
+}
+
+#atelier-page-tools button {
+  width: 28px;
+  font-size: 23px;
+  line-height: 1;
+  padding: 2px
+}
+
+#atelier-page-tools button:hover,
+#atelier-pages-toggle:hover {
+  background: #eae5da
+}
+
+#atelier-page-tools button:disabled {
+  opacity: .35
+}
+
+#atelier-page-tools button[hidden],
+#atelier-page-list[hidden] {
+  display: none
+}
+
+.editor-history-arrows {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: auto
+}
+
+.editor-history-arrows button {
+  border: 1px solid #d6d0c4;
+  background: #faf8f3;
+  border-radius: 5px;
+  padding: 3px 8px;
+  font-size: 25px;
+  line-height: 1;
+  min-width: 34px;
+  min-height: 32px
+}
+
+.editor-history-arrows button:disabled {
+  opacity: .3
+}
+
+.editor-history-arrows button:not(:disabled):hover {
+  background: #e6ebdf
+}
+
+@media(max-width:760px) {
+  .editor-page-navigation {
+    display: block
+  }
+
+  .editor-pages-heading {
+    margin-bottom: 10px
+  }
+}
+
+/* Folhear com setas discretas por baixo das paginas. */
+.editor-book-navigation {
+  display: flex;
+  margin-top: 12px
+}
+
+.book-navigation-back {
+  justify-content: flex-start
+}
+
+.book-navigation-forward {
+  justify-content: flex-end
+}
+
+.editor-book-navigation button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #535e44;
+  font-size: 25px;
+  line-height: 1;
+  border-radius: 4px
+}
+
+.editor-book-navigation button:not(:disabled):hover {
+  background: #dedfd4
+}
+
+.editor-book-navigation button:disabled {
+  opacity: .2;
+  cursor: default
+}
+
+/* La camera se rapproche de la meme estante et revient en arriere. */
+body:has(.quiet-library) {
+  overflow: hidden
+}
+
+main:has(>.quiet-library) {
+  height: 100svh;
+  overflow: hidden;
+  position: relative
+}
+
+.quiet-library {
+  transform-origin: 0 0;
+  transition: transform 850ms cubic-bezier(.22, .68, .2, 1);
+  will-change: transform
+}
+
+.quiet-library .personal-shelf-stage {
+  view-transition-name: none
+}
+
+.quiet-library .proportional-book>span {
+  position: relative;
+  z-index: 1;
+  writing-mode: vertical-rl;
+  font: 400 3.1cqw/1.2 var(--sans);
+  padding: 1.6cqw .6cqw;
+  max-height: 90%;
+  text-align: center;
+  color: #263b33;
+  background: var(--volume-color);
+  opacity: 0;
+  transition: opacity 250ms
+}
+
+.quiet-library .proportional-book.dashboard-card {
+  padding: 0;
+  background: var(--volume-color);
+  border-radius: 2px 3px 0 0
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+  .quiet-library,
+  .quiet-library .proportional-book>span {
+    transition: none !important
+  }
+}
+
+.page-pattern-none {
+  --page-pattern: none;
+  --pattern-size: auto;
+  background-image: none
+}
+
+.page-pattern-lines {
+  --page-pattern: repeating-linear-gradient(0deg, transparent 0 23px, #708b9c40 23px 24px);
+  --pattern-size: auto;
+  background-image: var(--page-pattern)
+}
+
+.page-pattern-grid {
+  --page-pattern: linear-gradient(#708b9c30 1px, transparent 1px), linear-gradient(90deg, #708b9c30 1px, transparent 1px);
+  --pattern-size: 20px 20px, 20px 20px;
+  background-image: var(--page-pattern);
+  background-size: var(--pattern-size)
+}
+
+.page-pattern-dots {
+  --page-pattern: radial-gradient(circle, #708b9c70 1px, transparent 1.5px);
+  --pattern-size: 16px 16px;
+  background-image: var(--page-pattern);
+  background-size: var(--pattern-size)
+}
+
+.page-pattern-stripes {
+  --page-pattern: repeating-linear-gradient(135deg, transparent 0 12px, #b391a32b 12px 24px);
+  --pattern-size: auto;
+  background-image: var(--page-pattern)
+}
+
+.atelier-objects,
+.atelier-patterns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px
+}
+
+.editor-tool-group .atelier-objects button,
+.editor-tool-group .atelier-patterns button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 86px;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid #ded9ce;
+  border-radius: 6px;
+  background: #fffdf8;
+  color: #4e5147;
+  font-size: 11px;
+  cursor: pointer
+}
+
+.atelier-objects button:hover,
+.atelier-patterns button:hover {
+  box-shadow: inset 0 0 0 1px #a2ad92
+}
+
+.atelier-patterns button[aria-pressed=true] {
+  outline: 2px solid #728360;
+  outline-offset: 1px
+}
+
+.object-preview {
+  display: block;
+  pointer-events: none
+}
+
+.object-preview-postit {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: #f4df88;
+  transform: rotate(-7deg);
+  box-shadow: 2px 3px 4px #50442325;
+  border-radius: 0 0 9px 0
+}
+
+.object-preview-postit::after {
+  content: '';
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 16px;
+  height: 1px;
+  background: #8b79354d;
+  box-shadow: 0 8px #8b79354d, 0 16px #8b79354d
+}
+
+.object-preview-tape {
+  width: 65px;
+  height: 23px;
+  transform: rotate(-12deg);
+  background: repeating-linear-gradient(90deg, #d3b4bb 0 9px, #e6cdd2 9px 10px);
+  opacity: .8;
+  clip-path: polygon(3% 0, 98% 3%, 96% 30%, 100% 50%, 96% 74%, 98% 100%, 0 96%, 3% 75%, 0 50%)
+}
+
+.object-preview-sticker,
+.object-preview-clip {
+  font-size: 44px;
+  line-height: 1.2
+}
+
+.pattern-preview {
+  display: block;
+  width: 100%;
+  height: 48px;
+  background-color: #fffdf8;
+  border: 1px solid #e5dfd3;
+  border-radius: 3px
+}
+
+.design-element.scrapbook-photo {
+  overflow: hidden;
+  background: transparent !important
+}
+
+.scrapbook-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  max-width: none
+}
+
+.design-element.scrapbook-audio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  box-sizing: border-box;
+  background: #f6f1e7 !important;
+  border: 1px solid #d8cdbb;
+  border-radius: 8px !important;
+  color: #454c3e !important;
+  font-size: 14px !important
+}
+
+.scrapbook-audio>span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: inherit
+}
+
+.scrapbook-audio audio {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 38px
+}
+
+.atelier-upload {
+  display: block;
+  margin: 12px 0;
+  padding: 10px;
+  border: 1px dashed #b8b39e;
+  border-radius: 6px;
+  background: #fffdf8
+}
+
+.atelier-upload input {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  font-size: 11px;
+  box-sizing: border-box
+}
+
+.photo-controls {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ded9ce
+}
+
+.photo-controls h4 {
+  margin: 16px 0 5px;
+  font-size: 13px
+}
+
+.photo-controls p {
+  font-size: 12px;
+  color: #656959
+}
+
+.photo-controls input[type=range] {
+  width: 100%;
+  padding: 0
+}
+
+#design-sheet .design-element[contenteditable] {
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+  touch-action: auto
+}
+
+#design-sheet .design-element[contenteditable]:focus {
+  outline: 2px solid #195771;
+  outline-offset: 2px
+}
+
+.atelier-templates {
+  display: grid;
+  gap: 12px
+}
+
+.atelier-templates .atelier-template {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ded9ce;
+  border-radius: 7px;
+  background: #fffdf8;
+  color: #4d5945;
+  cursor: pointer;
+  text-align: center
+}
+
+.atelier-templates .atelier-template:hover {
+  border-color: #728360;
+  background: #f4f5ed
+}
+
+.atelier-template:focus-visible {
+  outline: 2px solid #195771;
+  outline-offset: 3px
+}
+
+.template-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 110px;
+  min-height: 145px;
+  padding: 13px 12px;
+  background: #fff;
+  border: 1px solid #e8e2d7;
+  box-shadow: 2px 3px 5px #4d59451a;
+  text-align: left;
+  box-sizing: border-box;
+  font: 8px Georgia, serif
+}
+
+.template-preview strong {
+  font-size: 10px;
+  margin-bottom: 5px
+}
+
+.template-preview>span {
+  display: block;
+  min-height: 5px;
+  border-bottom: 1px solid #a7b19b80
+}
+
+.template-name {
+  font: 16px Georgia, serif
+}
+
+.atelier-template small {
+  font-size: 11px;
+  color: #737869
+}
+
+.cloud-notice {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 1000;
+  max-width: 760px;
+  margin: auto;
+  padding: 14px 20px;
+  background: #fff7e7;
+  color: #443c2e;
+  border: 1px solid #b2a387;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px #0002;
+}
+.cloud-notice[hidden] { display: none; }
+.legacy-actions { display: grid; justify-items: center; gap: 8px; margin: 20px 0; }
+.import-choice { display: flex; align-items: center; gap: 10px; margin: 16px 0; }
+.import-choice input { width: auto; flex: 0 0 auto; }
+
+.design-element.template-line {
+  border-bottom: 1px solid #a7b19b80
+}
+
+.atelier-objects .collage-preview { display: flex; align-items: center; justify-content: center; height: 68px; width: 100%; pointer-events: none; }
+.collage-preview svg { max-width: 82px; max-height: 60px; width: 100%; height: 100%; }
+.atelier-objects button small { display: block; font-size: 11px; margin-top: 5px; }
+
+:is(#photo-handles, #object-handles) .rotation-handle {
+  position: absolute; left: 50%; top: -38px; transform: translate(-50%, -50%);
+  width: 28px; height: 28px; min-width: 0; min-height: 0; padding: 4px; margin: 0;
+  border: 2px solid #fff; border-radius: 50%; background: #087bc1; color: #fff;
+  box-shadow: 0 0 0 1px #087bc1; pointer-events: auto; touch-action: none; cursor: grab;
+}
+:is(#photo-handles, #object-handles) .rotation-handle::after {
+  content: ''; position: absolute; width: 1px; height: 17px; background: #087bc1;
+  left: 50%; top: calc(100% + 2px); pointer-events: none;
+}
+.rotation-handle svg { display: block; width: 100%; height: 100%; pointer-events: none; }
+:is(#photo-handles, #object-handles) .rotation-handle:active { cursor: grabbing; }
+
+#design-sheet [data-placeholder]:empty::before {
+  content: attr(data-placeholder); opacity: .45; pointer-events: none;
+}
+#design-sheet [data-placeholder]:empty:focus::before { content: none; }
+
+.shape-menu-preview { display: inline-flex; width: 22px; height: 22px; margin-right: 8px; vertical-align: middle; pointer-events: none; }
+.shape-menu-preview svg { width: 100%; height: 100%; }
+
+#design-inspector:empty { display: none; }

@@ -1,0 +1,1169 @@
+/* 05. Wireframes: estante, acesso e área pessoal.
+A estrutura segue os desenhos;
+mantêm-se contraste e controlos legíveis. */
+:root {
+  --paper: #fafaf7;
+  --ink: #292d29;
+  --green: #465442;
+  --line: #d8d9d2;
+  --sans: Arial, sans-serif;
+  --serif: Georgia, serif;
+}
+
+.header {
+  max-width: none;
+  padding: 22px 5%;
+}
+
+.brand {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.header nav {
+  gap: 25px;
+}
+
+.spine {
+  background: var(--spine, #858b7c);
+  color: #fff;
+  width: 90px;
+  height: 250px;
+  border-radius: 3px 5px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 12px;
+  box-shadow: inset 5px 0 #0002, 4px 0 #0001;
+  transform-origin: bottom center;
+  transition: transform .2s;
+}
+
+.spine span {
+  writing-mode: vertical-rl;
+  font: 23px var(--serif);
+  letter-spacing: 1px;
+}
+
+.spine small {
+  font-size: 9px;
+}
+
+.spine-0 {
+  transform: rotate(-8deg);
+  margin-right: 9px;
+}
+
+.spine-1 {
+  height: 290px;
+}
+
+.spine-2 {
+  height: 225px;
+}
+
+.spine-3 {
+  height: 270px;
+  transform: rotate(4deg);
+}
+
+.spine-4 {
+  height: 240px;
+}
+
+a.spine:hover,
+a.spine:focus-visible {
+  transform: translateY(-12px);
+}
+
+.spine-new {
+  background: #e1e4d9;
+  color: #384335;
+  height: 220px;
+  transform: rotate(8deg);
+  margin-left: 10px;
+}
+
+.back-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 35px 0 25px;
+}
+
+.dashboard-card {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 28px;
+  background: #fff;
+}
+
+.dashboard-card:hover {
+  border-color: #7c8870;
+  background: #f0f2e9;
+}
+
+.dashboard-card h2 {
+  font: 23px var(--sans);
+  margin: 14px 0;
+}
+
+.dashboard-card h2 span {
+  float: right;
+}
+
+.dashboard-card p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+.sent-link {
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  font-size: 13px;
+}
+
+.personal-books {
+  margin-top: 30px;
+}
+
+.code-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 15px;
+}
+
+.auth-page {
+  max-width: 650px;
+}
+
+.auth-card {
+  max-width: 430px;
+  margin: 12px auto 40px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  padding: 30px;
+}
+
+.auth-card h1 {
+  font-size: 36px;
+}
+
+.auth-card>p {
+  font-size: 13px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.password-field {
+  display: flex;
+}
+
+.password-field input {
+  min-width: 0;
+}
+
+.password-field button {
+  border: 1px solid var(--line);
+  border-left: 0;
+  background: #f1f2eb;
+  padding: 0 12px;
+  font-size: 11px;
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: 12px;
+  margin: 22px 0;
+}
+
+.auth-switch a {
+  text-decoration: underline;
+}
+
+.auth-demo {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+
+.auth-demo p {
+  font-size: 13px;
+}
+
+.auth-demo small {
+  display: block;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.form-error {
+  color: #9b352b;
+  font-size: 12px;
+}
+
+.subnav {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+  margin: 25px 0;
+}
+
+.subnav a {
+  padding: 12px 0;
+}
+
+.subnav a[aria-current] {
+  border-bottom: 2px solid var(--green);
+}
+
+.proposal-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 25px;
+  margin: 18px 0;
+}
+
+.proposal-card h2 {
+  margin: 14px 0 8px;
+}
+
+.proposal-card p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.proposal-card .button {
+  flex-shrink: 0;
+}
+
+.review-actions,
+.reader-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.reader-details {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.reader-page {
+  max-width: 1200px;
+}
+
+.reading {
+  min-height: 440px;
+  border: 5px solid #d4d3c9;
+  box-shadow: 0 0 0 1px #aaa99f, 5px 6px 0 #e7e6de;
+}
+
+.reading.minimal .dedication {
+  background: #fff;
+}
+
+.reading p {
+  line-height: 1.85;
+}
+
+.reading figure {
+  margin: 0 0 20px;
+}
+
+.reading figcaption {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* 06. Editor com livro central e ferramentas laterais. */
+.editor-page {
+  display: grid;
+  grid-template-columns: 205px minmax(0, 1fr) 310px;
+  min-height: 750px;
+}
+
+.editor-sidebar {
+  background: #e9eae3;
+  padding: 25px 22px;
+  border-right: 1px solid var(--line);
+}
+
+.editor-sidebar h1 {
+  font: 26px/1.3 var(--serif);
+  margin: 20px 0;
+  overflow-wrap: anywhere;
+}
+
+.editor-sidebar p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.editor-sidebar>aside {
+  border-top: 1px solid var(--line);
+  margin-top: 30px;
+  padding-top: 20px;
+}
+
+.editor-sidebar>aside h2 {
+  font-size: 20px;
+}
+
+.editor-sidebar>aside small {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.editor-steps {
+  list-style: none;
+  padding: 0;
+  margin: 25px 0;
+  font-size: 12px;
+}
+
+.editor-steps li {
+  padding: 12px 0;
+  border-bottom: 1px solid #d3d5c9;
+  color: var(--muted);
+}
+
+.editor-steps [aria-current] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.editor-canvas {
+  padding: 28px;
+  background: #f1f1ec;
+  min-width: 0;
+}
+
+.editor-canvas-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.editor-canvas .reading {
+  min-height: 410px;
+  margin-top: 45px;
+}
+
+.editor-canvas .reading>section {
+  padding: 25px 20px;
+}
+
+.editor-canvas .reading h2 {
+  font-size: 26px;
+}
+
+.editor-canvas .reading p {
+  font-size: 13px;
+}
+
+.editor-canvas .reading .dedication h2 {
+  font-size: 31px;
+}
+
+.editor-properties {
+  padding: 28px 23px;
+  background: #fff;
+  border-left: 1px solid var(--line);
+  min-width: 0;
+}
+
+.editor-properties h2 {
+  font: 20px var(--sans);
+  margin-bottom: 25px;
+}
+
+.editor-properties .field {
+  margin: 17px 0;
+}
+
+.editor-properties .field input,
+.editor-properties .field select,
+.editor-properties .field textarea {
+  padding: 10px;
+  font-size: 12px;
+  background: #fafaf7;
+}
+
+.editor-properties input[type=file] {
+  font-size: 10px;
+}
+
+.editor-properties .panel-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.editor-properties .button {
+  width: 100%;
+  padding: 12px;
+}
+
+.editor-memories {
+  margin-top: 35px;
+  border-top: 1px solid var(--line);
+  padding-top: 25px;
+}
+
+.editor-memories h2 {
+  font-size: 24px;
+}
+
+.editor-memories .memory {
+  padding: 18px;
+}
+
+.editor-memories h3 {
+  font: 17px var(--serif);
+}
+
+.editor-memories .text-button {
+  font-size: 11px;
+}
+
+dialog {
+  width: min(510px, 92vw);
+  padding: 35px;
+  border-radius: 20px;
+}
+
+dialog::backdrop {
+  background: #24282091;
+}
+
+dialog .panel-actions {
+  justify-content: flex-end;
+}
+
+#result-count {
+  font-size: 11px;
+  margin-top: 25px;
+}
+
+@media (min-width: 1550px) {
+  .editor-page {
+    grid-template-columns: 240px minmax(0, 1fr) 360px;
+  }
+
+  .editor-canvas {
+    padding: 45px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .editor-page {
+    grid-template-columns: 165px minmax(0, 1fr) 280px;
+  }
+
+  .editor-canvas {
+    padding: 20px;
+  }
+
+  .editor-canvas .reading {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-canvas .reading>section+section {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .editor-canvas .reading .dedication {
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 760px) {
+  .header nav {
+    gap: 14px;
+    font-size: 11px;
+    flex-wrap: wrap;
+  }
+
+  .editor-page {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-sidebar {
+    padding: 18px 5%;
+    border-right: 0;
+  }
+
+  .editor-sidebar h1 {
+    margin: 8px 0;
+  }
+
+  .editor-sidebar .back-link {
+    margin-bottom: 8px;
+  }
+
+  .editor-sidebar>p,
+  .editor-sidebar>aside {
+    display: none;
+  }
+
+  .editor-steps {
+    display: flex;
+    gap: 20px;
+    margin: 15px 0 0;
+    flex-wrap: wrap;
+  }
+
+  .editor-steps li {
+    border: 0;
+    padding: 0;
+  }
+
+  .editor-properties {
+    border-left: 0;
+    grid-row: 2;
+    padding: 25px 5%;
+  }
+
+  .editor-canvas {
+    padding: 25px 5%;
+  }
+
+  .editor-canvas .reading {
+    margin-top: 25px;
+  }
+
+  .spine {
+    width: 65px;
+    height: 230px;
+  }
+
+  .spine-1 {
+    height: 265px;
+  }
+
+  .spine-2 {
+    height: 210px;
+  }
+
+  .spine-3 {
+    height: 245px;
+  }
+
+  .spine-new {
+    height: 200px;
+  }
+
+  .spine span {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .spine {
+    width: 43px;
+    padding: 15px 6px;
+    height: 205px;
+  }
+
+  .spine-1 {
+    height: 235px;
+  }
+
+  .spine-2 {
+    height: 180px;
+  }
+
+  .spine-3 {
+    height: 215px;
+  }
+
+  .spine-new {
+    height: 185px;
+    margin-left: 2px;
+    transform: rotate(5deg);
+  }
+
+  .spine span {
+    font-size: 17px;
+  }
+
+  .spine small {
+    font-size: 7px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .dashboard-card {
+    padding: 22px;
+  }
+
+  .sent-link,
+  .proposal-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .auth-card {
+    padding: 25px 20px;
+  }
+
+  .review-actions {
+    flex-wrap: wrap;
+  }
+
+  .review-actions .button {
+    flex: 1;
+  }
+
+  .subnav {
+    gap: 18px;
+    font-size: 13px;
+  }
+}
+
+/* Wireframes fornecidos: apresentação essencial, sem secções adicionais. */
+:root {
+  --paper: #fff;
+  --ink: #111;
+  --muted: #777;
+  --line: #999;
+  --green: #666;
+  --sans: Arial, sans-serif;
+  --serif: Arial, sans-serif
+}
+
+body {
+  background: #fff;
+  font: 14px/1.5 Arial, sans-serif
+}
+
+.header {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  padding: 0;
+  border: 0;
+  z-index: 2
+}
+
+.personal {
+  width: 40px;
+  height: 40px;
+  padding: 9px;
+  border: 0;
+  border-radius: 50%;
+  background: #d9d9d9
+}
+
+body:has(.page) .header,
+body:has(.editor-page) .header {
+  display: none
+}
+
+.button,
+.button.secondary {
+  background: #d9d9d9;
+  color: #111;
+  border: 0;
+  border-radius: 24px;
+  padding: 5px 15px;
+  min-height: 28px;
+  font-size: 13px;
+  gap: 8px
+}
+
+.button:hover,
+.button.secondary:hover {
+  background: #c7c7c7
+}
+
+h1,
+h2,
+h3 {
+  font-family: Arial, sans-serif;
+  font-weight: 400
+}
+
+.spine {
+  background: #d9d9d9;
+  box-shadow: none;
+  border-radius: 0;
+  width: 18%;
+  height: 78%;
+  padding: 0;
+  position: relative;
+  flex-shrink: 1
+}
+
+.spine span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%)
+}
+
+.spine-0 {
+  height: 58%;
+  transform: rotate(12deg)
+}
+
+.spine-1 {
+  height: 90%
+}
+
+.spine-2 {
+  height: 74%
+}
+
+.spine-3 {
+  height: 100%;
+  transform: none
+}
+
+.page {
+  max-width: 1200px;
+  padding: 75px 8% 40px;
+  min-height: 100vh
+}
+
+.back-link {
+  position: absolute;
+  left: 15px;
+  top: 12px;
+  border-radius: 50%;
+  background: #d9d9d9;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  overflow: hidden;
+  font-size: 0;
+  justify-content: center;
+  margin: 0
+}
+
+.back-link:before {
+  content: '‹';
+  font: 34px/1 Arial;
+  color: #333
+}
+
+.screen-brand,
+.page h1.screen-brand {
+  position: absolute;
+  top: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  margin: 0;
+  white-space: nowrap
+}
+
+.area-actions {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 25px;
+  margin: 80px 0 0 13%
+}
+
+.area-actions .button {
+  font-size: 22px;
+  padding: 3px 15px
+}
+
+.logout {
+  position: absolute;
+  right: 25px;
+  bottom: 20px;
+  font-size: 12px
+}
+
+.auth-page {
+  display: grid;
+  place-items: center
+}
+
+.auth-card {
+  width: min(370px, 100%);
+  padding: 30px 45px;
+  border: 1px solid #555;
+  border-radius: 0;
+  background: white;
+  box-shadow: none;
+  margin: 40px 0 0
+}
+
+.auth-card h1,
+.page .auth-card h1 {
+  font-size: 20px;
+  text-align: center;
+  margin: 0 0 25px
+}
+
+.auth-card .field {
+  margin: 15px auto;
+  max-width: 200px
+}
+
+.field label {
+  font-weight: 400;
+  font-size: 12px;
+  margin-bottom: 3px
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: white;
+  border: 1px solid #777;
+  border-radius: 0;
+  padding: 5px
+}
+
+.auth-card .button {
+  display: flex;
+  width: auto;
+  margin: 15px auto
+}
+
+.auth-card .text-button {
+  display: block;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: 12px;
+  margin: 18px 0 0
+}
+
+.password-field {
+  display: block
+}
+
+.password-field input {
+  width: 100%
+}
+
+.personal-books {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10%;
+  margin-top: 90px
+}
+
+.simple-book {
+  border: 1px solid #555;
+  padding: 22px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 210px
+}
+
+.book-thumbnail {
+  width: 115px;
+  min-height: 165px;
+  background: #d9d9d9;
+  padding: 14px;
+  font-size: 13px
+}
+
+.proposal-list {
+  margin-top: 90px;
+  width: min(420px, 100%)
+}
+
+.proposal-card {
+  border: 1px solid #555;
+  border-radius: 0;
+  padding: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  margin-bottom: 30px
+}
+
+.proposal-card h2 {
+  font-size: 14px;
+  margin: 0 0 5px
+}
+
+.proposal-card p {
+  font-size: 11px;
+  color: #888;
+  margin: 0
+}
+
+.proposal-card .button {
+  white-space: nowrap;
+  font-size: 12px
+}
+
+.reader-page>.page-top,
+.reader-page>.notice {
+  display: none
+}
+
+.reading {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 60vh;
+  margin: 35px 0;
+  border: 9px solid #d9d9d9;
+  outline: 1px solid #555;
+  box-shadow: none;
+  background: #fff
+}
+
+.reading>section {
+  padding: 28px;
+  overflow-wrap: anywhere
+}
+
+.reading>section+section {
+  border-left: 1px solid #333
+}
+
+.reading .dedication {
+  background: white
+}
+
+.reading .dedication h2 {
+  font-size: 30px
+}
+
+.reading h2 {
+  font-size: 23px
+}
+
+.reading .eyebrow,
+.reading .dedication>span {
+  display: none
+}
+
+.review-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-top: 30px
+}
+
+.page-controls {
+  display: flex;
+  justify-content: space-between
+}
+
+.code-label {
+  font-size: 12px;
+  color: #777
+}
+
+.editor-page {
+  display: grid;
+  grid-template-columns: 23% minmax(0, 1fr) 25%;
+  min-height: 100vh
+}
+
+.editor-sidebar {
+  background: #d9d9d9;
+  border: 0;
+  padding: 20px
+}
+
+.editor-canvas {
+  background: white;
+  padding: 55px 35px;
+  align-self: center
+}
+
+.editor-canvas-head {
+  display: none
+}
+
+.editor-properties {
+  background: #d9d9d9;
+  border: 0;
+  border-radius: 40px;
+  margin: 40px 20px 60px 0;
+  padding: 25px 20px
+}
+
+.editor-properties h2 {
+  font-size: 17px
+}
+
+.editor-properties .field input,
+.editor-properties .field select,
+.editor-properties .field textarea {
+  background: white
+}
+
+.editor-canvas .reading {
+  margin: 0;
+  min-height: 360px
+}
+
+.editor-canvas .reading>section {
+  padding: 15px
+}
+
+.editor-memories {
+  margin-top: 25px
+}
+
+.editor-memories h2 {
+  font-size: 17px
+}
+
+.memory {
+  background: white;
+  padding: 12px;
+  border: 1px solid #999;
+  border-radius: 0
+}
+
+dialog {
+  background: #666;
+  color: #fff;
+  border: 0;
+  border-radius: 70px;
+  width: min(560px, 92vw);
+  padding: 85px 35px;
+  box-shadow: none
+}
+
+dialog::backdrop {
+  background: #00000010
+}
+
+dialog h2 {
+  font: 400 20px/1.5 Arial;
+  text-align: center;
+  margin: 0 0 40px
+}
+
+dialog .panel-actions {
+  justify-content: center;
+  gap: 25px
+}
+
+#status {
+  background: #666;
+  color: white
+}
+
+@media(max-width:700px) {
+  .page {
+    padding: 80px 6% 30px
+  }
+
+  .personal-books {
+    grid-template-columns: 1fr;
+    gap: 25px
+  }
+
+  .area-actions {
+    margin-left: 10%;
+    gap: 20px
+  }
+
+  .editor-page {
+    grid-template-columns: 55px minmax(0, 1fr)
+  }
+
+  .editor-properties {
+    grid-column: 2;
+    margin: 0 15px 20px;
+    padding: 20px;
+    grid-row: auto
+  }
+
+  .editor-sidebar {
+    grid-row: 1/3;
+    padding: 0
+  }
+
+  .editor-canvas {
+    padding: 60px 20px 25px
+  }
+
+  .reading {
+    min-height: 50vh
+  }
+
+  .reading>section {
+    padding: 12px
+  }
+
+  .reading .dedication h2 {
+    font-size: 22px
+  }
+
+  .reading h2 {
+    font-size: 18px
+  }
+
+  .editor-canvas .reading {
+    grid-template-columns: 1fr 1fr
+  }
+
+  .editor-canvas .reading>section+section {
+    border-top: 0;
+    border-left: 1px solid #333
+  }
+
+  .auth-card {
+    padding: 30px
+  }
+
+  dialog {
+    padding: 65px 20px;
+    border-radius: 50px
+  }
+
+  dialog h2 {
+    font-size: 18px
+  }
+}

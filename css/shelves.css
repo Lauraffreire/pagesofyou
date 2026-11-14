@@ -1,0 +1,762 @@
+
+
+.wall-book {
+  position: relative;
+  display: block;
+  flex: var(--volume-width) 0 0;
+  height: var(--volume-height);
+  min-width: 20px;
+  max-width: 70px;
+  background: var(--volume-color);
+  color: #f5ecd7;
+  border-radius: 2px 3px 0 0;
+  border-left: 2px solid #fff2;
+  border-right: 2px solid #00000009;
+  transform: rotate(var(--volume-angle));
+  transform-origin: bottom center
+}
+
+.wall-book::before,
+.wall-book::after,
+.wall-book i::before,
+.wall-book i::after,
+.wall-book b::before,
+.wall-book b::after {
+  content: '';
+  position: absolute;
+  pointer-events: none
+}
+
+.wall-pattern-0::before {
+  inset: 10px 17%;
+  border: 1px solid currentColor;
+  border-radius: 40% 40% 35% 35%
+}
+
+.wall-pattern-0::after {
+  bottom: 8%;
+  left: 28%;
+  right: 28%;
+  height: 5px;
+  background: currentColor
+}
+
+.wall-pattern-1 {
+  background-image: repeating-linear-gradient(90deg, transparent 0 4px, #f6e5c355 4px 5px)
+}
+
+.wall-pattern-2::before {
+  inset: 5px 12%;
+  border: 3px double #5e6234
+}
+
+.wall-pattern-2::after {
+  top: 13%;
+  bottom: 13%;
+  left: 20%;
+  right: 20%;
+  border-top: 4px double #5e6234;
+  border-bottom: 4px double #5e6234
+}
+
+.wall-pattern-3 {
+  color: #333e2c
+}
+
+.wall-pattern-3::before {
+  inset: 10px 15%;
+  border: 1px solid currentColor
+}
+
+.wall-pattern-3::after {
+  top: 17%;
+  left: 24%;
+  right: 24%;
+  height: 3px;
+  background: currentColor
+}
+
+.wall-pattern-4::before {
+  inset: 6px 11%;
+  border: 3px double currentColor
+}
+
+.wall-pattern-4::after {
+  top: 20%;
+  bottom: 20%;
+  left: 11%;
+  right: 11%;
+  border-block: 4px double currentColor
+}
+
+.wall-pattern-4 i::before {
+  inset: 6px 16%;
+  background: repeating-linear-gradient(45deg, transparent 0 4px, #f5ecd744 4px 5px);
+  clip-path: polygon(0 0, 100% 0, 100% 16%, 0 16%, 0 84%, 100% 84%, 100% 100%, 0 100%)
+}
+
+.wall-pattern-5::before {
+  top: 8%;
+  bottom: 8%;
+  left: 18%;
+  right: 18%;
+  border-block: 4px double currentColor
+}
+
+.wall-pattern-5::after {
+  top: 12%;
+  left: 35%;
+  right: 35%;
+  height: 9%;
+  border-radius: 50%;
+  background: currentColor
+}
+
+.wall-pattern-5 i::before {
+  content: '✳';
+  left: 0;
+  right: 0;
+  top: 29%;
+  text-align: center;
+  font: clamp(13px, 2vw, 23px) Georgia;
+  color: currentColor
+}
+
+.wall-pattern-5 i::after {
+  content: '✳';
+  left: 0;
+  right: 0;
+  top: 50%;
+  text-align: center;
+  font: clamp(13px, 2vw, 23px) Georgia;
+  color: currentColor
+}
+
+.wall-pattern-5 b::after {
+  content: '✳';
+  left: 0;
+  right: 0;
+  top: 70%;
+  text-align: center;
+  font: clamp(13px, 2vw, 23px) Georgia;
+  color: currentColor
+}
+
+.wall-pattern-6 {
+  color: #55603c
+}
+
+.wall-pattern-6::before {
+  inset: 11% 22%;
+  border: 1px solid currentColor;
+  border-radius: 50%
+}
+
+.wall-pattern-6::after {
+  bottom: 5%;
+  left: 28%;
+  right: 28%;
+  height: 5px;
+  background: currentColor
+}
+
+.wall-pattern-7 {
+  border-top: 9px solid #c97751;
+  background: #f5edd9;
+  color: #374b3b
+}
+
+.wall-pattern-7::before {
+  inset: 10% 20%;
+  border-inline: 2px solid currentColor;
+  border-radius: 50%
+}
+
+.wall-pattern-7::after {
+  inset: 10% 42%;
+  background: currentColor;
+  border-radius: 50%
+}
+
+@media(max-width:700px) {
+
+  .wall-book:nth-child(n+17) {
+    display: none
+  }
+
+  .wall-book {
+    min-width: 12px
+  }
+}
+
+@media(max-width:420px) {
+  .wall-book:nth-child(n+12) {
+    display: none
+  }
+}
+
+/* Estante mais leve, com o titulo num intervalo entre os livros. */
+.quiet-library {
+  --wall-0: #adafcb;
+  --wall-1: #cb7957;
+  --wall-2: #e9c64b;
+  --wall-3: #7b813e;
+  --wall-4: #d798aa;
+  --wall-5: #263b33;
+  --wall-6: #8eafb6;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 38px;
+  min-height: 620px;
+  height: 100svh;
+  padding: 40px clamp(24px, 7vw, 110px) 35px;
+  background: #f7f1e5;
+  overflow: hidden
+}
+
+.quiet-shelf {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(8px, 1.4vw, 24px);
+  min-height: 0;
+  padding: 0 18px 14px;
+  border-bottom: 7px solid #ab8e6e;
+  box-shadow: 0 4px 0 #ab8e6e18
+}
+
+.quiet-library .wall-book {
+  max-width: 65px;
+  min-width: 16px;
+  flex: var(--volume-width) 1 0
+}
+
+.quiet-center {
+  gap: 30px
+}
+
+.quiet-side {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  align-self: stretch;
+  flex: 1;
+  min-width: 0;
+  padding-top: 25px
+}
+
+.quiet-title {
+  flex: 0 1 auto;
+  align-self: center;
+  position: static;
+  margin: 0 0 4px;
+  text-align: center;
+  font: 400 clamp(48px, 7.2vw, 108px)/1.08 Georgia, serif;
+  letter-spacing: -.055em;
+  white-space: nowrap;
+  color: #737d43
+}
+
+.quiet-title a {
+  display: block;
+  padding: 15px 0
+}
+
+.quiet-title em {
+  font-weight: 400;
+  color: #b87855
+}
+
+.quiet-title span:last-child {
+  color: #6c8c97
+}
+
+body:has(.quiet-library) .personal {
+  background: #f7f1e5;
+  color: #374938;
+  border-color: #737b64
+}
+
+@media(max-width:900px) {
+  .quiet-library {
+    gap: 28px;
+    padding: 35px 30px 28px
+  }
+
+  .quiet-center {
+    gap: 20px
+  }
+
+  .quiet-title {
+    font-size: 7.7vw
+  }
+
+  .quiet-library .wall-book {
+    min-width: 13px
+  }
+
+  .quiet-shelf {
+    gap: 10px;
+    padding-inline: 10px
+  }
+}
+
+@media(max-width:600px) {
+  .quiet-library {
+    min-height: 540px;
+    gap: 28px;
+    padding: 65px 20px 28px;
+    grid-template-rows: 1fr .85fr 1fr
+  }
+
+  .quiet-outer>.wall-book:nth-child(n+9) {
+    display: none
+  }
+
+  .quiet-shelf {
+    gap: 9px;
+    border-bottom-width: 5px;
+    padding: 0 5px 12px
+  }
+
+  .quiet-side {
+    gap: 0;
+    padding-top: 20px
+  }
+
+  .quiet-side .wall-book:nth-child(2) {
+    display: none
+  }
+
+  .quiet-center {
+    gap: 15px
+  }
+
+  .quiet-title {
+    font-size: 10vw
+  }
+
+  .quiet-title a {
+    padding: 16px 0
+  }
+
+  .quiet-library .wall-book {
+    max-width: 48px;
+    min-width: 12px
+  }
+}
+
+.quiet-title em {
+  display: inline-block;
+  margin-inline: .06em
+}
+
+/* Madeira, livros juntos e titulo alinhado a esquerda. */
+.quiet-library {
+  gap: 0;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  --shelf-wood: #a88560
+}
+
+.quiet-shelf {
+  position: relative;
+  gap: 0;
+  padding: 25px 20px 12px;
+  border-bottom: 12px solid var(--shelf-wood);
+  border-inline: 10px solid var(--shelf-wood);
+  box-shadow: 0 4px 0 #6d4e3020
+}
+
+.quiet-shelf:first-child {
+  border-top: 10px solid var(--shelf-wood)
+}
+
+.quiet-book-group {
+  display: flex;
+  align-items: flex-end;
+  align-self: stretch;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+  padding-top: 10px
+}
+
+.quiet-book-group+.quiet-book-group {
+  margin-left: 32px;
+  padding-left: 26px;
+  border-left: 10px solid var(--shelf-wood);
+  position: relative
+}
+
+.quiet-book-group+.quiet-book-group::before {
+  content: '';
+  position: absolute;
+  top: -25px;
+  bottom: -12px;
+  left: -10px;
+  width: 10px;
+  background: var(--shelf-wood)
+}
+
+.quiet-library .wall-book {
+  max-width: 62px;
+  flex: var(--volume-width) 1 0;
+  box-shadow: 1px 0 2px #00000015
+}
+
+.quiet-center {
+  padding-left: 30px;
+  gap: 28px
+}
+
+.quiet-center>.quiet-side:first-child {
+  display: none
+}
+
+.quiet-title {
+  flex: 1 1 auto;
+  text-align: left;
+  color: #59633c;
+  font-size: clamp(45px, 6.7vw, 100px)
+}
+
+.quiet-title em,
+.quiet-title span:last-child {
+  color: inherit
+}
+
+.quiet-center>.quiet-side:last-child {
+  flex: 0 1 28%;
+  gap: 3px;
+  border-left: 10px solid var(--shelf-wood);
+  padding-left: 24px;
+  position: relative
+}
+
+.quiet-center>.quiet-side:last-child::before {
+  content: '';
+  position: absolute;
+  top: -25px;
+  bottom: -12px;
+  left: -10px;
+  width: 10px;
+  background: var(--shelf-wood)
+}
+
+@media(max-width:900px) {
+  .quiet-shelf {
+    padding-inline: 14px
+  }
+
+  .quiet-title {
+    font-size: 6.5vw
+  }
+
+  .quiet-center {
+    gap: 20px
+  }
+
+  .quiet-book-group+.quiet-book-group {
+    margin-left: 20px;
+    padding-left: 16px
+  }
+
+  .quiet-center>.quiet-side:last-child {
+    padding-left: 15px
+  }
+}
+
+@media(max-width:600px) {
+  .quiet-library {
+    padding: 65px 16px 22px;
+    grid-template-rows: 1fr .85fr 1fr
+  }
+
+  .quiet-shelf {
+    border-inline-width: 6px;
+    border-bottom-width: 9px;
+    padding: 20px 10px 10px
+  }
+
+  .quiet-shelf:first-child {
+    border-top-width: 7px
+  }
+
+  .quiet-book-group>.wall-book:nth-child(n+5) {
+    display: none
+  }
+
+  .quiet-book-group+.quiet-book-group {
+    margin-left: 14px;
+    padding-left: 10px;
+    border-left-width: 6px
+  }
+
+  .quiet-book-group+.quiet-book-group::before {
+    width: 6px;
+    left: -6px;
+    top: -20px;
+    bottom: -10px
+  }
+
+  .quiet-center {
+    gap: 12px;
+    padding-left: 15px
+  }
+
+  .quiet-title {
+    font-size: 8.8vw
+  }
+
+  .quiet-center>.quiet-side:last-child {
+    flex-basis: 17%;
+    padding-left: 9px;
+    border-left-width: 6px
+  }
+
+  .quiet-center>.quiet-side:last-child::before {
+    width: 6px;
+    left: -6px;
+    top: -20px;
+    bottom: -10px
+  }
+
+  .quiet-side .wall-book:nth-child(n+3) {
+    display: none
+  }
+
+  .quiet-side .wall-book:nth-child(2) {
+    display: block
+  }
+
+  .quiet-side {
+    padding-top: 20px
+  }
+}
+
+/* A prateleira superior direita abre a area pessoal. */
+body:has(.quiet-library)>.header {
+  display: none
+}
+
+.personal-shelf {
+  position: relative;
+  view-transition-name: personal-shelf
+}
+
+.quiet-book-group.personal-shelf {
+  padding-top: 48px
+}
+
+.shelf-personal-button {
+  position: absolute;
+  right: 0;
+  top: 4px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  background: #f7f1e5 !important
+}
+
+.shelf-area {
+  max-width: 1200px;
+  margin: auto;
+  min-height: 100svh;
+  background: #f7f1e5;
+  padding: 45px clamp(22px, 6vw, 80px) 30px
+}
+
+.shelf-area h1.screen-brand {
+  font: 400 clamp(25px, 4vw, 42px)/1.2 Georgia, serif;
+  letter-spacing: 0;
+  text-transform: none;
+  text-align: left;
+  margin: 30px 0
+}
+
+.shelf-menu-book>span {
+  position: relative;
+  z-index: 1;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font: 400 clamp(20px, 2.8vw, 32px)/1.25 Georgia, serif;
+  color: #263b33;
+  text-align: center;
+  background: var(--volume-color);
+  padding: 14px 8px;
+  max-height: 90%
+}
+
+.shelf-area .logout {
+  display: block;
+  margin: 25px 0 0 auto
+}
+
+::view-transition-group(personal-shelf) {
+  animation-duration: 650ms;
+  animation-timing-function: cubic-bezier(.22, .68, .24, 1)
+}
+
+::view-transition-old(personal-shelf) {
+  height: 100%;
+  animation: portal-out 650ms ease both
+}
+
+::view-transition-new(personal-shelf) {
+  height: 100%;
+  animation: portal-in 650ms ease both
+}
+
+@keyframes portal-out {
+
+  0%,
+  35% {
+    opacity: 1
+  }
+
+  85%,
+  100% {
+    opacity: 0
+  }
+}
+
+@keyframes portal-in {
+
+  0%,
+  20% {
+    opacity: 0
+  }
+
+  90%,
+  100% {
+    opacity: 1
+  }
+}
+
+@media(max-width:600px) {
+  .shelf-personal-button {
+    width: 34px;
+    height: 34px;
+    right: 0;
+    top: 0;
+    padding: 7px
+  }
+
+  .quiet-book-group.personal-shelf {
+    padding-top: 43px
+  }
+
+  .shelf-menu-book>span {
+    font-size: 20px;
+    padding: 10px 3px
+  }
+
+  .shelf-area {
+    padding-top: 30px
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+  ::view-transition-group(personal-shelf),
+  ::view-transition-old(personal-shelf),
+  ::view-transition-new(personal-shelf) {
+    animation: none
+  }
+}
+
+.shelf-area h1.screen-brand {
+  position: static;
+  transform: none;
+  white-space: normal
+}
+
+/* Os mesmos quatro volumes na entrada e na prateleira ampliada. */
+.quiet-book-group.personal-shelf {
+  flex: 0 0 38%;
+  justify-content: center;
+  gap: 10px;
+  padding-left: 25px;
+  padding-right: 20px
+}
+
+.quiet-book-group.personal-shelf>.wall-book {
+  flex: 1 1 0;
+  max-width: 65px;
+  min-width: 0
+}
+
+@media(max-width:900px) {
+  .quiet-book-group.personal-shelf {
+    flex-basis: 41%;
+    gap: 7px;
+    padding-left: 18px;
+    padding-right: 10px
+  }
+}
+
+@media(max-width:600px) {
+  .quiet-book-group.personal-shelf {
+    flex-basis: 47%;
+    gap: 5px;
+    padding-left: 12px;
+    padding-right: 5px
+  }
+
+  .quiet-book-group.personal-shelf>.wall-book {
+    display: block;
+    max-width: 35px
+  }
+}
+
+.personal-shelf {
+  view-transition-name: none
+}
+
+.personal-shelf-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.65;
+  flex: none;
+  container-type: inline-size;
+  view-transition-name: personal-shelf
+}
+
+.quiet-book-group.personal-shelf {
+  display: flex;
+  align-items: flex-end
+}
+
+.personal-shelf-stage>.wall-book.proportional-book {
+  position: absolute;
+  left: var(--book-left);
+  bottom: 0;
+  width: 13.6%;
+  height: calc(var(--book-height)*.68);
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  flex: none;
+  border-radius: 2px 3px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(var(--volume-angle));
+  transform-origin: bottom center
+}
+
+.quiet-library .quiet-outer:first-child>.quiet-book-group:first-child {
+  gap: 2px
+}
+
+@media(max-width:600px) {
+  .quiet-outer:first-child>.quiet-book-group:first-child>.wall-book:nth-child(-n+6) {
+    display: block
+  }
+
+  .personal-shelf-stage>.wall-book.proportional-book {
+    display: flex
+  }
+}

@@ -1,0 +1,156 @@
+.book-list-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.book-list-actions .danger {
+  color: #a23629;
+}
+
+/* Centrar a capa e as ações nos cartões dos livros publicados. */
+.creation-site .simple-book {
+  align-items: center;
+}
+
+.creation-site .simple-book .book-list-actions {
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 18px;
+}
+
+/* A miniatura utiliza a mesma composição que a capa no editor. */
+.cover.custom-cover {
+  padding: 0;
+  height: auto;
+  aspect-ratio: 5 / 7;
+  display: block;
+}
+
+.cover.custom-cover::before {
+  content: none;
+}
+
+.cover.custom-cover .design-sheet {
+  max-width: none;
+  margin: 0;
+  box-shadow: none;
+}
+
+.draft-book-card {
+  gap: 24px;
+  align-items: center;
+}
+
+.draft-book-card > div:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .draft-book-card {
+    flex-wrap: wrap;
+  }
+}
+
+.design-marquee {
+  position: absolute;
+  z-index: 60;
+  border: 1px solid #087bc1;
+  background: #087bc126;
+  pointer-events: none;
+}
+
+/* Personalização da lombada com pré-visualização ao lado dos campos. */
+.spine-editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px;
+  align-items: center;
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.spine-settings .field {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.spine-preview {
+  width: 90px;
+  height: 320px;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px;
+  overflow: hidden;
+  box-shadow: inset 4px 0 #ffffff25;
+}
+
+.spine-preview span {
+  writing-mode: vertical-rl;
+  max-height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.spine-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Fotografia selecionada: cantos para tamanho, lados para recorte. */
+:is(#photo-handles, #object-handles) {
+  position: absolute;
+  z-index: 50;
+  border: 2px solid #087bc1;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+:is(#photo-handles, #object-handles) .photo-handle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  background: #087bc1;
+  box-shadow: 0 0 0 1px #087bc1;
+  pointer-events: auto;
+  touch-action: none;
+  transform: translate(-50%, -50%);
+}
+
+:is(#photo-handles, #object-handles) .handle-nw { left: 0; top: 0; cursor: nwse-resize; }
+:is(#photo-handles, #object-handles) .handle-n { left: 50%; top: 0; cursor: ns-resize; }
+:is(#photo-handles, #object-handles) .handle-ne { left: 100%; top: 0; cursor: nesw-resize; }
+:is(#photo-handles, #object-handles) .handle-e { left: 100%; top: 50%; cursor: ew-resize; }
+:is(#photo-handles, #object-handles) .handle-se { left: 100%; top: 100%; cursor: nwse-resize; }
+:is(#photo-handles, #object-handles) .handle-s { left: 50%; top: 100%; cursor: ns-resize; }
+:is(#photo-handles, #object-handles) .handle-sw { left: 0; top: 100%; cursor: nesw-resize; }
+:is(#photo-handles, #object-handles) .handle-w { left: 0; top: 50%; cursor: ew-resize; }
+
+:is(#photo-handles, #object-handles) output {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 12px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #087bc1;
+  color: #fff;
+  font: 600 12px/1.4 Arial, sans-serif;
+  white-space: nowrap;
+}
