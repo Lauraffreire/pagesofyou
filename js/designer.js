@@ -311,7 +311,7 @@ function renderSinglePageDesigner() {
     node.setAttribute('role', 'textbox');
     node.setAttribute('aria-multiline', 'true');
     node.setAttribute('aria-label', item.type === 'postit' ? 'Texto do post-it' : 'Texto da página');
-    node.title = item.templateLine || item.type === 'postit' ? 'Clique para escrever. Alt + arrastar para mover.' :
+    node.title = item.templateLine || item.type === 'postit' ? 'Clique para escrever. Arraste para mover.' :
       'Arraste para mover. Use as pegas para ajustar o tamanho. Duplo clique para escrever.';
     node.onbeforeinput = () => designSnapshot();
     node.oninput = () => {
@@ -353,21 +353,28 @@ function renderSinglePageDesigner() {
     renderDesignLayers();
     renderPhotoHandles();
     if (!designSelectionIds.has(id)) return;
-    if (node.isContentEditable && !event.altKey) return;
-    event.preventDefault();
-    node.focus({ preventScroll: true });
+    const editing = node.isContentEditable && !event.altKey;
+    if (!editing) {
+      event.preventDefault();
+      node.focus({ preventScroll: true });
+    }
     const members = selectedDesignObjects();
     const origins = members.map(item => ({ ...item }));
     const group = selectionBounds(origins);
     const bounds = sheet.getBoundingClientRect();
     const startX = event.clientX, startY = event.clientY;
     let moved = false;
-    node.setPointerCapture(event.pointerId);
+    if (!editing) node.setPointerCapture(event.pointerId);
     node.onpointermove = move => {
       if (!moved && Math.hypot(move.clientX - startX, move.clientY - startY) < 3) return;
       if (!moved) {
         designSnapshot();
         moved = true;
+        node.setPointerCapture(event.pointerId);
+        if (editing) {
+          node.blur();
+          window.getSelection()?.removeAllRanges();
+        }
       }
       const dx = designNumber((move.clientX - startX) * 600 / bounds.width, -group.x, 600 - group.x - group.width);
       const dy = designNumber((move.clientY - startY) * 840 / bounds.height, -group.y, 840 - group.y - group.height);
@@ -380,7 +387,7 @@ function renderSinglePageDesigner() {
       designChanged();
     };
     node.onpointerup = node.onpointercancel = () => {
-      node.onpointermove = null;
+      node.onpointermove = node.onpointerup = node.onpointercancel = null;
       if (moved) renderDesigner();
     };
   };

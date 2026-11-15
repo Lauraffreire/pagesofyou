@@ -85,6 +85,22 @@ CHECKS = """
     await wait();
     assert(document.querySelector('#design-sheet'), 'Editor visual e capa');
     capture('editor');
+    for (const type of ['postit', 'shape']) {
+      const item = {id: 'move-' + type, type, text: '', x: 50, y: 50, width: 120, height: 100, rotation: 0, color: '#eee6ce', fontSize: 22};
+      activeDesign().elements.push(item);
+      renderDesigner();
+      const node = document.querySelector('[data-design-id="' + item.id + '"]');
+      const sheet = document.querySelector('#design-sheet');
+      node.setPointerCapture = () => {};
+      sheet.onpointerdown({button: 0, target: node, clientX: 20, clientY: 20, pointerId: 1, preventDefault() {}});
+      if (type === 'postit') assert(node.isContentEditable, 'Post-it permite escrever com um clique');
+      assert(typeof node.onpointermove === 'function', 'Arrastar ativo: ' + type);
+      node.onpointermove({clientX: 30, clientY: 30});
+      node.onpointerup();
+      assert(item.x > 50 && item.y > 50, 'Mover elemento: ' + type);
+      activeDesign().elements = activeDesign().elements.filter(el => el.id !== item.id);
+    }
+    renderDesigner();
     assert(document.querySelector('#book-form [name="visibility"]'), 'Visibilidade do livro');
     await saveBookDraft();
     assert(state.bookDrafts.length === 1, 'Guardar rascunho no navegador');

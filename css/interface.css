@@ -838,7 +838,7 @@ main:has(>.quiet-library) {
   user-select: text;
   -webkit-user-select: text;
   cursor: text;
-  touch-action: auto;
+  touch-action: none;
 }
 
 #design-sheet .design-element[contenteditable]:focus {
