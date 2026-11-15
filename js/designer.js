@@ -302,7 +302,7 @@ function renderSinglePageDesigner() {
       node.textContent = '';
     }
     node.setAttribute('data-placeholder', item.placeholder || (item.type === 'postit' ? 'Escreve aqui…' : 'Escreva aqui'));
-    node.contentEditable = item.templateLine ? 'plaintext-only' : 'false';
+    node.contentEditable = item.templateLine || item.type === 'postit' ? 'plaintext-only' : 'false';
     node.ondblclick = event => {
       event.stopPropagation();
       node.contentEditable = 'plaintext-only';
@@ -311,7 +311,7 @@ function renderSinglePageDesigner() {
     node.setAttribute('role', 'textbox');
     node.setAttribute('aria-multiline', 'true');
     node.setAttribute('aria-label', item.type === 'postit' ? 'Texto do post-it' : 'Texto da página');
-    node.title = item.templateLine ? 'Clique para escrever. Alt + arrastar para mover.' :
+    node.title = item.templateLine || item.type === 'postit' ? 'Clique para escrever. Alt + arrastar para mover.' :
       'Arraste para mover. Use as pegas para ajustar o tamanho. Duplo clique para escrever.';
     node.onbeforeinput = () => designSnapshot();
     node.oninput = () => {
@@ -324,7 +324,7 @@ function renderSinglePageDesigner() {
       renderDesignLayers();
     };
     node.onblur = () => {
-      node.contentEditable = item.templateLine ? 'plaintext-only' : 'false';
+      node.contentEditable = item.templateLine || item.type === 'postit' ? 'plaintext-only' : 'false';
       if (designSelection === item.id) renderDesignInspector();
     };
   });
