@@ -5,11 +5,11 @@
   --muted: #53634c;
   --line: #c5b88f;
   --green: #173b2d;
-  --lime: #e8e5bc;
+  --lime: var(--paper);
   --serif: var(--sans);
   --sans: 'Manrope', 'Trebuchet MS', Arial, sans-serif;
   --red: #dc7247;
-  --pink: #efd4b3;
+  --pink: var(--paper);
   --olive: #8c914f;
   --blue: #70988a;
   --yellow: #e7ad51;

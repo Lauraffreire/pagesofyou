@@ -19,7 +19,7 @@ function home() {
     books(0, 18) + '</div><div class="quiet-book-group">' + books(18, 12) +
     '</div></div><section class="quiet-shelf quiet-center" aria-labelledby="landing-title"><div class="quiet-side" aria-hidden="true">' +
     books(4, 0) +
-    '</div><h1 id="landing-title" class="quiet-title"><a href="#area" aria-label="Pages of You: entrar na \u00e1rea pessoal"><span>Pages</span> <em>of</em> <span>You.</span></a></h1><div class="quiet-side" aria-hidden="true">' +
+    '</div><h1 id="landing-title" class="quiet-title"><a href="#area" aria-label="Pages of You: entrar na \u00e1rea pessoal"><span>Pages</span> <em>of</em> <span>You<span class="title-period">.</span></span></a></h1><div class="quiet-side" aria-hidden="true">' +
     books(30, 18) +
     '</div></section><div class="quiet-shelf quiet-outer" aria-hidden="true"><div class="quiet-book-group">' +
     books(48, 15) + '</div><div class="quiet-book-group">' + books(63, 15) + '</div></div></div>';

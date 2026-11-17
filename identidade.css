@@ -685,7 +685,7 @@ select {
   --wall-1: #dc7247;
   --wall-2: #f7eed5;
   --wall-3: #8c914f;
-  --wall-4: #efd4b3;
+  --wall-4: var(--paper);
   --wall-5: #70988a;
   --wall-6: #bf7b42;
   --shelf-wood: #e7ad51;
@@ -1032,7 +1032,7 @@ body.installation-site {
   --wall-1: #dc7247;
   --wall-2: #f7eed5;
   --wall-3: #8c914f;
-  --wall-4: #efd4b3;
+  --wall-4: var(--paper);
   --wall-5: #70988a;
   --wall-6: #bf7b42;
   position: fixed;
@@ -1389,4 +1389,51 @@ body.creation-site,
 .creation-site .reader-arrow:disabled {
   opacity: .35;
   cursor: default;
+}
+
+/* Logotipo plano com uma linha a sugerir a lombada. */
+.creation-site .quiet-title a {
+  position: relative;
+  background: var(--paper);
+  border: 3px solid var(--yellow);
+  border-radius: 12px 3px 3px 12px;
+  box-shadow: none;
+}
+.creation-site .quiet-title a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 12px;
+  width: 1px;
+  background: var(--yellow);
+  border: 0;
+  box-shadow: none;
+  pointer-events: none;
+}
+.creation-site .quiet-title a::after {
+  content: none;
+}
+@media (max-width: 600px) {
+  .creation-site .quiet-title a {
+    border-width: 2px;
+    border-radius: 9px 3px 3px 9px;
+  }
+  .creation-site .quiet-title a::before { left: 7px; }
+}
+
+/* Ponto final circular, independente do desenho da fonte. */
+.creation-site .quiet-title .title-period {
+  display: inline-block;
+  width: .13em;
+  height: .13em;
+  margin-left: .035em;
+  border-radius: 50%;
+  background: currentColor;
+  font-size: inherit;
+  line-height: 0;
+  color: inherit;
+  text-indent: -9999px;
+  overflow: hidden;
+  vertical-align: baseline;
 }
