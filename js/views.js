@@ -1,41 +1,71 @@
 /* Entrada, biblioteca, leitura, área pessoal e propostas. */
 function home() {
-  if (main.querySelector('.quiet-library')) {
-    return;
-  }
+  if (main.querySelector('.landing-shelves')) return;
+  const [olive, teal, forest, gold, terra, ochre] = PoyObjects.spinePresets;
+  // As medidas da referência são escaladas em conjunto dentro de cada compartimento.
+  const position = (x, width, height, bottom = 0) =>
+    '--book-x:' + x + ';--book-width:' + width + ';--book-height:' + height + ';--book-bottom:' + bottom;
+  const spine = (preset, x, width, height, { bottom = 0, angle = 0, flat = false, pages = false } = {}) =>
+    '<span aria-hidden="true" class="landing-spine' + (flat ? ' landing-spine--flat' : '') +
+    (pages ? ' landing-spine--pages' + (preset === terra ? ' landing-spine--right-binding' : '') : '') +
+    (angle < 0 ? ' landing-spine--against-left' : angle > 0 ? ' landing-spine--against-right' : '') +
+    '" style="' + position(x, width, height, bottom) +
+    ';--spine-fill:' + preset.background + ';--spine-angle:' + angle + 'deg' +
+    ';--spine-corners:' + (preset.radius ? (flat ? '5% / 22%' : preset.radius) : '0') + '">' +
+    (pages ? '' : '<i class="spine-art" style="' + PoyObjects.spineArt(preset.id, preset.patternColor) + '"></i>') +
+    '</span>';
+  const flat = (preset, x, width, height, bottom, pages = false) =>
+    spine(preset, x, width, height, { flat: true, bottom, pages });
+  const compartment = (origin, width, contents) =>
+    '<div class="landing-compartment" style="--origin:' + origin + ';--reference-width:' + width + '">' +
+    contents + '</div>';
+  const row = (divider, left, right) =>
+    '<div class="landing-shelf" style="--division:' + divider / 2055 * 100 + '%">' +
+    compartment(0, divider, left) + compartment(divider, 2055 - divider, right) + '</div>';
+  const logo = '<h1 id="landing-title" style="' + position(104, 446, 96, 276) + '">' +
+    '<a href="#area" aria-label="Pages of you. — Entrar na área pessoal"><span>Pages</span> <em>of</em> <span>you.</span></a></h1>';
 
-  const books = (offset, count) => Array.from({
-    length: count
-  }, (_, i) => {
-    const n = i + offset;
-    const pattern = n % 5 < 2 ? '' : ' wall-pattern-' + (n % 8);
-    return '<span class="wall-book' + pattern + '" style="--volume-color:var(--wall-' + (n %
-        7) + ');--volume-height:' + (72 + (n * 13) % 27) + '%;--volume-width:' + (24 + (n * 17) % 30) +
-      ';--volume-angle:' + (n % 5 === 0 ? -9 : n % 4 === 0 ? 7 : n % 7 === 0 ? -4 : 0) +
-      'deg"><i></i><b></b></span>';
-  }).join('');
-  main.innerHTML =
-    '<div class="quiet-library"><div class="quiet-shelf quiet-outer" aria-hidden="true"><div class="quiet-book-group">' +
-    books(0, 18) + '</div><div class="quiet-book-group">' + books(18, 12) +
-    '</div></div><section class="quiet-shelf quiet-center" aria-labelledby="landing-title"><div class="quiet-side" aria-hidden="true">' +
-    books(4, 0) +
-    '</div><h1 id="landing-title" class="quiet-title"><a href="#area" aria-label="Pages of You: entrar na \u00e1rea pessoal"><span>Pages</span> <em>of</em> <span>You<span class="title-period">.</span></span></a></h1><div class="quiet-side" aria-hidden="true">' +
-    books(30, 18) +
-    '</div></section><div class="quiet-shelf quiet-outer" aria-hidden="true"><div class="quiet-book-group">' +
-    books(48, 15) + '</div><div class="quiet-book-group">' + books(63, 15) + '</div></div></div>';
-  const shelf = main.querySelector('.quiet-outer');
-  shelf.removeAttribute('aria-hidden');
-  shelf.firstElementChild.setAttribute('aria-hidden', 'true');
-  const personalShelf = shelf.lastElementChild;
-  personalShelf.classList.add('personal-shelf');
-  personalShelf.innerHTML = books(18, 11);
-  personalShelf.querySelectorAll('.wall-book').forEach(book => {
-    book.tabIndex = -1;
-    book.setAttribute('aria-hidden', 'true');
-  });
-  personalShelf.insertAdjacentHTML('beforeend',
-    '<a class="personal shelf-personal-button" href="#area" aria-label="Abrir a prateleira da área pessoal"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="7" r="4" fill="currentColor"/><path d="M4 21v-3a8 8 0 0 1 16 0v3" fill="currentColor"/></svg></a>'
-    );
+  main.innerHTML = '<div class="quiet-library landing-shelves">' +
+    row(1140,
+      spine(olive, 10, 116, 426, { angle: -6.5 }) + spine(teal, 172, 91, 426) +
+      spine(forest, 297, 91, 426) + spine(gold, 400, 112, 361) +
+      spine(terra, 514, 91, 426) + spine(ochre, 644, 91, 426) +
+      flat(teal, 784, 325, 67, 285) + flat(olive, 814, 305, 70, 215) +
+      flat(gold, 801, 330, 71, 144) + flat(terra, 765, 331, 71, 73) +
+      flat(gold, 783, 329, 73, 0, true),
+      spine(teal, 1193, 91, 426, { angle: -5 }) + spine(olive, 1285, 91, 424) +
+      spine(terra, 1386, 106, 310) + spine(forest, 1506, 83, 357) + spine(teal, 1603, 81, 395) +
+      spine(gold, 1711, 91, 429) +
+      spine(ochre, 1833, 91, 345) + spine(forest, 1955, 91, 425)) +
+    row(704,
+      spine(teal, 12, 57, 338, { angle: -2.5 }) +
+      logo + flat(olive, 98, 395, 85, 191) + flat(gold, 145, 395, 104, 87) +
+      flat(terra, 126, 398, 87, 0, true) + spine(forest, 552, 49, 258) +
+      spine(terra, 607, 78, 345, { angle: 4 }),
+      spine(ochre, 748, 91, 424, { angle: -4 }) + spine(teal, 857, 91, 424) +
+      spine(forest, 966, 91, 426) + spine(terra, 1083, 91, 426) +
+      spine(gold, 1175, 91, 424) +
+      flat(ochre, 1332, 340, 65, 315) + flat(teal, 1304, 394, 67, 248) +
+      flat(olive, 1323, 374, 67, 181) +
+      flat(gold, 1287, 424, 90, 91, true) + flat(terra, 1294, 427, 91, 0, true) +
+      spine(olive, 1753, 86, 358) + spine(ochre, 1850, 50, 292) +
+      spine(teal, 1908, 91, 425, { angle: 8 })) +
+    row(1397,
+      spine(olive, 17, 91, 355, { angle: -2.5 }) + spine(teal, 108, 91, 321) +
+      spine(gold, 213, 91, 424) + spine(forest, 322, 91, 426) +
+      spine(terra, 453, 91, 372) +
+      spine(ochre, 589, 91, 323) +
+      flat(gold, 724, 328, 69, 352) +
+      flat(terra, 746, 331, 71, 281, true) + flat(olive, 693, 330, 70, 211) +
+      flat(terra, 737, 331, 70, 141) + flat(gold, 707, 330, 71, 70) +
+      flat(teal, 723, 330, 70, 0) + spine(ochre, 1134, 90, 316) +
+      spine(terra, 1258, 91, 427, { angle: 6.5 }),
+      flat(olive, 1434, 315, 68, 277) + flat(ochre, 1418, 320, 67, 210) +
+      flat(terra, 1425, 331, 70, 140) + flat(gold, 1436, 329, 70, 70, true) +
+      flat(teal, 1426, 330, 70, 0) +
+      spine(forest, 1773, 54, 280) +
+      spine(olive, 1833, 91, 327) + spine(gold, 1964, 91, 424, { angle: 3 })) +
+    '</div>';
 }
 
 function library() {
@@ -93,11 +123,11 @@ function myBooks() {
   main.dataset.section = 'my-books';
   const books = state.books.filter(owns);
   main.innerHTML = '<div class="page">' + back() +
-    '<h1 class="screen-brand">Pages of You</h1><div class="personal-books">' + (books.length ? books.map(
-        book => '<article class="simple-book">' + (book.coverDesign ? '<div class="custom-book-thumbnail">' +
-          designMarkup(book.coverDesign) + '</div>' : '<div class="custom-book-thumbnail">' + designMarkup(defaultBookCover(book)) + '</div>'
-          ) + '<div class="book-list-actions"><span class="badge">' + (book.visibility === 'private' ? 'Privado — apenas a minha conta' : 'Público — biblioteca e instalação') + '</span><a class="button" href="#livro/' + e(book.id) + '">Ver livro</a><button type="button" class="text-button danger" data-action="delete-book" data-id="' + e(book.id) + '">Eliminar livro</button></div></article>').join('') :
-      '<p>Ainda não tem livros.</p>') + '</div></div>';
+    '<h1>Os meus livros</h1>' + (books.length ? '<div class="owned-bookshelves">' + books.map(
+        book => '<article class="shelved-book"><div class="shelved-book-cover"><div class="custom-book-thumbnail">' +
+          designMarkup(book.coverDesign || defaultBookCover(book)) +
+          '</div></div><div class="book-list-actions"><span class="badge">' + (book.visibility === 'private' ? 'Privado — apenas a minha conta' : 'Público — biblioteca e instalação') + '</span><a class="button" href="#livro/' + e(book.id) + '" aria-label="Ver livro de ' + e(book.name) + '">Ver livro</a><button type="button" class="text-button danger" data-action="delete-book" data-id="' + e(book.id) + '">Eliminar livro</button></div></article>').join('') + '</div>' :
+      '<p>Ainda não tem livros.</p>') + '</div>';
   const drafts = (state.bookDrafts || []).filter(item => item.ownerId === user.id);
   main.querySelector('.page').insertAdjacentHTML('beforeend',
     '<section class="saved-drafts"><h2>Rascunhos guardados</h2>' + (drafts.length ? drafts.map(item =>

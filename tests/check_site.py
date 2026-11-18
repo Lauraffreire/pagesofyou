@@ -67,7 +67,35 @@ CHECKS = """
   const go = async hash => {await navigate(hash, true); await wait();};
   try {
     while (!started || cloudLoading) await wait();
-    assert(main.querySelector('.home-wall, .home-page, .landing, .home, .wall-library') || main.textContent.includes('Pages of You'), 'Entrada carregada');
+    const landing = main.querySelector('.landing-shelves');
+    const shelves = landing.querySelectorAll('.landing-shelf');
+    const bounds = landing.getBoundingClientRect();
+    assert(shelves.length === 3 && landing.querySelectorAll('.landing-spine').length >= 47 &&
+      !landing.querySelector('img') && Math.abs(bounds.width - innerWidth) < 1 &&
+      Math.abs(bounds.height - innerHeight) < 1, 'Estante desenhada no site ocupa todo o ecra');
+    assert([...landing.querySelectorAll('.landing-spine')].every(book => {
+      const css = getComputedStyle(book);
+      const referenceRatio = parseFloat(css.getPropertyValue('--book-width')) /
+        parseFloat(css.getPropertyValue('--book-height'));
+      return Math.abs(parseFloat(css.width) / parseFloat(css.height) / referenceRatio - 1) < .01;
+    }), 'Livros mantêm as proporções da referência em ambas as orientações');
+    const leaningBooks = [...landing.querySelectorAll('.landing-spine--against-left, .landing-spine--against-right')];
+    assert(leaningBooks.length > 0 && leaningBooks.every(book => {
+      const bay = book.parentElement;
+      const bayBounds = bay.getBoundingClientRect();
+      const bookBounds = book.getBoundingClientRect();
+      const css = getComputedStyle(bay);
+      const wallGap = book.classList.contains('landing-spine--against-left') ?
+        bookBounds.left - bayBounds.left - parseFloat(css.borderLeftWidth) : bayBounds.right - bookBounds.right;
+      const floorGap = bayBounds.bottom - parseFloat(css.borderBottomWidth) - bookBounds.bottom;
+      return Math.abs(wallGap) < 1 && Math.abs(floorGap) < 1;
+    }), 'Livros inclinados apoiam-se na parede e na prateleira');
+    const logo = landing.querySelector('#landing-title a');
+    const logoBounds = logo.getBoundingClientRect();
+    const topBook = logo.closest('h1').nextElementSibling.getBoundingClientRect();
+    assert(document.elementFromPoint(logoBounds.left + logoBounds.width / 2, logoBounds.top + logoBounds.height / 2)
+      ?.closest('a') === logo && logo.hash === '#area' &&
+      Math.abs(logoBounds.bottom - topBook.top) < 1, 'Logotipo pousado sobre os livros abre a area pessoal');
     capture('inicio');
     await go('#biblioteca');
     assert(document.querySelector('#book-results'), 'Biblioteca e pesquisa');
@@ -85,6 +113,25 @@ CHECKS = """
     await wait();
     assert(document.querySelector('#design-sheet'), 'Editor visual e capa');
     capture('editor');
+    document.querySelector('#edit-spine').click();
+    const spineDialog = document.querySelector('#modal');
+    assert(spineDialog.scrollHeight <= spineDialog.clientHeight, 'Editor de lombada sem deslocamento vertical');
+    spineDialog.querySelector('.spine-close').click();
+    assert(!spineDialog.open, 'Fechar o editor de lombada pelo botão superior');
+    document.querySelector('#edit-spine').click();
+    const spineOptions = [...document.querySelectorAll('[data-spine-format]')];
+    assert(spineOptions.length === 7, 'Apresentar os seis detalhes e a opção lisa');
+    const spineForm = document.querySelector('#spine-form');
+    spineForm.elements.background.value = '#345678';
+    spineForm.elements.patternColor.value = '#fedcba';
+    spineForm.elements.color.value = '#ffffff';
+    spineOptions.find(option => option.dataset.spineFormat === 'terra-lines').click();
+    const spinePreview = document.querySelector('.spine-preview');
+    assert(getComputedStyle(spinePreview).backgroundColor === 'rgb(52, 86, 120)' &&
+      getComputedStyle(spinePreview).borderTopLeftRadius !== '0px' &&
+      spineForm.elements.color.value === '#ffffff' &&
+      spineForm.elements.patternColor.value === '#fedcba', 'Combinar detalhes arredondados com cores personalizadas');
+    spineForm.requestSubmit();
     for (const type of ['postit', 'shape']) {
       const item = {id: 'move-' + type, type, text: '', x: 50, y: 50, width: 120, height: 100, rotation: 0, color: '#eee6ce', fontSize: 22};
       activeDesign().elements.push(item);
@@ -117,6 +164,8 @@ CHECKS = """
     await wait();
     const book = state.books[0];
     assert(book?.name === 'Pessoa de teste', 'Publicar livro no serviço simulado');
+    assert(book.spine?.format === 'terra-lines' && book.spine.background === '#345678' &&
+      book.spine.patternColor === '#fedcba' && book.spine.color === '#ffffff', 'Publicar detalhes e cores da lombada');
     await go('#livro/' + book.id);
     assert(main.textContent.includes(book.name) || main.querySelector('.book-preview, .book-reader, .design-sheet'), 'Leitura do livro');
     await session({id: 'test-collaborator', email: 'outra@example.test', user_metadata: {name: 'Outra pessoa'}});

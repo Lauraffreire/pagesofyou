@@ -41,23 +41,6 @@ function render(focus = true) {
     sobre: about
   };
   (needsLogin ? auth : views[view] || missing)();
-  if (main.querySelector('.auth-page .auth-card')) {
-    const backdrop = document.createElement('div');
-    backdrop.className = 'form-library-background';
-    backdrop.setAttribute('aria-hidden', 'true');
-    backdrop.innerHTML = Array.from({ length: 4 }, (_, row) =>
-      '<div class="form-library-shelf">' + Array.from({ length: 32 }, (_, i) => {
-        const n = row * 11 + i;
-        return '<span class="wall-book wall-pattern-' + (n % 8) +
-          '" style="--volume-color:var(--wall-' + (n % 7) +
-          ');--volume-height:' + (65 + (n * 13) % 32) +
-          '%;--volume-width:' + (24 + (n * 17) % 30) +
-          ';--volume-angle:' + (n % 5 === 0 ? -6 : n % 4 === 0 ? 5 : 0) +
-          'deg"><i></i><b></b></span>';
-      }).join('') + '</div>'
-    ).join('');
-    main.querySelector('.auth-page').prepend(backdrop);
-  }
   const titles = {
     inicio: 'Início',
     biblioteca: 'Biblioteca',

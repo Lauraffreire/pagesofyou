@@ -69,20 +69,80 @@
 /* Personalização da lombada com pré-visualização ao lado dos campos. */
 .spine-editor {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 90px;
-  align-items: center;
-  gap: 24px;
-  margin: 24px 0;
+  grid-template-columns: minmax(0, 1fr) clamp(60px, 18vw, 112px);
+  align-items: start;
+  gap: clamp(10px, 3vw, 24px);
+  margin: 20px 0;
 }
 
-.spine-settings .field {
-  display: block;
-  margin-bottom: 14px;
+.spine-settings {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.spine-settings fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.spine-settings legend {
+  padding: 0 5px;
+  font-weight: 800;
+}
+
+#spine-form .spine-settings .field {
+  min-width: 0;
+  margin: 0;
+}
+
+.spine-colors,
+.spine-text-properties {
+  display: grid;
+  gap: 8px;
+}
+
+.spine-colors {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 64px), 1fr));
+}
+
+.spine-text-properties {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr));
+  margin-top: 10px;
+}
+
+#spine-form .spine-colors input {
+  height: 38px;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.spine-preview-panel {
+  position: sticky;
+  top: 0;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 10px 4px;
+  border-radius: 8px;
+  background: var(--paper);
+  text-align: center;
+}
+
+.spine-preview-panel figcaption {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .spine-preview {
-  width: 90px;
-  height: 320px;
+  width: min(85%, 72px);
+  aspect-ratio: 1 / 4;
   border-radius: 6px 6px 0 0;
   display: flex;
   justify-content: center;

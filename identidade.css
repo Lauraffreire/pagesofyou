@@ -1,48 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
-/* O compartimento do título fica livre; os restantes ficam cheios de livros. */
-.creation-site .quiet-center > .quiet-side:first-child {
-  display: none;
-}
-
-.creation-site .quiet-center .quiet-title {
-  flex: 0 1 39%;
-  min-width: 0;
-  align-self: center;
-  text-align: center;
-  font-size: clamp(26px, 5vw, 88px);
-}
-
-.creation-site .quiet-center .quiet-title a {
-  justify-content: center;
-}
-
-.creation-site .quiet-library .quiet-book-group,
-.creation-site .quiet-library .quiet-side:last-child {
-  justify-content: space-between;
-  gap: 2px;
-}
-
-.creation-site .quiet-library .quiet-book-group.personal-shelf {
-  padding-top: 10px;
-  padding-right: 70px;
-}
-
-.creation-site .quiet-library .quiet-book-group > .wall-book,
-.creation-site .quiet-library .quiet-side > .wall-book {
-  display: block;
-  flex: var(--volume-width) 1 0;
-  min-width: 0;
-  max-width: none;
-}
-
-@media (max-width: 600px) {
-  .creation-site .quiet-center .quiet-title {
-  flex-basis: 56%;
-  font-size: clamp(22px, 6vw, 36px);
-}
-}
-
 /* Padrões de lombada partilhados pela pré-visualização e pela instalação. */
 :is(.spine, .spine-preview).spine-pattern-none {
   background-image: none;
@@ -125,6 +82,7 @@ select {
 .creation-site .quiet-shelf {
   border-inline-width: 2px;
   border-bottom-width: 5px;
+  padding-bottom: 0;
   box-shadow: none;
 }
 
@@ -139,6 +97,7 @@ select {
 
 .creation-site .quiet-book-group + .quiet-book-group::before,
 .creation-site .quiet-center > .quiet-side:last-child::before {
+  bottom: 0;
   left: -2px;
   width: 2px;
 }
@@ -388,10 +347,10 @@ select {
   place-items: center;
   min-height: clamp(70px, 12vh, 104px);
   padding: 18px 24px;
-  border: 6px solid #e6a94f;
+  border: 6px solid var(--yellow);
   border-left-width: 13px;
-  border-radius: 14px 4px 4px 14px;
-  background: #f7eed5;
+  border-radius: 19px;
+  background: var(--paper);
   color: #173b2d;
   transform: rotate(-1deg);
   transition: translate .18s ease;
@@ -411,22 +370,42 @@ select {
 .stack-book i {
   position: absolute;
   inset: 7px 10px;
-  border-block: 1px solid #ffffffa6;
+  pointer-events: none;
+}
+
+.stack-book:is(.stack-book-0, .stack-book-3) {
+  isolation: isolate;
+  border-color: transparent;
+  background: var(--yellow) border-box;
+}
+
+.stack-book:is(.stack-book-0, .stack-book-3)::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -2px -4px -2px 0;
+  border-radius: 14px;
+  background: var(--paper);
   pointer-events: none;
 }
 
 .stack-book-1 {
-  background: #dc7247;
-  border-color: #dc7247;
-  border-radius: 3px 14px 14px 3px;
+  background: var(--red);
+  border-color: var(--red);
+  border-radius: 19px;
   transform: rotate(.6deg);
   margin-left: 14px;
   margin-right: -10px;
 }
 
+.stack-book-1 i {
+  border-block: 1px solid #f7eed5a6;
+}
+
 .stack-book-2 {
-  background: #e7ad51;
-  border-color: #e7ad51;
+  background: var(--yellow);
+  border-color: var(--yellow);
+  border-radius: 0;
   transform: rotate(-.6deg);
   margin-left: -12px;
   margin-right: 12px;
@@ -436,10 +415,15 @@ select {
   border: 1px solid #fff6dc;
 }
 
-.stack-book-3 {
-  border-color: #dc7247;
-  border-radius: 4px 14px 14px 4px;
+.stack-book.stack-book-3 {
+  border-left-width: 6px;
+  border-right-width: 13px;
+  background: var(--red) border-box;
   transform: rotate(-1deg);
+}
+
+.stack-book.stack-book-3::before {
+  inset-inline: -4px 0;
 }
 
 .stack-book:hover {
@@ -681,13 +665,6 @@ select {
 }
 
 .creation-site .quiet-library {
-  --wall-0: #e7ad51;
-  --wall-1: #dc7247;
-  --wall-2: #f7eed5;
-  --wall-3: #8c914f;
-  --wall-4: var(--paper);
-  --wall-5: #70988a;
-  --wall-6: #bf7b42;
   --shelf-wood: #e7ad51;
 }
 
@@ -763,17 +740,6 @@ select {
 }
 }
 
-/* Capa fechada vista de cima, com uma dobra discreta junto à lombada. */
-.creation-site .page .auth-card.book-start {
-  position: relative;
-  isolation: isolate;
-  overflow: visible;
-  padding: 42px 36px 46px 52px;
-  border: 1px solid #c4af79;
-  border-radius: 3px 7px 7px 3px;
-  box-shadow: inset 5px 0 7px -5px #173b2d60, 5px 7px 15px #173b2d26;
-}
-
 /* Cada secção acompanha a cor da respetiva lombada no menu pessoal. */
 .creation-site main[data-section="create"],
 .creation-site main[data-section="contribute"] {
@@ -802,16 +768,10 @@ select {
 }
 
 .creation-site main[data-section] .simple-book,
-.creation-site main[data-section] .proposal-card,
-.creation-site main[data-section] .auth-card {
+.creation-site main[data-section] .proposal-card {
   background: var(--section-color, var(--paper));
   border-color: var(--section-edge, var(--yellow));
   color: var(--green);
-}
-
-.creation-site main[data-section="create"] .book-start,
-.creation-site main[data-section="contribute"] .auth-card {
-  border-color: var(--section-edge);
 }
 
 .creation-site main[data-section="my-books"] .badge,
@@ -825,31 +785,58 @@ select {
   color: #253e2d;
 }
 
-.creation-site .book-start::before {
+.owned-bookshelves {
+  --shelf-board: linear-gradient(var(--yellow) 0 25%, #bf7b42 25% 82%, #754522 82%);
+  --shelf-back: var(--green);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
+  row-gap: 24px;
+  margin: 24px 0 40px;
+  overflow: clip;
+}
+
+.shelved-book {
+  min-width: 0;
+}
+
+.shelved-book-cover {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-items: end;
+  height: 212px;
+  padding: 14px 16px 14px;
+  background: var(--shelf-back);
+}
+
+.shelved-book-cover .custom-book-thumbnail {
+  width: min(100%, 128px);
+  margin: 0;
+}
+
+.shelved-book-cover::after {
   content: '';
   position: absolute;
-  left: 13px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: #c4af7966;
-  box-shadow: 2px 0 3px #ffffff80;
-  pointer-events: none;
+  inset: auto 0 0;
+  height: 14px;
+  background: var(--shelf-board);
 }
 
-.creation-site .book-start::after {
-  content: none;
+.shelved-book:last-child .shelved-book-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 100%;
+  width: 100vw;
+  background: var(--shelf-board) bottom / 100% 14px no-repeat, var(--shelf-back);
 }
 
-.creation-site .book-start > * {
-  position: relative;
-  z-index: 1;
+.shelved-book .book-list-actions {
+  padding: 12px 10px 6px;
+  align-items: center;
 }
 
-@media (max-width: 600px) {
-  .creation-site .page .auth-card.book-start {
-  padding: 30px 22px 34px 36px;
-}
+.shelved-book .book-list-actions .danger {
+  color: var(--paper);
 }
 
 /* A instalação ocupa um único ecrã, com a assinatura do site. */
@@ -1000,7 +987,6 @@ body.installation-site {
 /* Todas as setas de voltar partilham posição, tamanho e aparência. */
 .creation-site main .back-link,
 .creation-site main .shelf-zoom-exit,
-.creation-site .auth-page:has(.form-library-background) > .back-link,
 .installation-site #return-shelf {
   position: fixed;
   inset: max(20px, env(safe-area-inset-top)) auto auto max(20px, env(safe-area-inset-left));
@@ -1020,91 +1006,6 @@ body.installation-site {
   color: #173b2d;
   font-size: 0;
   line-height: 1;
-}
-
-/* Estantes decorativas atrás dos formulários de acesso e de criação. */
-.creation-site main:has(.form-library-background) {
-  isolation: isolate;
-}
-
-.creation-site .form-library-background {
-  --wall-0: #e7ad51;
-  --wall-1: #dc7247;
-  --wall-2: #f7eed5;
-  --wall-3: #8c914f;
-  --wall-4: var(--paper);
-  --wall-5: #70988a;
-  --wall-6: #bf7b42;
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  display: grid;
-  grid-template-rows: repeat(4, minmax(0, 1fr));
-  padding: 28px 0 0;
-  overflow: hidden;
-  background: #173b2d;
-  pointer-events: none;
-}
-
-.creation-site .form-library-shelf {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-around;
-  gap: 9px;
-  min-height: 0;
-  padding: 16px 24px 0;
-  border-bottom: 12px solid #e7ad51;
-  box-shadow: 0 8px 14px #071c1670;
-}
-
-.creation-site .form-library-shelf .wall-book {
-  flex-shrink: 0;
-  min-width: 28px;
-}
-
-/* Capa amarela no formulario Criar livro. */
-.creation-site .page .auth-card.book-start {
-  background: #e7ad51;
-  border-color: #c88c31;
-}
-
-/* Os formulários de acesso usam a mesma capa amarela vista de cima. */
-.creation-site .page.auth-page .auth-card:not(.book-start) {
-  position: relative;
-  isolation: isolate;
-  overflow: visible;
-  padding: 42px 36px 46px 52px;
-  border: 1px solid #c88c31;
-  border-radius: 3px 7px 7px 3px;
-  background: #e7ad51;
-  color: #173b2d;
-  box-shadow: inset 5px 0 7px -5px #173b2d60, 5px 7px 15px #173b2d26;
-}
-
-.creation-site .page.auth-page .auth-card:not(.book-start)::before {
-  content: '';
-  position: absolute;
-  left: 13px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: #a7763266;
-  box-shadow: 2px 0 3px #ffffff80;
-  pointer-events: none;
-}
-
-.creation-site .page.auth-page .auth-card .field input {
-  background: #fff9e9;
-}
-
-.creation-site .page.auth-page .auth-card .muted {
-  color: #34482e;
-}
-
-@media (max-width: 600px) {
-  .creation-site .page.auth-page .auth-card:not(.book-start) {
-  padding: 30px 22px 34px 36px;
-}
 }
 
 /* Editor: verde floresta, sálvia e papel claro. */
@@ -1205,18 +1106,6 @@ body.installation-site {
 .creation-site .visual-editor #design-sheet .design-element[contenteditable]:focus {
   outline-color: var(--editor-accent);
 }
-.creation-site .page:has(#book-start-form) {
-  background: var(--green);
-}
-.creation-site .page:has(#book-start-form) .auth-card {
-  background: #e3e9dc;
-  border-color: #a9b8a0;
-}
-.creation-site #book-start-form input {
-  background: #f6f7ef;
-  border-color: #a9b8a0;
-}
-
 /* Fundo e navegação comuns a todas as páginas. */
 body.creation-site,
 .creation-site main,
@@ -1253,7 +1142,6 @@ body.creation-site,
 }
 .creation-site main .back-link,
 .creation-site main .shelf-zoom-exit,
-.creation-site .auth-page:has(.form-library-background) > .back-link,
 .creation-site .visual-editor .editor-sidebar .back-link {
   background: var(--green);
   color: var(--paper);
@@ -1275,65 +1163,67 @@ body.creation-site,
   color: var(--paper);
 }
 
-/* Formulários sobre a estante completa, desfocada ao fundo. */
-.creation-site main > .page.auth-page:has(.form-library-background) {
-  position: relative;
-  isolation: isolate;
+/* Capas dos formulários, com margem de encadernação e folhas à vista. */
+.creation-site main > .page.auth-page {
+  --cover-accent: var(--blue);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
   width: 100%;
   max-width: none;
   min-height: 100svh;
-  background: transparent;
-  padding: 76px 24px 40px;
+  padding: 76px clamp(20px, 5vw, 64px) 40px;
 }
-.creation-site .auth-page > .form-library-background {
-  inset: -12px;
-  padding-top: 24px;
-  filter: blur(5px) brightness(.76) saturate(.8);
-  transform: scale(1.025);
+
+.creation-site .auth-page:has(#book-start-form) {
+  --cover-accent: var(--yellow);
 }
-.creation-site main .page.auth-page:has(.form-library-background) .auth-card,
-.creation-site main .page.auth-page:has(.form-library-background) .auth-card.book-start {
+
+.creation-site .auth-page:has(#code-form) {
+  --cover-accent: var(--red);
+}
+
+.creation-site main > .auth-page .auth-card {
   position: relative;
-  isolation: isolate;
-  background: #e3e9dc;
+  width: min(100%, 490px);
+  max-width: none;
+  margin: 0 auto;
+  padding: clamp(22px, 5vw, 38px);
+  border: 2px solid var(--cover-accent);
+  border-left-width: 9px;
+  border-radius: 19px 3px 3px 19px;
+  background: var(--paper);
   color: var(--ink);
-  width: min(490px, 100%);
-  max-width: 490px;
-  margin: 24px auto;
-  padding: 42px 36px 46px 52px;
-  border: 1px solid #a9b8a0;
-  border-radius: 3px 8px 8px 3px;
-  box-shadow: inset 6px 0 9px -7px #173b2d99, 0 18px 60px #061c1666, 5px 5px 0 #c9d2c2;
+  box-shadow: 2px 3px 0 var(--line), 5px 6px 0 var(--paper),
+    8px 9px 0 var(--cover-accent), 12px 15px 0 #0c241c;
 }
-.creation-site main .page.auth-page:has(.form-library-background) .auth-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 17px;
-  width: 1px;
-  background: #a9b8a0;
-  box-shadow: 2px 0 3px #ffffff80;
-  pointer-events: none;
+
+.creation-site main > .auth-page .auth-card h1 {
+  margin: 0 0 20px;
+  color: var(--ink);
+  font: 800 clamp(24px, 5vw, 34px)/1.15 var(--sans);
+  text-transform: none;
 }
-.creation-site main .page.auth-page:has(.form-library-background) .auth-card :is(input, textarea, select) {
-  background: #f6f7ef;
-  border-color: #a9b8a0;
+
+.creation-site .auth-page .auth-card .eyebrow {
+  display: block;
+  margin-bottom: 10px;
   color: var(--ink);
 }
-.creation-site main .page.auth-page:has(.form-library-background) .auth-card .button {
-  box-shadow: 3px 3px 0 #a9b8a0;
+
+.creation-site .auth-page .auth-card .field input {
+  min-height: 44px;
+  background: #fff9e9;
+  border-color: #8a8061;
 }
-@media (max-width: 600px) {
-  .creation-site main > .page.auth-page:has(.form-library-background) {
-  padding: 76px 20px 32px;
+
+.creation-site .auth-page .auth-card .button {
+  min-height: 44px;
+  box-shadow: 3px 3px 0 var(--cover-accent);
 }
-  .creation-site main .page.auth-page:has(.form-library-background) .auth-card {
-  padding: 30px 22px 34px 36px;
-}
-  .creation-site .auth-page > .form-library-background {
-  filter: blur(4px) brightness(.76) saturate(.8);
-}
+
+.creation-site .auth-page .auth-card .form-error {
+  color: #8b3326;
 }
 
 :is(.spine, .spine-preview) {
@@ -1349,16 +1239,101 @@ body.creation-site,
   pointer-events: none;
   z-index: -1;
 }
+.creation-site #modal:has(#spine-form) {
+  width: min(900px, calc(100% - 24px));
+  max-width: none;
+  max-height: calc(100dvh - 20px);
+  padding: clamp(12px, 2vw, 22px);
+}
+
+.spine-dialog-heading {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: var(--paper);
+}
+
+.spine-dialog-heading #modal-title {
+  margin: 0;
+}
+
+.spine-dialog-heading .spine-close {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  font: 400 28px/1 var(--sans);
+}
+
+.spine-dialog-heading .spine-close:hover {
+  background: #e9dfc4;
+}
+
+#spine-form .spine-editor {
+  margin: 6px 0 10px;
+}
+
+#spine-form .spine-settings {
+  gap: 8px;
+}
+
+#spine-form .spine-settings fieldset {
+  padding: 6px 8px;
+}
+
+#spine-form .spine-settings .field {
+  display: grid;
+  gap: 3px;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+#spine-form .spine-settings :is(input:not([type="color"]), select) {
+  min-height: 36px;
+  padding: 6px 8px;
+}
+
+#spine-form .spine-preview {
+  width: min(85%, 58px);
+  aspect-ratio: 1 / 3.6;
+}
+
+@media (min-width: 640px) {
+  #spine-form .spine-settings {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    align-items: start;
+  }
+
+  #spine-form .spine-text-properties {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  }
+
+  #spine-form .spine-detail-settings {
+    grid-column: 1 / -1;
+  }
+
+  #spine-form .spine-format-options {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
+
 .spine-format-options {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-  margin-bottom: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 64px), 1fr));
+  gap: 6px;
 }
 .spine-format-options button {
-  padding: 8px 4px;
-  border: 1px solid #a9b8a0;
-  background: #f6f7ef;
+  padding: 5px 3px;
+  border: 1px solid var(--line);
+  background: #fff9e9;
   color: #173b2d;
   border-radius: 5px;
 }
@@ -1368,15 +1343,17 @@ body.creation-site,
 }
 .spine-format-sample {
   display: block;
-  width: 30px;
-  height: 85px;
+  width: 16px;
+  height: 36px;
   margin: 0 auto 6px;
-  background-color: #70988a;
+  background-color: #d4c8a0;
   background-size: 100% 100%;
   border-radius: 3px;
 }
 .spine-format-options small {
+  display: block;
   font-size: 10px;
+  line-height: 1.2;
 }
 
 .creation-site .reader-arrow {
@@ -1391,49 +1368,141 @@ body.creation-site,
   cursor: default;
 }
 
-/* Logotipo plano com uma linha a sugerir a lombada. */
-.creation-site .quiet-title a {
-  position: relative;
-  background: var(--paper);
-  border: 3px solid var(--yellow);
-  border-radius: 12px 3px 3px 12px;
-  box-shadow: none;
-}
-.creation-site .quiet-title a::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 12px;
-  width: 1px;
-  background: var(--yellow);
-  border: 0;
-  box-shadow: none;
-  pointer-events: none;
-}
-.creation-site .quiet-title a::after {
-  content: none;
-}
-@media (max-width: 600px) {
-  .creation-site .quiet-title a {
-    border-width: 2px;
-    border-radius: 9px 3px 3px 9px;
-  }
-  .creation-site .quiet-title a::before { left: 7px; }
+/* Estante da entrada desenhada com os elementos da identidade visual. */
+.creation-site main > .landing-shelves {
+  --shelf-line: max(3px, 1.05svh);
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-inline: var(--shelf-line) solid var(--yellow);
+  background: var(--green);
 }
 
-/* Ponto final circular, independente do desenho da fonte. */
-.creation-site .quiet-title .title-period {
-  display: inline-block;
-  width: .13em;
-  height: .13em;
-  margin-left: .035em;
-  border-radius: 50%;
-  background: currentColor;
-  font-size: inherit;
-  line-height: 0;
-  color: inherit;
-  text-indent: -9999px;
+.landing-shelf {
+  display: grid;
+  grid-template-columns: minmax(0, var(--division)) minmax(0, 1fr);
+  min-height: 0;
+}
+
+.landing-compartment {
+  position: relative;
+  container-type: size;
+  min-width: 0;
+  border-bottom: var(--shelf-line) solid var(--yellow);
+}
+
+.landing-compartment + .landing-compartment {
+  border-left: var(--shelf-line) solid var(--yellow);
+}
+
+.landing-spine,
+.landing-shelf #landing-title {
+  --scale: min(100cqw / var(--reference-width), 100cqh / 458);
+  --side-space: calc((100% - var(--reference-width) * var(--scale)) / 2);
+  position: absolute;
+  container-type: size;
+  margin: 0;
+  left: calc(var(--side-space) + (var(--book-x) - var(--origin)) * var(--scale));
+  bottom: calc(var(--book-bottom) * var(--scale));
+  width: calc(var(--book-width) * var(--scale));
+  height: calc(var(--book-height) * var(--scale));
+}
+
+@media (orientation: portrait) {
+  .creation-site main > .landing-shelves {
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+  }
+
+  .landing-shelf {
+    display: contents;
+  }
+
+  .landing-compartment + .landing-compartment {
+    border-left: 0;
+  }
+}
+
+.landing-spine {
+  isolation: isolate;
   overflow: hidden;
-  vertical-align: baseline;
+  border-radius: var(--spine-corners);
+  background: var(--spine-fill);
+}
+
+.landing-spine:is(.landing-spine--against-left, .landing-spine--against-right) {
+  bottom: calc((cos(var(--spine-angle)) - 1) * var(--book-height) * var(--scale));
+  transform: rotate(var(--spine-angle));
+}
+
+.landing-spine--against-left {
+  left: 0;
+  border-top-left-radius: 0;
+  transform-origin: top left;
+}
+
+.landing-spine--against-right {
+  right: 0;
+  left: auto;
+  border-top-right-radius: 0;
+  transform-origin: top right;
+}
+
+.landing-spine--flat .spine-art {
+  inset: 50% auto auto 50%;
+  width: 100cqh;
+  height: 100cqw;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.landing-spine--pages {
+  border-radius: 5% / 24%;
+}
+
+.landing-spine--pages::before {
+  content: '';
+  position: absolute;
+  inset: 5% .9% 5% .9%;
+  border-radius: inherit;
+  background: var(--paper);
+}
+
+.landing-spine--right-binding::before {
+  inset-inline: 0 2%;
+}
+
+.landing-shelf #landing-title a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .22em;
+  height: 100%;
+  border: max(1px, .27svh) solid var(--yellow);
+  border-inline-width: max(2px, .35vw) 0;
+  border-radius: 5% / 24%;
+  background: var(--paper);
+  color: var(--ink);
+  font: 800 min(11cqw, 52cqh)/1 var(--sans);
+  letter-spacing: -.035em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.landing-shelf #landing-title a::after {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  transform: translate(-50%, -50%);
+  content: '';
+}
+
+.landing-shelf #landing-title a:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 3px;
+}
+
+.landing-shelf #landing-title em {
+  color: var(--yellow);
+  font-style: normal;
 }
